@@ -1,0 +1,7 @@
+setup.py
+package/SDK.py
+package/__init__.py
+packagetest.egg-info/PKG-INFO
+packagetest.egg-info/SOURCES.txt
+packagetest.egg-info/dependency_links.txt
+packagetest.egg-info/top_level.txt
