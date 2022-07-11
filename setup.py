@@ -1,12 +1,14 @@
 from setuptools import setup
 
 setup(
-    name='packagetest',
+    name='Laevitas-SDK',
     version='1.0',
-    packages=['package'],
-    url='',
-    license='',
-    author='ASUS',
+    packages=['Laevitas'],
+    url='https://github.com/Elyesbdakhlia',
+    download_url = 'https://github.com/Elyesbdakhlia/API-SDK/archive/refs/tags/1.0.tar.gz',
+    license='apache-2.0',
+    author='Elyes',
     author_email='elyes@laevitas.ch',
-    description='Sdk'
+    description='SDK'
+
 )

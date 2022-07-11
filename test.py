@@ -1,10 +1,8 @@
-from package import SDK
-import array as arr
-from typing import List, Set, Tuple, Dict
+from Laevitas import SDK
 
 
 sdk = SDK.api()
-sdk.configure("c23682e9-0f28-4af6-886f-4ee5b1a7c215")
+sdk.configure()
 test1 = sdk.realtime.options.get_atm("deribit","btc")
 #test2 = SDK.api("c23682e9-0f28-4af6-886f-4ee5b1a7c215").realtime.options.get_atm("deribit","btc")
 #test3 = SDK.api("c23682e9-0f28-4af6-886f-4ee5b1a7c215").realtime.options.gex_date("deribit","btc","30SEP22")
@@ -17,15 +15,3 @@ print(test5.items
       )
 for item in test5.items:
     print(item.date)
-#for item in test5.items:
-#    print(item.)
-#for item in test6.items.item:
-#    print(item)
-#for items in test5.items.v :
-#    print(items)
-
-#for o in test5.items:
-#    print(o)
-#print(test6)
-#test5 = SDK.api("c23682e9-0f28-4af6-886f-4ee5b1a7c215").historical.options.iv("deribit","ETH-10JUN22-60000-C","2022-06-07","2022-06-14","10","2")
-#test1.alldata

@@ -1,3 +1,5 @@
+LICENSE.txt
+setup.cfg
 setup.py
 package/SDK.py
 package/__init__.py
