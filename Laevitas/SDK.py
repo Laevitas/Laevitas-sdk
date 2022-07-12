@@ -1,14 +1,14 @@
 import requests
-from typing import List, Optional, Sequence
 from dataclasses import dataclass
-# Set, Tuple, Dict
 from enum import Enum
 
 
 class pagination(object):
-    def __init__(self,meta:dict,items = []):
+    def __init__(self, meta: dict, items=[]):
         self.meta = meta
         self.items = items
+
+
 @dataclass
 class item():
     v: float
@@ -281,6 +281,23 @@ class api():
 
             @classmethod
             def iv(self,market: str,instrument: str,start="",end="",limit="",page=""):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param instrument: exp: BTC-10JUN21-60000-P
+                :type instrument:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: total oi data
+                :rtype:
+                """
                 market=market.upper()
                 instrument=instrument.upper()
                 x=instrument.split("-")

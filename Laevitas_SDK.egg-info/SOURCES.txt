@@ -1,4 +1,5 @@
 LICENSE.txt
+README.md
 setup.cfg
 setup.py
 Laevitas/SDK.py
