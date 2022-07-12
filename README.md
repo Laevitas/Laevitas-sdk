@@ -11,7 +11,7 @@ Python 3.7+
 
 
 ```sh
-pip install Laevitas-SDK
+pip install SDK-Laevitas
 ```
 Then import the package:
 ```python

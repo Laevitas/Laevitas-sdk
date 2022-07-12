@@ -7,4 +7,5 @@ Laevitas/__init__.py
 Laevitas_SDK.egg-info/PKG-INFO
 Laevitas_SDK.egg-info/SOURCES.txt
 Laevitas_SDK.egg-info/dependency_links.txt
+Laevitas_SDK.egg-info/requires.txt
 Laevitas_SDK.egg-info/top_level.txt
