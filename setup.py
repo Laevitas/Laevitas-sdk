@@ -1,15 +1,20 @@
 from setuptools import setup
 
+
+with open("README.md") as readme:
+    README = readme.read()
 setup(
-    name='SDK-Laevitas',
-    version='test-1.0',
+    name='SDK-Laevitas-test',
+    version='1.2',
     packages=['Laevitas'],
     url='https://github.com/Elyesbdakhlia',
-    download_url='https://github.com/Elyesbdakhlia/API-SDK/archive/refs/tags/test-1.0.tar.gz',
+    download_url='https://github.com/Elyesbdakhlia/API-SDK/archive/refs/tags/test-1.1.tar.gz',
     license='apache-2.0',
     author='Elyes',
     author_email='elyes@laevitas.ch',
     description='SDK',
+    long_description=open("README.md", "r").read(),
+    long_description_content_type="text/markdown",
     install_requires=[
                        'requests',
                    ]

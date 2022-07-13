@@ -26,7 +26,7 @@ Please follow the procedure and then run the following:
 
 ```python
 from Laevitas import SDK
-from dataclasses import dataclass
+from Laevitas import item
 
 # create an instance of the API class
 sdk = SDK.api()
