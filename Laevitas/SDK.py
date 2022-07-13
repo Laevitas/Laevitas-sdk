@@ -1,40 +1,37 @@
 import requests
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
-
-
-class pagination(object):
-    def __init__(self, meta: dict, items=[]):
-        self.meta = meta
-        self.items = items
+from typing import List
 
 
 @dataclass
-class item():
+class Ipaginationmeta():
+    total: int
+    page: int
+    items: int
+
+
+@dataclass
+class IDateV():
     v: float
-    date : int
+    date: int
 
-class data_atm:
-    def __init__(self, alldata, Today, Yesterday, Two_days_ago, One_week_ago, Two_weeks_ago, Three_weeks_ago
-                    ):
-        self.alldata = alldata
-        self.Today = Today
-        self.Yesterday = Yesterday
-        self.Two_days_ago = Two_days_ago
-        self.One_week_ago = One_week_ago
-        self.Two_weeks_ago = Two_weeks_ago
-        self.Three_weeks_ago = Three_weeks_ago
-    class date:
-        def __init__(self):
-            pass
+@dataclass
+class Ipagination():
+    meta: Ipaginationmeta
+    items: List[IDateV] = field(default_factory=lambda: [])
 
-        @property
-        def date(self):
-            return self.date
 
-        @date.setter
-        def date(self, date):
-            self.date = date
+@dataclass
+class data_atm():
+    Today: list
+    Yesterday: list
+    Two_days_ago: list
+    One_week_ago: list
+    Two_weeks_ago: list
+    Three_weeks_ago: list
+    date: int
+
 class response(object):
     def __init__(self, *argv, **kwargs):
         pass
@@ -178,14 +175,13 @@ class api():
                 else:
                      api_url = self.url + "atm_iv_ts/" + market + "/" + currency
                      responsedata = requests.get(api_url, headers=api.header).json()
-                     Response = data_atm(responsedata['data'],
-                                              responsedata['data']['Today'],
-                                              responsedata['data']['Yesterday'],
-                                              responsedata['data']['2 Days Ago'],
-                                              responsedata['data']['1 Week Ago'],
-                                              responsedata['data']['2 Weeks Ago'],
-                                              responsedata['data']['3 Weeks Ago'])
-                     Response.date = responsedata['date']
+                     Response = data_atm(responsedata['data']['Today'],
+                                         responsedata['data']['Yesterday'],
+                                         responsedata['data']['2 Days Ago'],
+                                         responsedata['data']['1 Week Ago'],
+                                         responsedata['data']['2 Weeks Ago'],
+                                         responsedata['data']['3 Weeks Ago'],
+                                         responsedata['date'])
                      return Response
 
 
@@ -347,15 +343,21 @@ class api():
                 elif makequery != "":
                     api_url = self.url+ "total_oi/market/" + currency.lower() + makequery
                     response = requests.get(api_url,headers=api.header).json()
-                    Response = pagination(response['meta'])
+                    Response = Ipagination(
+                        Ipaginationmeta(response['meta']['total'], response['meta']['page'], response['meta']['items']),
+
+                    )
                     for i in range(len(response['items'])):
-                        Response.items.append(item(response['items'][i]['v'], response['items'][i]['date']))
+                        Response.items.append(IDateV(response['items'][i]['v'], response['items'][i]['date']))
                     return Response
                 else:
                     api_url = self.url+ "total_oi/market/" + currency.lower()
                     response = requests.get(api_url,headers=api.header).json()
-                    Response = pagination(response['meta'])
+                    Response = Ipagination(
+                        Ipaginationmeta(response['meta']['total'],response['meta']['page'],response['meta']['items']),
+
+                    )
                     for i in range(len(response['items'])):
-                        Response.items.append(item(response['items'][i]['v'], response['items'][i]['date']))
+                        Response.items.append(IDateV(response['items'][i]['v'], response['items'][i]['date']))
                     return Response
 
