@@ -1,5 +1,5 @@
 # API-SDK
-First test version which includes 7 endpoints:
+First test version which includes 6 endpoints:
 
 ## Requirements.
 
@@ -45,7 +45,7 @@ for i in response.items:
 
 |Class | Sub-class | Method                                                             | Description|
 |------------ |-----------|--------------------------------------------------------------------| -------------|
-|*realtime* | options   | getatm(market,currency)<br/>get_atm(market, currency, period)      | At the money Implied Volatility Term Structure|
+|*realtime* | options   | get_atm(market, currency, period)      | At the money Implied Volatility Term Structure|
 |*realtime* | options   | gex_date(market, currency, maturity)                               | Gamma Exposure by Expiration|
 |*realtime* | options   | greeks(market, currency, maturity, optiontype)                     | Greeks|
 |*realtime* | derivs    | oi_gainers(market, oitype, period)                                 | oi gainers|

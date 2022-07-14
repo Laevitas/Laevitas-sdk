@@ -145,38 +145,6 @@ class api():
             pass
 
             @classmethod
-            def getatm(self, market: str, currency: str, period = "none"):
-                """
-
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH
-                :type currency:
-                :param period: alldata, Today, Yesterday, Two_days_ago, One_week_ago, Two_weeks_ago,
-                Three_weeks_ago, One_month_ago
-                :type period:
-                :return: data concerning atm_iv_is:
-                :rtype:
-                """
-                market = market.upper()
-                currency = currency.upper()
-                if currency not in CURRENCY.__members__:
-                    raise TypeError("Currency not available")
-                elif market not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                else:
-                    api_url = self.url + "atm_iv_ts/" + market + "/" + currency
-                    responsedata = requests.get(api_url, headers=api.header).json()
-                    if period == "none":
-                        return responsedata
-                    else:
-                        resp = []
-                        response = responsedata['data'][period]
-                        for i in range(len(response)):
-                            resp.append(MaturityIV(response[i]['maturity'], response[i]['iv']))
-                        return resp
-
-            @classmethod
             def get_atm(self, market: str, currency: str):
                 """
 
