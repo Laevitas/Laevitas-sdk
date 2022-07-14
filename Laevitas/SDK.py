@@ -350,7 +350,7 @@ class api():
                                                      response['items'][i]['bid_iv'], response['items'][i]['ask_iv']))
                     return Response
 
-        class moves:
+        class move:
             url = "https://gateway.devitas.ch/historical/move/"
             pass
 

@@ -1,18 +1,18 @@
 Metadata-Version: 2.1
 Name: SDK-Laevitas-test
-Version: 1.3
+Version: 1.3.2
 Summary: SDK
 Home-page: https://github.com/Elyesbdakhlia
 Author: Elyes
 Author-email: elyes@laevitas.ch
 License: apache-2.0
-Download-URL: https://github.com/Elyesbdakhlia/API-SDK/archive/refs/tags/test-1.3.tar.gz
+Download-URL: https://github.com/Elyesbdakhlia/API-SDK/archive/refs/tags/test-1.3.2.tar.gz
 Platform: UNKNOWN
 Description-Content-Type: text/markdown
 License-File: LICENSE.txt
 
 # API-SDK
-First test version which includes 7 endpoints:
+First test version which includes 6 endpoints:
 
 ## Requirements.
 
@@ -58,7 +58,7 @@ for i in response.items:
 
 |Class | Sub-class | Method                                                             | Description|
 |------------ |-----------|--------------------------------------------------------------------| -------------|
-|*realtime* | options   | getatm(market,currency)<br/>get_atm(market, currency, period)      | At the money Implied Volatility Term Structure|
+|*realtime* | options   | get_atm(market, currency, period)      | At the money Implied Volatility Term Structure|
 |*realtime* | options   | gex_date(market, currency, maturity)                               | Gamma Exposure by Expiration|
 |*realtime* | options   | greeks(market, currency, maturity, optiontype)                     | Greeks|
 |*realtime* | derivs    | oi_gainers(market, oitype, period)                                 | oi gainers|
