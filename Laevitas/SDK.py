@@ -9,57 +9,76 @@ class Ipaginationmeta():
     total: int
     page: int
     items: int
-
-
 @dataclass
 class IDateV():
     v: float
     date: int
 
+
+@dataclass
+class ivdata():
+    date: int
+    mark_iv: float
+    bid_iv: float
+    ask_iv: float
 @dataclass
 class Ipagination():
     meta: Ipaginationmeta
     items: List[IDateV] = field(default_factory=lambda: [])
 
+@dataclass
+class Ipaginationiv():
+    meta: Ipaginationmeta
+    items: List[ivdata] = field(default_factory=lambda: [])
+
+@dataclass
+class MaturityIV():
+    maturity: str
+    iv: float
 
 @dataclass
 class data_atm():
-    Today: list
-    Yesterday: list
-    Two_days_ago: list
-    One_week_ago: list
-    Two_weeks_ago: list
-    Three_weeks_ago: list
     date: int
+    Today: List[MaturityIV] = field(default_factory=lambda: [])
+    Yesterday: List[MaturityIV] = field(default_factory=lambda: [])
+    Two_days_ago: List[MaturityIV] = field(default_factory=lambda: [])
+    One_week_ago: List[MaturityIV] = field(default_factory=lambda: [])
+    Two_weeks_ago: List[MaturityIV] = field(default_factory=lambda: [])
+    Three_weeks_ago: List[MaturityIV] = field(default_factory=lambda: [])
 
-class response(object):
-    def __init__(self, *argv, **kwargs):
-        pass
+@dataclass
+class gex_date_data():
+    strike: int
+    optionType: str
+    gex: float
+@dataclass
+class Igex_date():
+    date: int
+    data: List[gex_date_data] = field(default_factory=lambda: [])
 
-    class date:
-        def __init__(self):
-            pass
+@dataclass
+class greeks_data():
+    strike: int
+    underlying_price: float
+    delta: float
+    gamma: float
+    theta: float
+    vega: float
+@dataclass
+class Igreeks():
+    date:int
+    data: List[greeks_data] = field(default_factory=lambda: [])
 
-        @property
-        def date(self):
-            return self.date
+@dataclass
+class oi_gainers_data():
+    symbol: str
+    open_interest_change: int
+    open_interest_change_notional: int
 
-        @date.setter
-        def date(self, date):
-            self.date = date
-    class data:
-        def __init__(self):
-            pass
-
-        @property
-        def data(self):
-            return self.data
-
-        @data.setter
-        def data(self, data):
-            self.data = data
-
-
+@dataclass
+class Ioi_gainers():
+    date:int
+    data: List[oi_gainers_data] = field(default_factory=lambda: [])
 
 
 
@@ -151,8 +170,11 @@ class api():
                     if period == "none":
                         return responsedata
                     else:
-                        responsedata = responsedata['data'][period]
-                        return responsedata
+                        resp = []
+                        response = responsedata['data'][period]
+                        for i in range(len(response)):
+                            resp.append(MaturityIV(response[i]['maturity'], response[i]['iv']))
+                        return resp
 
             @classmethod
             def get_atm(self, market: str, currency: str):
@@ -175,13 +197,20 @@ class api():
                 else:
                      api_url = self.url + "atm_iv_ts/" + market + "/" + currency
                      responsedata = requests.get(api_url, headers=api.header).json()
-                     Response = data_atm(responsedata['data']['Today'],
-                                         responsedata['data']['Yesterday'],
-                                         responsedata['data']['2 Days Ago'],
-                                         responsedata['data']['1 Week Ago'],
-                                         responsedata['data']['2 Weeks Ago'],
-                                         responsedata['data']['3 Weeks Ago'],
-                                         responsedata['date'])
+                     resp = responsedata["data"]
+                     Response = data_atm(responsedata['date'])
+                     for i in range(len(resp["Today"])):
+                        Response.Today.append(MaturityIV(resp["Today"][i]['maturity'], resp["Today"][i]['iv']))
+                     for i in range(len(resp["Yesterday"])):
+                        Response.Yesterday.append(MaturityIV(resp["Yesterday"][i]['maturity'], resp["Yesterday"][i]['iv']))
+                     for i in range(len(resp["2 Days Ago"])):
+                        Response.Two_days_ago.append(MaturityIV(resp["2 Days Ago"][i]['maturity'], resp["2 Days Ago"][i]['iv']))
+                     for i in range(len(resp["1 Week Ago"])):
+                        Response.One_week_ago.append(MaturityIV(resp["1 Week Ago"][i]['maturity'], resp["1 Week Ago"][i]['iv']))
+                     for i in range(len(resp["2 Weeks Ago"])):
+                        Response.Two_weeks_ago.append(MaturityIV(resp["2 Weeks Ago"][i]['maturity'], resp["2 Weeks Ago"][i]['iv']))
+                     for i in range(len(resp["3 Weeks Ago"])):
+                        Response.Three_weeks_ago.append(MaturityIV(resp["3 Weeks Ago"][i]['maturity'], resp["3 Weeks Ago"][i]['iv']))
                      return Response
 
 
@@ -209,11 +238,13 @@ class api():
                     maturity = maturity.upper()
                     api_url = self.url + "gex_date/" + market + "/" + currency + "/" + maturity
                     responsedata = requests.get(api_url, headers=api.header).json()
-                    Response = response()
-                    Response.date = responsedata['date']
-                    Response.data = responsedata['data']
+                    Response = Igex_date(responsedata['date'])
+                    for i in range(len(responsedata['data'])):
+                        Response.data.append(gex_date_data(responsedata['data'][i]['strike'],
+                                                           responsedata['data'][i]['optionType'],
+                                                           responsedata['data'][i]['gex']
+                                                           ))
                     return Response
-
             @classmethod
             def greeks(self, market: str, currency: str, maturity: str, optiontype: str):
                 """
@@ -243,9 +274,15 @@ class api():
                     maturity = maturity.upper()
                     api_url = self.url + "greeks/" + market + "/" + currency + "/" + maturity + "/" + optiontype
                     responsedata = requests.get(api_url, headers=api.header).json()
-                    Response = response()
-                    Response.date = responsedata['date']
-                    Response.data = responsedata['data']
+                    Response = Igreeks(responsedata['date'])
+                    for i in range(len(responsedata['data'])):
+                        Response.data.append(greeks_data(responsedata['data'][i]['strike'],
+                                                           responsedata['data'][i]['underlying_price'],
+                                                           responsedata['data'][i]['delta'],
+                                                           responsedata['data'][i]['gamma'],
+                                                           responsedata['data'][i]['theta'],
+                                                           responsedata['data'][i]['vega']
+                                                           ))
                     return Response
 
         class derivs:
@@ -254,6 +291,17 @@ class api():
 
             @classmethod
             def oi_gainers(self, market: str, oitype: str, period: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param oitype: future, perpetual
+                :type oitype:
+                :param period: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720, ytd
+                :type period:
+                :return: oi_gainers
+                :rtype:
+                """
                 market = market.upper()
                 oitype = oitype.upper()
                 if oitype not in ["FUTURE", "PERPETUAL"]:
@@ -264,9 +312,14 @@ class api():
                     raise TypeError("period not available")
                 else:
                     api_url = self.url + "oi_gainers/" + market + "/" + oitype + "/" + period
-                    response = requests.get(api_url, headers=api.header)
-                    return response.json()
-
+                    response = requests.get(api_url, headers=api.header).json()
+                    Response = Ioi_gainers(response['date'])
+                    for i in range(len(response['data'])):
+                        Response.data.append(oi_gainers_data(response['data'][i]['symbol'],
+                                                             response['data'][i]['open_interest_change'],
+                                                             response['data'][i]['open_interest_change_notional']
+                                                         ))
+                    return Response
     class historical:
         def __init__(self):
             self.option = self.options()
@@ -309,11 +362,25 @@ class api():
                 elif makequery != "":
                     api_url = self.url+ "iv/" + market + "/" + instrument + makequery
                     response = requests.get(api_url,headers=api.header).json()
-                    return response
+                    Response = Ipaginationiv(
+                        Ipaginationmeta(response['meta']['total'],response['meta']['page'],response['meta']['items']),
+
+                    )
+                    for i in range(len(response['items'])):
+                        Response.items.append(ivdata(response['items'][i]['date'], response['items'][i]['mark_iv'],
+                                                     response['items'][i]['bid_iv'],response['items'][i]['ask_iv']))
+                    return Response
                 else:
                     api_url = self.url+ "iv/" + market + "/" + instrument
                     response = requests.get(api_url,headers=api.header).json()
-                    return response
+                    Response = Ipaginationiv(
+                        Ipaginationmeta(response['meta']['total'], response['meta']['page'], response['meta']['items']),
+
+                    )
+                    for i in range(len(response['items'])):
+                        Response.items.append(ivdata(response['items'][i]['date'], response['items'][i]['mark_iv'],
+                                                     response['items'][i]['bid_iv'], response['items'][i]['ask_iv']))
+                    return Response
 
         class moves:
             url = "https://gateway.devitas.ch/historical/move/"
