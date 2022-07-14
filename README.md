@@ -43,14 +43,14 @@ for i in response.items:
 
 ## Documentation for available API Endpoints
 
-|Class | Sub-class | Method                                                             | Description|
-|------------ |----------|--------------------------------------------------------------------| -------------|
-|*realtime* | options  | get_atm(market, currency, period)      | At the money Implied Volatility Term Structure|
-|*realtime* | options  | gex_date(market, currency, maturity)                               | Gamma Exposure by Expiration|
-|*realtime* | options  | greeks(market, currency, maturity, optiontype)                     | Greeks|
-|*realtime* | derivs   | oi_gainers(market, oitype, period)                                 | oi gainers|
-|*historical* | options  | iv(market, instrument, start(opt), end(opt), limit(opt), page(opt) | Instrument Historical Implied Volatility|
-|*historical* | move     | total_oi(currency, start(opt), end(opt), limit(opt), page(opt)     | total oi|
+|Class | Sub-class | Method                                                             | Description                                    |
+|------------ |----------|--------------------------------------------------------------------|------------------------------------------------|
+|*realtime* | options  | get_atm(market, currency, period)      | At the money Implied Volatility Term Structure |
+|*realtime* | options  | gex_date(market, currency, maturity)                               | Gamma Exposure by Expiration                   |
+|*realtime* | options  | greeks(market, currency, maturity, optiontype)                     | Greeks                                         |
+|*realtime* | derivs   | oi_gainers(market, oitype, period)                                 | oi gainers                                     |
+|*historical* | options  | iv(market, instrument, start(opt), end(opt), limit(opt), page(opt) | Instrument Historical Implied Volatility       |
+|*historical* | move     | total_oi(currency, start(opt), end(opt), limit(opt), page(opt)     | total oi                                       |
 
 
 
