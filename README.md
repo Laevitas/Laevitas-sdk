@@ -43,21 +43,22 @@ for i in response.items:
 
 ## Documentation for available API Endpoints
 
-|Class | Sub-class | Method                                              | Description                                   |
-|------------ |----------|-----------------------------------------------------|-----------------------------------------------|
-|*realtime* | options  | get_atm(market, currency) | At the money Implied Volatility Term Structure |
-|*realtime* | options  | gex_date_all(market, currency) | Gamma Exposure All Expirations |
-|*realtime* | options  | maturities(market, currency) | Active Expirations |
-|*realtime* | options  | oi_expiry(market, currency) | Open Interest By Expiration |
-|*realtime* | options  | oi_strike_all(market, currency) | Open Interest By Strike All Expirations |
-|*realtime* | options  | oi_type(market, currency) | Open Interest By Type |
-|*realtime* | options  | top_traded_option(market, currency) | Top Traded Instrument |
-|*realtime* | options  | v_expiry(market, currency,) | Volume By Expiry |
-|*realtime* | options  | gex_date(market, currency, maturity)                | Gamma Exposure by Expiration                  |
-|*realtime* | options  | greeks(market, currency, maturity, optiontype)      | Greeks                                        |
-|*realtime* | derivs   | oi_gainers(market, oitype, period)                  | oi gainers                                    |
-|*historical* | options  | iv(market, instrument, start(opt), end(opt), limit(opt), page(opt) | Instrument Historical Implied Volatility      |
-|*historical* | move     | total_oi(currency, start(opt), end(opt), limit(opt), page(opt) | total oi                                      |
+|Class | Sub-class | Method                                                                         | Description                                    |
+|------------ |----------|--------------------------------------------------------------------------------|------------------------------------------------|
+|*realtime* | options  | get_atm(market, currency)                                                      | At the money Implied Volatility Term Structure |
+|*realtime* | options  | gex_date_all(market, currency)                                                 | Gamma Exposure All Expirations                 |
+|*realtime* | options  | maturities(market, currency)                                                   | Active Expirations                             |
+|*realtime* | options  | oi_expiry(market, currency)                                                    | Open Interest By Expiration                    |
+|*realtime* | options  | oi_strike_all(market, currency)                                                | Open Interest By Strike All Expirations        |
+|*realtime* | options  | oi_type(market, currency)                                                      | Open Interest By Type                          |
+|*realtime* | options  | top_traded_option(market, currency)                                            | Top Traded Instrument                          |
+|*realtime* | options  | v_expiry(market, currency,)                                                    | Volume By Expiry                               |
+|*realtime* | options  | gex_date(market, currency, maturity)                                           | Gamma Exposure by Expiration                   |
+|*realtime* | options  | greeks(market, currency, maturity, optiontype)                                 | Greeks                                         |
+|*realtime* | derivs   | oi_gainers(market, oitype, period)                                             | oi gainers                                     |
+|*historical* | options  | iv(market, instrument, start(opt), end(opt), limit(opt), page(opt)             | Instrument Historical Implied Volatility       |
+|*historical* | options  | iv_bid_ask(market, currency, type, start(opt), end(opt), limit(opt), page(opt) | iv bid/ask                                     |
+|*historical* | move     | total_oi(currency, start(opt), end(opt), limit(opt), page(opt)                 | total oi                                       |
 
 
 
