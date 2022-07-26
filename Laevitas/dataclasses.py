@@ -101,6 +101,24 @@ class Itop_traded_option:
     data: List[top_traded_option_data] = field(default_factory=lambda: [])
 
 
+# v_strike_all
+@dataclass
+class v_strike_all_data:
+    strike: int
+    C: float
+    P: float
+    USDVC: float
+    USDVP: float
+
+
+@dataclass
+class v_strike_alli:
+    datajson: list
+    date: int
+    data: List[v_strike_all_data] = field(default_factory=lambda: [])
+
+
+
 # greeks
 @dataclass
 class greeks_data:
@@ -162,6 +180,26 @@ class Ipaginationiv:
     meta: Ipaginationmeta
     items: List[ivdata] = field(default_factory=lambda: [])
 
+
+#iv_bid_ask
+@dataclass
+class iv_bid_ask_data:
+    ask: float
+    bid: float
+    mark: float
+
+
+@dataclass
+class IpaginationIv_bid_ask:
+    datajson: list
+    meta: Ipaginationmeta
+    date: List[int] = field(default_factory=lambda: [])
+    week: List[iv_bid_ask_data] = field(default_factory=lambda: [])
+    two_weeks: List[iv_bid_ask_data] = field(default_factory=lambda: [])
+    one_month: List[iv_bid_ask_data] = field(default_factory=lambda: [])
+    two_months: List[iv_bid_ask_data] = field(default_factory=lambda: [])
+    half_a_year: List[iv_bid_ask_data] = field(default_factory=lambda: [])
+    year: List[iv_bid_ask_data] = field(default_factory=lambda: [])
 
 # historical/moves
 # total_oi

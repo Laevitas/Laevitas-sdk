@@ -328,6 +328,34 @@ class api():
                                                             responsedata['data'][i]['notional_p']))
                     return Response
             @classmethod
+            def v_strike_all(self, market: str, currency: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: v_expiry
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "v_strike_all/" + market + "/" + currency
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    Response = v_strike_alli(responsedata, responsedata['date'])
+                    for i in range(len(responsedata['data'])):
+                        Response.data.append(v_strike_all_data(responsedata['data'][i]['strike'],
+                                                            responsedata['data'][i]['C'],
+                                                            responsedata['data'][i]['P'],
+                                                            responsedata['data'][i]['USDVC'],
+                                                            responsedata['data'][i]['USDVP']))
+                    return Response
+            @classmethod
             def greeks(self, market: str, currency: str, maturity: str, optiontype: str):
                 """
 
@@ -463,6 +491,65 @@ class api():
                         Response.items.append(ivdata(response['items'][i]['date'], response['items'][i]['mark_iv'],
                                                      response['items'][i]['bid_iv'], response['items'][i]['ask_iv']))
                     return Response
+
+            @classmethod
+            def iv_bid_ask(self, market: str, currency: str, type:str, start="", end="", limit="", page=""):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param type: p_25, p_10, c_25, c_10
+                :type type:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: iv bid ask, all data in json format or specific period in dataclass format
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                elif makequery != "":
+                    api_url = self.url + "type/iv_bid_ask/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "type/iv_bid_ask/" + market.lower() + "/" + currency.lower() + "/" + type
+                    response = requests.get(api_url, headers=api.header).json()
+
+                Response = IpaginationIv_bid_ask(response,
+                                             Ipaginationmeta(response['meta']['total'], response['meta']['page'],
+                                                             response['meta']['items']))
+
+                for i in range(len(response["items"])):
+                    Response.date.append(response["items"][i]['date'])
+                    Response.week.append(iv_bid_ask_data(response['items'][i]['7']['ask'],
+                                                         response['items'][i]['7']['bid'],
+                                                         response['items'][i]['7']['mark']))
+                    Response.two_weeks.append(iv_bid_ask_data(response['items'][i]['14']['ask'],
+                                                         response['items'][i]['14']['bid'],
+                                                         response['items'][i]['14']['mark']))
+                    Response.one_month.append(iv_bid_ask_data(response['items'][i]['30']['ask'],
+                                                         response['items'][i]['30']['bid'],
+                                                         response['items'][i]['30']['mark']))
+                    Response.two_months.append(iv_bid_ask_data(response['items'][i]['60']['ask'],
+                                                         response['items'][i]['60']['bid'],
+                                                         response['items'][i]['60']['mark']))
+                    Response.half_a_year.append(iv_bid_ask_data(response['items'][i]['180']['ask'],
+                                                         response['items'][i]['180']['bid'],
+                                                         response['items'][i]['180']['mark']))
+                    Response.year.append(iv_bid_ask_data(response['items'][i]['365']['ask'],
+                                                         response['items'][i]['365']['bid'],
+                                                         response['items'][i]['365']['mark']))
+
+                return Response
+
 
         class move:
             url = "https://gateway.devitas.ch/historical/move/"
