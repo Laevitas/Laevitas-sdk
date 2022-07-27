@@ -356,6 +356,189 @@ class api():
                                                             responsedata['data'][i]['USDVP']))
                     return Response
             @classmethod
+            def volume_buy_sell_all(self, market: str, currency: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of all volume buy/sell
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "volume_buy_sell_all/" + market.lower() + "/" + currency.lower()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def iv_strike(self, market: str, currency: str, strike: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of iv strike
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "iv_strike/" + market.lower() + "/" + currency.lower() + "/" + strike
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def oi_strike(self, market: str, currency: str, maturity: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param maturity: EXP:30SEP22
+                :type maturity:
+                :return: json data of oi strike
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                maturity = maturity.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "gex_date/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def oi_net_change_all(self, market: str, currency: str, hours: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param hours: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
+                :type hours:
+                :return: json data of all oi net change
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "oi_net_change_all/" + market.lower() + "/" + currency.lower() + "/" + hours
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def top_instrument_oi_change(self, market: str, currency: str, hours: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param hours: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
+                :type hours:
+                :return: json data of top instrument oi change
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "top_instrument_oi_change/" + market.lower() + "/" + currency.lower() + "/" + hours
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def volume_buy_sell(self, market: str, currency: str, maturity: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param maturity: EXP:30SEP22
+                :type maturity:
+                :return: json data of volume buy sell
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                maturity = maturity.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def v_strike(self, market: str, currency: str, maturity: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param maturity: EXP:30SEP22
+                :type maturity:
+                :return: json data of v strike
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                maturity = maturity.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "v_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def summary_trades(self, market: str, currency: str, hours: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param hours: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
+                :type hours:
+                :return: json data of top summary trades
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "summary_trades/" + market.lower() + "/" + currency.lower() + "/" + hours
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
             def greeks(self, market: str, currency: str, maturity: str, optiontype: str):
                 """
 
@@ -394,6 +577,99 @@ class api():
                                                            responsedata['data'][i]['vega']
                                                            ))
                     return Response
+
+            @classmethod
+            def iv_all(self, market: str, currency: str, maturity: str, type: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param maturity: EXP:30SEP22
+                :type maturity:
+                :param type: C , P
+                :type type:
+                :return: json data of all iv
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "iv_all/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "/" + type.upper()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def iv_table(self, market: str, currency: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of iv table
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "iv_table/" + market.lower() + "/" + currency.lower()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def oi_net_change(self, market: str, currency: str, maturity: str, hour: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param maturity: EXP:30SEP22
+                :type maturity:
+                :param hour: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720,
+                :type hour:
+                :return: json data of oi net change
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "oi_net_change/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "/" + hour
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+            @classmethod
+            def snapshot(self, market: str, currency: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of snapshot
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "snapshot/" + market.lower() + "/" + currency.lower()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
 
         class derivs:
             url = "https://gateway.devitas.ch/analytics/derivs/"
@@ -437,6 +713,45 @@ class api():
         class options:
             url = "https://gateway.devitas.ch/historical/options/"
             pass
+
+            @classmethod
+            def option(self,market: str,instrument: str,start="",end="",limit="",page=""):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param instrument: exp: BTC-10JUN21-60000-P
+                :type instrument:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: total oi data
+                :rtype:
+                """
+                market=market.upper()
+                instrument=instrument.upper()
+                x=instrument.split("-")
+                makequery = query(start=start,end=end,limit=limit,page=page)
+                if len(x) != 4:
+                    raise TypeError("wrong instrument")
+                elif x[0] not in CURRENCY.__members__:
+                    raise TypeError("Currency in insrument not available")
+                elif x[3] not in ["P","C"]:
+                    raise TypeError("type in instument is either C or P")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                elif makequery != "":
+                    api_url = self.url+ market + "/" + instrument + makequery
+                    response = requests.get(api_url,headers=api.header).json()
+                else:
+                    api_url = self.url+ market + "/" + instrument
+                    response = requests.get(api_url,headers=api.header).json()
+                return response
 
             @classmethod
             def iv(self,market: str,instrument: str,start="",end="",limit="",page=""):
