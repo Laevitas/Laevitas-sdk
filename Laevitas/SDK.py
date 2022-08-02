@@ -671,6 +671,141 @@ class api():
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
+        class futures:
+            url = "https://gateway.devitas.ch/analytics/futures/"
+            pass
+
+            @classmethod
+            def instruments(self):
+                """
+                :return: json data of instruments
+                :rtype:
+                """
+                api_url = self.url + "instruments"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+            @classmethod
+            def perpetual_funding(self,currency: str):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of perpetual funding
+                :rtype:
+                """
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                else:
+                    api_url = self.url + "perpetual_funding/" +  currency.lower()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+
+            @classmethod
+            def futures_yield(self,currency: str):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of futures yield
+                :rtype:
+                """
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                else:
+                    api_url = self.url + "futures_yield/" + currency.lower()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+
+            @classmethod
+            def futures_basis(self,currency: str):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of futures basis
+                :rtype:
+                """
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                else:
+                    api_url = self.url + "futures_basis/" + currency.lower()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+
+            @classmethod
+            def volume_breakdown(self,currency: str):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of volume breakdown
+                :rtype:
+                """
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                else:
+                    api_url = self.url + "volume_breakdown/" + currency.lower()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+
+            @classmethod
+            def oi_breakdown(self, currency: str):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of volume oi breakdown
+                :rtype:
+                """
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                else:
+                    api_url = self.url + "oi_breakdown/" + currency.lower()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+
+            @classmethod
+            def markets_oi_gainers_and_losers(self, currency: str, option: str , hour: str):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param option: perpetual, future , all
+                :type option:
+                :param hour: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720,
+                :type hour:
+                :return: json data of markets oi gainers and losers
+                :rtype:
+                """
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                else:
+                    api_url = self.url + "markets_oi_gainers_and_losers/" + currency.lower() + "/" + option + "/" + hour
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+
+            @classmethod
+            def snapshot(self, market: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :return: json data of snapshot
+                :rtype:
+                """
+                market = market.upper()
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "snapshot/" + market.lower()
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
         class derivs:
             url = "https://gateway.devitas.ch/analytics/derivs/"
             pass
@@ -1659,6 +1794,528 @@ class api():
                     response = requests.get(api_url, headers=api.header).json()
                 else:
                     api_url = self.url + "maturity/VolumeOiByExchange/" + currency.lower() + "/" + maturity
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+        class futures:
+            url = "https://gateway.devitas.ch/historical/futures/"
+            pass
+
+            @classmethod
+            def oi_weighted_funding (self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of oi weighted funding
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "oi_weighted_funding/" + currency.lower()  + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "oi_weighted_funding/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def oi_weighted_volume_funding(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of oi weighted volume funding
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Market not available")
+                elif makequery != "":
+                    api_url = self.url + "oi_weighted_volume_funding/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "oi_weighted_volume_funding/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def oi_weighted_basis(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of oi weighted basis
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "oi_weighted_basis/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "oi_weighted_basis/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def total_oi(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of total oi
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "total_oi/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "total_oi/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def total_oi_by_margin(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of total oi by margin
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "total_oi_by_margin/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "total_oi_by_margin/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def total_volume (self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of total volume
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "total_volume/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "total_volume/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def total_volume_by_margin(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of total volume by margin
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "total_volume_by_margin/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "total_volume_by_margin/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def realized_volatility(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of realized volatility
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "realized_volatility/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "realized_volatility/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def alt_summary(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of alt summary
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "alt_summary/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "alt_summary/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def alt_markets(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of alt markets
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "alt_markets/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "alt_markets/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def market_index(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of market index
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "market_index/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "market_index/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def indices_price(self, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of indices price
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "indices_price/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "indices_price/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def futures_annualized_basis(self, currency: str,option:str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param option: C,P
+                :type option:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of futures annualized basis
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "futures_annualized_basis/" + currency.lower() +"/"+ option + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "futures_annualized_basis/" + currency.lower()+ "/" + option
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def perpetual_funding_exchange(self, currency: str, option: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param option: C,P
+                :type option:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of perpetual funding exchange
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "perpetual_funding_exchange/" + currency.lower() + "/" + option + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "perpetual_funding_exchange/" + currency.lower() + "/" + option
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def total_oi_by_exchange(self, currency: str, option: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param option: C,P
+                :type option:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of total oi by exchange
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "total_oi_by_exchange/" + currency.lower() + "/" + option + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "total_oi_by_exchange/" + currency.lower() + "/" + option
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def total_volume_by_exchange(self, currency: str, option: str, start="", end="", limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param option: C,P
+                :type option:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of total volume by exchange
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "total_volume_by_exchange/" + currency.lower() + "/" + option + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "total_volume_by_exchange/" + currency.lower() + "/" + option
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+            @classmethod
+            def perpetual_yield(self,market:str, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of perpetual yield
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "perpetual_yield/" + currency.lower() + "/" + market.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "perpetual_yield/" + currency.lower() + "/" + market.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def perpetual_funding(self, market: str, currency: str, start="", end="", limit="", page=""):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of perpetual funding
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "perpetual_funding/" + currency.lower() + "/" + market.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "perpetual_funding/" + currency.lower() + "/" + market.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 

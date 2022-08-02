@@ -23,11 +23,12 @@ test12 = sdk.realtime.derivs.oi_gainers("deribit","future","ytd")
 test13 = sdk.historical.options.iv("DERIBIT","BTC-30SEP22-20000-C")
 test14 = sdk.historical.move.total_oi("btc","2022-06-07","2022-06-16","10","2")
 test15 = sdk.historical.options.iv_bid_ask("deribit","btc","c_10","2022-06-07","2022-06-16","10","2")"""
-test13 = sdk.historical.options.volumeOiByExchange("BTC","all","2022-07-20","2022-07-27","2","1")
+test13 = sdk.realtime.futures.snapshot(market="deribit")
+test14 = sdk.historical.futures.perpetual_funding("deribit","BTC","2022-07-25","2022-08-01","10","1")
 
 
-test14 = sdk.historical.options.dvol("deribit","btc")
-print(test13)
+#test14 = sdk.historical.options.dvol("deribit","btc")
+print(test14)
 
 
 #print(test15.date)
