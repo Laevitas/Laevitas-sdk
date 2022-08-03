@@ -806,6 +806,142 @@ class api():
                     api_url = self.url + "snapshot/" + market.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
+        class move:
+            url = "https://gateway.devitas.ch/analytics/move/"
+            pass
+
+            @classmethod
+            def oi_group(self):
+                """
+                :return: json data of oi group
+                :rtype:
+                """
+                api_url = self.url + "oi_group/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def oi_expiry(self):
+                """
+                :return: json data of oi expiry
+                :rtype:
+                """
+                api_url = self.url + "oi_expiry/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def volume_expiry(self):
+                """
+                :return: json data of volume expiry
+                :rtype:
+                """
+                api_url = self.url + "volume_expiry/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def volume_group(self):
+                """
+                :return: json data of volume group
+                :rtype:
+                """
+                api_url = self.url + "volume_group/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def volume_expiry_buy_sell(self):
+                """
+                :return: json data of volume expiry buy sell
+                :rtype:
+                """
+                api_url = self.url + "volume_expiry_buy_sell/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def volume_contract_buy_sell(self):
+                """
+                :return: json data of volume contract buy sell
+                :rtype:
+                """
+                api_url = self.url + "volume_contract_buy_sell/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def volume_top_contract(self):
+                """
+                :return: json data of volume top contract
+                :rtype:
+                """
+                api_url = self.url + "volume_top_contract/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def oi_top_contract(self):
+                """
+                :return: json data of oi top contract
+                :rtype:
+                """
+                api_url = self.url + "oi_top_contract/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def big_trades(self):
+                """
+                :return: json data of big trades
+                :rtype:
+                """
+                api_url = self.url + "big_trades/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def contract_name(self):
+                """
+                :return: json data of contract names
+                :rtype:
+                """
+                api_url = self.url + "contract_name/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def expirations(self):
+                """
+                :return: json data of expirations
+                :rtype:
+                """
+                api_url = self.url + "expirations/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def ftx_vs_deribit(self):
+                """
+                :return: json data of ftx vs deribit
+                :rtype:
+                """
+                api_url = self.url + "ftx_vs_deribit/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def live(self):
+                """
+                :return: json data of live
+                :rtype:
+                """
+                api_url = self.url + "live/"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+
         class derivs:
             url = "https://gateway.devitas.ch/analytics/derivs/"
             pass
@@ -841,6 +977,7 @@ class api():
                                                              response['data'][i]['open_interest_change_notional']
                                                          ))
                     return Response
+
     class historical:
         def __init__(self):
             self.option = self.options()
@@ -1796,6 +1933,7 @@ class api():
                     api_url = self.url + "maturity/VolumeOiByExchange/" + currency.lower() + "/" + maturity
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
         class futures:
             url = "https://gateway.devitas.ch/historical/futures/"
             pass
@@ -2324,9 +2462,10 @@ class api():
             pass
 
             @classmethod
-            def total_oi(self,currency: str,start="",end="",limit="",page=""):
+            def total_oi(self,market="ftx" ,currency="btc",start="",end="",limit="",page=""):
                 """
-
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
                 :param start: EXP:2022-06-07
@@ -2340,12 +2479,13 @@ class api():
                 :return: total oi data
                 :rtype:
                 """
-                currency=currency.upper()
-                makequery = query(start=start,end=end,limit=limit,page=page)
-                if currency not in CURRENCY.__members__:
-                    raise TypeError("currency not available")
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                elif currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
                 elif makequery != "":
-                    api_url = self.url+ "total_oi/ftx/" + currency.lower() + makequery
+                    api_url = self.url+ "total_oi/" + market.lower()+ "/" +currency.lower() + makequery
                     response = requests.get(api_url,headers=api.header).json()
                     Response = Ipagination(response,
                         Ipaginationmeta(response['meta']['total'], response['meta']['page'], response['meta']['items'])
@@ -2355,7 +2495,7 @@ class api():
                         Response.items.append(IDateV(response['items'][i]['v'], response['items'][i]['date']))
                     return Response
                 else:
-                    api_url = self.url+ "total_oi/ftx/" + currency.lower()
+                    api_url = self.url+ "total_oi/" + market.lower()+ "/" +currency.lower()
                     response = requests.get(api_url,headers=api.header).json()
                     Response = Ipagination(response,
                         Ipaginationmeta(response['meta']['total'],response['meta']['page'],response['meta']['items'])
@@ -2365,3 +2505,266 @@ class api():
                         Response.items.append(IDateV(response['items'][i]['v'], response['items'][i]['date']))
                     return Response
 
+            @classmethod
+            def volume_buy_sell(self,market="ftx" ,currency="btc", start="", end="", limit="", page=""):
+                """
+
+                :param market: FTX
+                :type market:
+                :param currency: BTC
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of volume buy sell
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def iv_type(self, market:str, currency:str,type:str, start="", end="", limit="", page=""):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param type: daily, weekly, quarterly
+                :type type:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of iv type
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "iv_type/" + market.lower() + "/" + currency.lower()+ "/"+ type + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "iv_type/" + market.lower() + "/" + currency.lower()+ "/" + type
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def iv_historical_open_future(self, market: str, currency: str, is_open: str, start="", end="", limit="", page=""):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param is_open : true or false
+                :type is_open :
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of iv historical open future
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "iv_historical_open_future/" + market.lower() + "/" + currency.lower() + "/" + is_open.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "iv_historical_open_future/" + market.lower() + "/" + currency.lower() + "/" + is_open.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def total_volume(self, market="ftx", currency="btc", start="", end="", limit="", page=""):
+                """
+
+                :param market: FTX
+                :type market:
+                :param currency: BTC
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of total volume
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                if currency.upper() not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif makequery != "":
+                    api_url = self.url + "total_volume/" + market.lower() + "/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "total_volume/" + market.lower() + "/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def historical_iv(self, contract_name: str, market="ftx", start="", end="", limit="", page=""):
+                """
+
+                :param market: FTX
+                :type market:
+                :param contract_name: BTC-MOVE-2022Q4
+                :type contract_name:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of historical iv
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                elif makequery != "":
+                    api_url = self.url + "historical_iv/" + market.lower() + "/" + contract_name.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "historical_iv/" + market.lower() + "/" + contract_name.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def historical_oi(self, contract_name: str, market="ftx", start="", end="", limit="", page=""):
+                """
+
+                :param market: FTX
+                :type market:
+                :param contract_name: BTC-MOVE-2022Q4
+                :type contract_name:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of historical oi
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                elif makequery != "":
+                    api_url = self.url + "historical_oi/" + market.lower() + "/" + contract_name.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "historical_oi/" + market.lower() + "/" + contract_name.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def historical_price(self, contract_name: str, market="ftx", start="", end="", limit="", page=""):
+                """
+
+                :param market: FTX
+                :type market:
+                :param contract_name: BTC-MOVE-2022Q4
+                :type contract_name:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of historical price
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                elif makequery != "":
+                    api_url = self.url + "historical_price/" + market.lower() + "/" + contract_name.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "historical_price/" + market.lower() + "/" + contract_name.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def historical_volume(self, contract_name: str, market="ftx", start="", end="", limit="", page=""):
+                """
+
+                :param market: FTX
+                :type market:
+                :param contract_name: BTC-MOVE-2022Q4
+                :type contract_name:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of historical volume
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                elif makequery != "":
+                    api_url = self.url + "historical_volume/" + market.lower() + "/" + contract_name.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "historical_volume/" + market.lower() + "/" + contract_name.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def open_future(self, contract_type: str):
+                """
+                :param contract_type: daily, weekly, quarterly
+                :type contract_type:
+                :return: json data of open future
+                :rtype:
+                """
+                api_url = self.url + "open_future/" + contract_type
+                response = requests.get(api_url, headers=api.header).json()
+                return response
