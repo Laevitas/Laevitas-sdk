@@ -418,7 +418,7 @@ class api():
                 elif market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "gex_date/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
+                    api_url = self.url + "oi_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
             @classmethod
@@ -941,10 +941,125 @@ class api():
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
+        class defi:
+            url = "https://gateway.devitas.ch/analytics/defi/"
+            pass
+
+            @classmethod
+            def dovs(self):
+                """
+                :return: json data of dovs
+                :rtype:
+                """
+                api_url = self.url + "dovs"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def ribbon(self):
+                """
+                :return: json data of ribbon
+                :rtype:
+                """
+                api_url = self.url + "ribbon"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def friktion(self):
+                """
+                :return: json data of friktion
+                :rtype:
+                """
+                api_url = self.url + "friktion"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def squeeth(self):
+                """
+                :return: json data of squeeth
+                :rtype:
+                """
+                api_url = self.url + "squeeth"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def thetanuts(self):
+                """
+                :return: json data of thetanuts
+                :rtype:
+                """
+                api_url = self.url + "thetanuts"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
 
         class derivs:
             url = "https://gateway.devitas.ch/analytics/derivs/"
             pass
+
+
+            @classmethod
+            def futures(self, market: str, currency: str, maturity: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param maturity: EXP:30SEP22
+                :type maturity:
+                :return: json data of futures
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                maturity = maturity.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "futures/" + market + "/" + currency + "/" + maturity
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+
+            @classmethod
+            def perpetuals(self, market: str, currency: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of perpetuals
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                elif market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "perpetuals/" + market + "/" + currency
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+
+            @classmethod
+            def summary(self,currency=""):
+                """
+
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :return: json data of summary
+                :rtype:
+                """
+                currency = currency.upper()
+                api_url = self.url + "summary/" + currency
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
 
             @classmethod
             def oi_gainers(self, market: str, oitype: str, period: str):
@@ -965,10 +1080,10 @@ class api():
                     raise TypeError("Type not available")
                 elif market not in MARKET_CONSTS_DERIVS.__members__:
                     raise TypeError("Market not available")
-                elif period not in [1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720, "ytd"]:
+                elif period not in ["1", "2", "4", "8", "12", "18", "24", "48", "168", "336", "504", "720", "ytd"]:
                     raise TypeError("period not available")
                 else:
-                    api_url = self.url + "oi_gainers/" + market + "/" + oitype + "/" + period
+                    api_url = self.url + "oi_gainers/" + market + "/" + oitype.lower() + "/" + period
                     response = requests.get(api_url, headers=api.header).json()
                     Response = Ioi_gainers(response,response['date'])
                     for i in range(len(response['data'])):
@@ -978,6 +1093,48 @@ class api():
                                                          ))
                     return Response
 
+            @classmethod
+            def price_gainers(self, market: str, oitype: str, period: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param oitype: future, perpetual
+                :type oitype:
+                :param period: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720, ytd
+                :type period:
+                :return: json data of price gainers
+                :rtype:
+                """
+                market = market.upper()
+                oitype = oitype.upper()
+                if oitype not in ["FUTURE", "PERPETUAL"]:
+                    raise TypeError("Type not available")
+                elif market not in MARKET_CONSTS_DERIVS.__members__:
+                    raise TypeError("Market not available")
+                elif period not in ["1", "2", "4", "8", "12", "18", "24", "48", "168", "336", "504", "720", "ytd"]:
+                    raise TypeError("period not available")
+                else:
+                    api_url = self.url + "price_gainers/" + market + "/" + oitype.lower() + "/" + period
+                    response = requests.get(api_url, headers=api.header).json()
+                    return response
+
+            @classmethod
+            def top_funding(self, market: str):
+                """
+
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :return: json data of top funding
+                :rtype:
+                """
+                market = market.upper()
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "top_funding/" + market
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
     class historical:
         def __init__(self):
             self.option = self.options()
@@ -2768,3 +2925,92 @@ class api():
                 api_url = self.url + "open_future/" + contract_type
                 response = requests.get(api_url, headers=api.header).json()
                 return response
+
+        class defi:
+            url = "https://gateway.devitas.ch/historical/defi/"
+            pass
+
+            @classmethod
+            def dovs_auctions(self, protocol:str, start="", end="", currency="", limit="", page=""):
+                """
+
+                :param protocol: ribbon, friktion, thetanuts
+                :type protocol:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param currency: BTC , ETH, BCH
+                :type currency:
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of dovs auctions
+                :rtype:
+                """
+                makequery = query(start=start, end=end,currency=currency, limit=limit, page=page)
+                if makequery != "":
+                    api_url = self.url + "dovs/auctions/" + protocol.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "dovs/auctions/" + protocol.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+        class defi:
+            url = "https://gateway.devitas.ch/historical/derivs/"
+            pass
+
+            @classmethod
+            def perpetuals(self, market:str,symbol:str, start="", end="", limit="", page=""):
+                """
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param symbol:
+                :type symbol:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of dovs auctions
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if makequery != "":
+                    api_url = self.url + "perpetuals/" + market.lower()+ "/"+ symbol + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "perpetuals/" + market.lower()+ "/"+ symbol
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def summary(self, currency: str, start="", end="", limit="", page=""):
+                """
+                :param currency: BTC,ETH,BCH
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of summary
+                :rtype:
+                """
+                makequery = query(start=start, end=end, limit=limit, page=page)
+                if makequery != "":
+                    api_url = self.url + "summary/" + currency.lower() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                else:
+                    api_url = self.url + "summary/" + currency.lower()
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
