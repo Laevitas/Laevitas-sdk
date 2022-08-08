@@ -1135,6 +1135,22 @@ class api():
                     api_url = self.url + "top_funding/" + market
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
+            @classmethod
+            def top_gainers_losers(self, change: str ,type:str):
+                """
+
+                :param change: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
+                :type change:
+                :param type: gainers , losers
+                :type type:
+                :return: json data of top gainers and losers
+                :rtype:
+                """
+
+                api_url = self.url + "top_gainers_losers/" + change + "/" + type
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
     class historical:
         def __init__(self):
             self.option = self.options()
@@ -2958,7 +2974,7 @@ class api():
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
-        class defi:
+        class derivs:
             url = "https://gateway.devitas.ch/historical/derivs/"
             pass
 
@@ -2967,7 +2983,7 @@ class api():
                 """
                 :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param symbol:
+                :param symbol: exp : BTC-30DEC22, ETHUSDTH22, ETHUSD, BTCUSD
                 :type symbol:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2987,6 +3003,29 @@ class api():
                 else:
                     api_url = self.url + "perpetuals/" + market.lower()+ "/"+ symbol
                     response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def futures(self, market: str, symbol: str, date:str ):
+                """
+                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :type market:
+                :param symbol: exp : BTC-30DEC22, ETHUSDTH22, ETHUSD, BTCUSD
+                :type symbol:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: json data of futures
+                :rtype:
+                """
+                makequery = query(start=date)
+                api_url = self.url + "futures/" + market.lower() + "/" + symbol + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
