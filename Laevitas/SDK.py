@@ -76,7 +76,7 @@ class api():
             def get_atm(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -114,7 +114,7 @@ class api():
             def gex_date(self, market: str, currency: str, maturity: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -146,7 +146,7 @@ class api():
             def gex_date_all(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -174,7 +174,7 @@ class api():
             def maturities(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -196,7 +196,7 @@ class api():
             def oi_expiry(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -225,7 +225,7 @@ class api():
             def oi_strike_all(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -254,7 +254,7 @@ class api():
             def oi_type(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -276,7 +276,7 @@ class api():
             def top_traded_option(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -303,7 +303,7 @@ class api():
             def v_expiry(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -331,7 +331,7 @@ class api():
             def v_strike_all(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -359,7 +359,7 @@ class api():
             def volume_buy_sell_all(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -380,7 +380,7 @@ class api():
             def iv_strike(self, market: str, currency: str, strike: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -401,7 +401,7 @@ class api():
             def oi_strike(self, market: str, currency: str, maturity: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -425,7 +425,7 @@ class api():
             def oi_net_change_all(self, market: str, currency: str, hours: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -448,7 +448,7 @@ class api():
             def top_instrument_oi_change(self, market: str, currency: str, hours: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -471,7 +471,7 @@ class api():
             def volume_buy_sell(self, market: str, currency: str, maturity: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -495,7 +495,7 @@ class api():
             def v_strike(self, market: str, currency: str, maturity: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -519,7 +519,7 @@ class api():
             def summary_trades(self, market: str, currency: str, hours: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -542,7 +542,7 @@ class api():
             def greeks(self, market: str, currency: str, maturity: str, optiontype: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -582,7 +582,7 @@ class api():
             def iv_all(self, market: str, currency: str, maturity: str, type: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -607,7 +607,7 @@ class api():
             def iv_table(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -628,7 +628,7 @@ class api():
             def oi_net_change(self, market: str, currency: str, maturity: str, hour: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -653,7 +653,7 @@ class api():
             def snapshot(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -1620,35 +1620,6 @@ class api():
                     response = requests.get(api_url, headers=api.header).json()
                 return response
             @classmethod
-            def realized_vol(self, market: str, currency: str,start="", end="", limit="10", page="1"):
-                """
-
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH
-                :type currency:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: default: 10
-                :type limit:
-                :param page: default :1
-                :type page:
-                :return: json format data of realized vol
-                :rtype:
-                """
-                makequery = query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "realized_vol/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "realized_vol/" + market.lower() + "/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-            @classmethod
             def vix(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
@@ -1869,7 +1840,7 @@ class api():
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :param type: 1d , 10d
+                :param type: 25d , 10d
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1931,7 +1902,7 @@ class api():
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :param type: 1d default
+                :param type: 1d default , 7d, 30d
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
