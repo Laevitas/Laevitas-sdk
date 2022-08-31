@@ -1,13 +1,8 @@
 import requests
 from Laevitas.dataclasses import *
-from dataclasses import dataclass, field,make_dataclass
+# from dataclasses import dataclass, field, make_dataclass
 from enum import Enum
-from typing import List
-
-
-
-
-
+# from typing import List
 
 
 def query(**kwargs):
@@ -69,8 +64,30 @@ class api():
             self.option = self.options()
 
         class options:
-            url = "https://gateway.devitas.ch/analytics/options/"
+            url = "https://api.laevitas.ch/analytics/options/"
             pass
+
+            @classmethod
+            def instruments(self,market="",currency="",maturity="",strike="",optiontype=""):
+
+                """
+                :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
+                :type market:
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
+                :type currency:
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities ( maturities function)
+                :type maturity:
+                :param strike: e.g., 25000
+                :type strike:
+                :param optiontype: C,P
+                :type optiontype:
+                :return: json data of dovs
+                :rtype:
+                """
+                makequery = query(market=market, currency=currency, maturity=maturity, strike=strike,optiontype=optiontype)
+                api_url = self.url + "Instruments" + makequery
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
 
             @classmethod
             def get_atm(self, market: str, currency: str):
@@ -80,7 +97,7 @@ class api():
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :return: returns object with attributes alldata, Today, Yesterday, Two_days_ago, One_week_ago, Two_weeks_ago,
+                :return: returns At the money Implied Volatility Term Structure as an object with attributes alldata, Today, Yesterday, Two_days_ago, One_week_ago, Two_weeks_ago,
                 Three_weeks_ago, One_month_ago
                 :rtype:
                 """
@@ -109,18 +126,17 @@ class api():
                         Response.Three_weeks_ago.append(MaturityIV(resp["3 Weeks Ago"][i]['maturity'], resp["3 Weeks Ago"][i]['iv']))
                      return Response
 
-
             @classmethod
             def gex_date(self, market: str, currency: str, maturity: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities ( maturities function)
                 :type maturity:
-                :return: Gamma Exposure by Expiration
+                :return: Gamma Exposure by Expiration as a data class
                 :rtype:
                 """
                 market = market.upper()
@@ -148,7 +164,7 @@ class api():
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
                 :return: Gamma Exposure All Expirations
                 :rtype:
@@ -176,9 +192,9 @@ class api():
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: json data of maturities
+                :return: json data of active expirations
                 :rtype:
                 """
                 market = market.upper()
@@ -198,9 +214,9 @@ class api():
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: oi_expiry
+                :return: Open interest by expiration
                 :rtype:
                 """
                 market = market.upper()
@@ -227,9 +243,9 @@ class api():
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: all oi strike
+                :return: Open Interest by strike all expirations
                 :rtype:
                 """
                 market = market.upper()
@@ -256,9 +272,9 @@ class api():
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: json data of oi type
+                :return: json data of Open interest by type
                 :rtype:
                 """
                 market = market.upper()
@@ -278,9 +294,9 @@ class api():
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: top traded options
+                :return: data of Top Traded Instrument
                 :rtype:
                 """
                 market = market.upper()
@@ -305,9 +321,9 @@ class api():
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: v_expiry
+                :return: Volume by expiration
                 :rtype:
                 """
                 market = market.upper()
@@ -327,15 +343,16 @@ class api():
                                                             responsedata['data'][i]['notional_c'],
                                                             responsedata['data'][i]['notional_p']))
                     return Response
+
             @classmethod
             def v_strike_all(self, market: str, currency: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: v_expiry
+                :return: Volume by strike all expirations
                 :rtype:
                 """
                 market = market.upper()
@@ -355,15 +372,16 @@ class api():
                                                             responsedata['data'][i]['USDVC'],
                                                             responsedata['data'][i]['USDVP']))
                     return Response
+
             @classmethod
             def volume_buy_sell_all(self, market: str, currency: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: json data of all volume buy/sell
+                :return: json data of all volume buy/sell last 24h all expirations
                 :rtype:
                 """
                 market = market.upper()
@@ -376,15 +394,18 @@ class api():
                     api_url = self.url + "volume_buy_sell_all/" + market.lower() + "/" + currency.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def iv_strike(self, market: str, currency: str, strike: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: json data of iv strike
+                :param strike: e.g., 25000
+                :type strike:
+                :return: json data of implied volatility term structure by strike
                 :rtype:
                 """
                 market = market.upper()
@@ -397,17 +418,18 @@ class api():
                     api_url = self.url + "iv_strike/" + market.lower() + "/" + currency.lower() + "/" + strike
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def oi_strike(self, market: str, currency: str, maturity: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities (maturities function)
                 :type maturity:
-                :return: json data of oi strike
+                :return: json data of open interest by strike
                 :rtype:
                 """
                 market = market.upper()
@@ -421,17 +443,18 @@ class api():
                     api_url = self.url + "oi_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def oi_net_change_all(self, market: str, currency: str, hours: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
                 :param hours: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
                 :type hours:
-                :return: json data of all oi net change
+                :return: json data of Open interest change, all expirations
                 :rtype:
                 """
                 market = market.upper()
@@ -444,17 +467,18 @@ class api():
                     api_url = self.url + "oi_net_change_all/" + market.lower() + "/" + currency.lower() + "/" + hours
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def top_instrument_oi_change(self, market: str, currency: str, hours: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
                 :param hours: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
                 :type hours:
-                :return: json data of top instrument oi change
+                :return: json data of top instrument open interest change
                 :rtype:
                 """
                 market = market.upper()
@@ -467,17 +491,18 @@ class api():
                     api_url = self.url + "top_instrument_oi_change/" + market.lower() + "/" + currency.lower() + "/" + hours
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def volume_buy_sell(self, market: str, currency: str, maturity: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities (maturities function)
                 :type maturity:
-                :return: json data of volume buy sell
+                :return: json data of volume buy sell last 24h
                 :rtype:
                 """
                 market = market.upper()
@@ -491,17 +516,18 @@ class api():
                     api_url = self.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def v_strike(self, market: str, currency: str, maturity: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities (maturities function)
                 :type maturity:
-                :return: json data of v strike
+                :return: json data of volume by strike
                 :rtype:
                 """
                 market = market.upper()
@@ -515,13 +541,14 @@ class api():
                     api_url = self.url + "v_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def summary_trades(self, market: str, currency: str, hours: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
                 :param hours: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
                 :type hours:
@@ -538,15 +565,16 @@ class api():
                     api_url = self.url + "summary_trades/" + market.lower() + "/" + currency.lower() + "/" + hours
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def greeks(self, market: str, currency: str, maturity: str, optiontype: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities (maturities function)
                 :type maturity:
                 :param optiontype: C,P
                 :type optiontype:
@@ -584,13 +612,13 @@ class api():
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities (maturities function)
                 :type maturity:
                 :param type: C , P
                 :type type:
-                :return: json data of all iv
+                :return: json data of implied volatility skew
                 :rtype:
                 """
                 market = market.upper()
@@ -603,15 +631,16 @@ class api():
                     api_url = self.url + "iv_all/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "/" + type.upper()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def iv_table(self, market: str, currency: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :return: json data of iv table
+                :return: json data of implied volatility
                 :rtype:
                 """
                 market = market.upper()
@@ -624,19 +653,20 @@ class api():
                     api_url = self.url + "iv_table/" + market.lower() + "/" + currency.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def oi_net_change(self, market: str, currency: str, maturity: str, hour: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities (maturities function)
                 :type maturity:
                 :param hour: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720,
                 :type hour:
-                :return: json data of oi net change
+                :return: json data of Open interest change by expiration
                 :rtype:
                 """
                 market = market.upper()
@@ -649,13 +679,14 @@ class api():
                     api_url = self.url + "oi_net_change/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "/" + hour
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
+
             @classmethod
             def snapshot(self, market: str, currency: str):
                 """
 
                 :param market: BIT (BTC,ETH,BCH) | DERIBIT (BTC,ETH,SOL) | BYBIT (BTC) | OKEX (BTC,ETH,SOL) | POWERTRADE (ETH,BTC | DELTA_EXCHANGE (BTC,ETH,BCH,SOL, XRP,BNB) | ZETA_EXCHANGE (SOL)
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | BCH | SOL | XRP | BNB
                 :type currency:
                 :return: json data of snapshot
                 :rtype:
@@ -672,23 +703,34 @@ class api():
                     return responsedata
 
         class futures:
-            url = "https://gateway.devitas.ch/analytics/futures/"
+            url = "https://api.laevitas.ch/analytics/futures/"
             pass
 
             @classmethod
             def instruments(self):
                 """
-                :return: json data of instruments
+                :return: json data of available futures instruments
                 :rtype:
                 """
                 api_url = self.url + "instruments"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
+
+            @classmethod
+            def alt_currency(self):
+                """
+                :return: json data of available futures currency
+                :rtype:
+                """
+                api_url = self.url + "alt_currency"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
             @classmethod
             def perpetual_funding(self,currency: str):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the future alt_currency function for more available currency
                 :type currency:
                 :return: json data of perpetual funding
                 :rtype:
@@ -705,7 +747,7 @@ class api():
             def futures_yield(self,currency: str):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the future alt_currency function for more available currency
                 :type currency:
                 :return: json data of futures yield
                 :rtype:
@@ -722,7 +764,7 @@ class api():
             def futures_basis(self,currency: str):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the future alt_currency function for more available currency
                 :type currency:
                 :return: json data of futures basis
                 :rtype:
@@ -739,7 +781,7 @@ class api():
             def volume_breakdown(self,currency: str):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the future alt_currency function for more available currency
                 :type currency:
                 :return: json data of volume breakdown
                 :rtype:
@@ -756,9 +798,9 @@ class api():
             def oi_breakdown(self, currency: str):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the future alt_currency function for more available currency
                 :type currency:
-                :return: json data of volume oi breakdown
+                :return: json data of open interest breakdown
                 :rtype:
                 """
                 currency = currency.upper()
@@ -770,10 +812,29 @@ class api():
                     return responsedata
 
             @classmethod
+            def futures_curve(self, currency: str, market = "" ):
+                """
+
+                :param currency: BTC,ETH,BCH try the future alt_currency function for more available currency
+                :type currency:
+                :param market: optional: Binance, Bitfinex, Bitmex, Bybit, Deribit, DyDx, FTX, Huobi, Kraken, OKEx
+                :type market:
+                :return: json data of futures term structure
+                :rtype:
+                """
+                currency = currency.upper()
+                if currency not in CURRENCY.__members__:
+                    raise TypeError("Currency not available")
+                else:
+                    api_url = self.url + "oi_breakdown/" + currency.lower() + "/" + market
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                    return responsedata
+
+            @classmethod
             def markets_oi_gainers_and_losers(self, currency: str, option: str , hour: str):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the future alt_currency function for more available currency
                 :type currency:
                 :param option: perpetual, future , all
                 :type option:
@@ -794,7 +855,7 @@ class api():
             def snapshot(self, market: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: Binance, Bitfinex, Bitmex, Bybit, Deribit, DyDx, FTX, Huobi, Kraken, OKEx
                 :type market:
                 :return: json data of snapshot
                 :rtype:
@@ -808,26 +869,26 @@ class api():
                     return responsedata
 
         class move:
-            url = "https://gateway.devitas.ch/analytics/move/"
+            url = "https://api.laevitas.ch//analytics/move/"
             pass
 
             @classmethod
             def oi_group(self):
                 """
-                :return: json data of oi group
+                :return: json data of open interest group
                 :rtype:
                 """
-                api_url = self.url + "oi_group/"
+                api_url = self.url + "oi_group"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
             def oi_expiry(self):
                 """
-                :return: json data of oi expiry
+                :return: json data of open interest expiry
                 :rtype:
                 """
-                api_url = self.url + "oi_expiry/"
+                api_url = self.url + "oi_expiry"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -837,7 +898,7 @@ class api():
                 :return: json data of volume expiry
                 :rtype:
                 """
-                api_url = self.url + "volume_expiry/"
+                api_url = self.url + "volume_expiry"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -847,7 +908,7 @@ class api():
                 :return: json data of volume group
                 :rtype:
                 """
-                api_url = self.url + "volume_group/"
+                api_url = self.url + "volume_group"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -857,7 +918,7 @@ class api():
                 :return: json data of volume expiry buy sell
                 :rtype:
                 """
-                api_url = self.url + "volume_expiry_buy_sell/"
+                api_url = self.url + "volume_expiry_buy_sell"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -867,7 +928,7 @@ class api():
                 :return: json data of volume contract buy sell
                 :rtype:
                 """
-                api_url = self.url + "volume_contract_buy_sell/"
+                api_url = self.url + "volume_contract_buy_sell"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -877,7 +938,17 @@ class api():
                 :return: json data of volume top contract
                 :rtype:
                 """
-                api_url = self.url + "volume_top_contract/"
+                api_url = self.url + "volume_top_contract"
+                responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def volume_type_buy_sell(self):
+                """
+                :return: json data of volume type buy/sell
+                :rtype:
+                """
+                api_url = self.url + "volume_type_buy_sell"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -887,7 +958,7 @@ class api():
                 :return: json data of oi top contract
                 :rtype:
                 """
-                api_url = self.url + "oi_top_contract/"
+                api_url = self.url + "oi_top_contract"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -897,7 +968,7 @@ class api():
                 :return: json data of big trades
                 :rtype:
                 """
-                api_url = self.url + "big_trades/"
+                api_url = self.url + "big_trades"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -907,7 +978,7 @@ class api():
                 :return: json data of contract names
                 :rtype:
                 """
-                api_url = self.url + "contract_name/"
+                api_url = self.url + "contract_name"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -917,7 +988,7 @@ class api():
                 :return: json data of expirations
                 :rtype:
                 """
-                api_url = self.url + "expirations/"
+                api_url = self.url + "expirations"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -927,7 +998,7 @@ class api():
                 :return: json data of ftx vs deribit
                 :rtype:
                 """
-                api_url = self.url + "ftx_vs_deribit/"
+                api_url = self.url + "ftx_vs_deribit"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -937,12 +1008,12 @@ class api():
                 :return: json data of live
                 :rtype:
                 """
-                api_url = self.url + "live/"
+                api_url = self.url + "live"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
         class defi:
-            url = "https://gateway.devitas.ch/analytics/defi/"
+            url = "https://api.laevitas.ch/analytics/defi/"
             pass
 
             @classmethod
@@ -996,7 +1067,7 @@ class api():
                 return responsedata
 
         class derivs:
-            url = "https://gateway.devitas.ch/analytics/derivs/"
+            url = "https://api.laevitas.ch/analytics/derivs/"
             pass
 
 
@@ -1004,13 +1075,13 @@ class api():
             def futures(self, market: str, currency: str, maturity: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | ALTS (Full list of supported assets on instruments endpoint)
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23, Active expirations endpoint in options provide available maturities
                 :type maturity:
-                :return: json data of futures
+                :return: json data of futures live data
                 :rtype:
                 """
                 market = market.upper()
@@ -1029,11 +1100,11 @@ class api():
             def perpetuals(self, market: str, currency: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | ALTS (Full list of supported assets on instruments endpoint)
                 :type currency:
-                :return: json data of perpetuals
+                :return: json live data of perpetual swaps
                 :rtype:
                 """
                 market = market.upper()
@@ -1051,7 +1122,7 @@ class api():
             def summary(self,currency=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | ALTS (Full list of supported assets on instruments endpoint)
                 :type currency:
                 :return: json data of summary
                 :rtype:
@@ -1065,13 +1136,13 @@ class api():
             def oi_gainers(self, market: str, oitype: str, period: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
                 :type market:
                 :param oitype: future, perpetual
                 :type oitype:
                 :param period: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720, ytd
                 :type period:
-                :return: oi_gainers
+                :return: Open interest gainers
                 :rtype:
                 """
                 market = market.upper()
@@ -1097,7 +1168,7 @@ class api():
             def price_gainers(self, market: str, oitype: str, period: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
                 :type market:
                 :param oitype: future, perpetual
                 :type oitype:
@@ -1123,7 +1194,7 @@ class api():
             def top_funding(self, market: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
                 :type market:
                 :return: json data of top funding
                 :rtype:
@@ -1151,21 +1222,22 @@ class api():
                 api_url = self.url + "top_gainers_losers/" + change + "/" + type
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
+
     class historical:
         def __init__(self):
             self.option = self.options()
 
         class options:
-            url = "https://gateway.devitas.ch/historical/options/"
+            url = "https://api.laevitas.ch/historical/options/"
             pass
 
             @classmethod
             def option(self,market: str,instrument: str,start="",end="",limit="",page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param instrument: exp: BTC-10JUN21-60000-P
+                :param instrument: Currency-Maturity-Strike-C/P e.g., BTC-30JUN23-80000-C try (instruments function)
                 :type instrument:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1175,7 +1247,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: total oi data
+                :return: option
                 :rtype:
                 """
                 market=market.upper()
@@ -1202,9 +1274,9 @@ class api():
             def iv(self,market: str,instrument: str,start="",end="",limit="",page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param instrument: exp: BTC-10JUN21-60000-P
+                :param instrument: Currency-Maturity-Strike-C/P e.g., BTC-30JUN23-80000-C try (instruments function)
                 :type instrument:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1214,7 +1286,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: total oi data
+                :return: Instrument historical implied volatility
                 :rtype:
                 """
                 market=market.upper()
@@ -1251,13 +1323,14 @@ class api():
                         Response.items.append(ivdata(response['items'][i]['date'], response['items'][i]['mark_iv'],
                                                      response['items'][i]['bid_iv'], response['items'][i]['ask_iv']))
                     return Response
+
             @classmethod
             def price(self,market: str,instrument: str,start="",end="",limit="",page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param instrument: exp: BTC-10JUN21-60000-P
+                :param instrument: Currency-Maturity-Strike-C/P e.g., BTC-30JUN23-80000-C try (instruments function)
                 :type instrument:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1267,7 +1340,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of price
+                :return: json data of instrument historical price
                 :rtype:
                 """
                 market=market.upper()
@@ -1289,13 +1362,14 @@ class api():
                     api_url = self.url+ "price/" + market + "/" + instrument
                     response = requests.get(api_url,headers=api.header).json()
                 return response
+
             @classmethod
             def oi_volume(self,market: str,instrument: str,start="",end="",limit="",page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param instrument: exp: BTC-10JUN21-60000-P
+                :param instrument: Currency-Maturity-Strike-C/P e.g., BTC-30JUN23-80000-C try (instruments function)
                 :type instrument:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1305,7 +1379,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of oi volume
+                :return: json data of instrument historical open interest volume
                 :rtype:
                 """
                 market=market.upper()
@@ -1327,13 +1401,14 @@ class api():
                     api_url = self.url + "oi_volume/" + market + "/" + instrument
                     response = requests.get(api_url,headers=api.header).json()
                 return response
+
             @classmethod
             def underlying_price(self,market: str,instrument: str,start="",end="",limit="",page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param instrument: exp: BTC-10JUN21-60000-P
+                :param instrument: Currency-Maturity-Strike-C/P e.g., BTC-30JUN23-80000-C try (instruments function)
                 :type instrument:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1343,7 +1418,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of underlying price
+                :return: json data of instrument historical underlying price
                 :rtype:
                 """
                 market=market.upper()
@@ -1365,19 +1440,20 @@ class api():
                     api_url = self.url + "underlying_price/" + market + "/" + instrument
                     response = requests.get(api_url,headers=api.header).json()
                 return response
+
             @classmethod
             def oi_strike(self,market: str,currency: str, maturity: str,date: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities
                 :type maturity:
-                :param date: EXP:2022-05-25T02
+                :param date: YYYY-MM-DDTHH e.g., 2022-07-24T01
                 :type date :
-                :return: json data of oi strike
+                :return: json data of historical open interest by strike
                 :rtype:
                 """
                 market = market.upper()
@@ -1390,19 +1466,20 @@ class api():
                     api_url = self.url + "oi_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "?date=" + date
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
+
             @classmethod
             def volume_strike(self,market: str,currency: str, maturity: str,date: str):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
-                :param maturity: EXP:30SEP22
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities
                 :type maturity:
-                :param date: EXP:2022-05-25T02
+                :param date: YYYY-MM-DDTHH e.g., 2022-07-24T01
                 :type date :
-                :return: json data of volume strike
+                :return: json data of historical volume by strike
                 :rtype:
                 """
                 market = market.upper()
@@ -1420,9 +1497,9 @@ class api():
             def volume_pc_ratio(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1432,7 +1509,7 @@ class api():
                 :type limit:
                 :param page: default :1
                 :type page:
-                :return: json format data of volume pc ratio
+                :return: json format data of volume put call ratio
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1445,13 +1522,14 @@ class api():
                     api_url = self.url + "volume_pc_ratio/" + market.lower() + "/" + currency.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def gex_index(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1461,7 +1539,7 @@ class api():
                 :type limit:
                 :param page: default :1
                 :type page:
-                :return: json format data of gex index
+                :return: json format data of gamma exposure index
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1474,13 +1552,14 @@ class api():
                     api_url = self.url + "gex_index/" + market.lower() + "/" + currency.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def max_pain(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1490,7 +1569,7 @@ class api():
                 :type limit:
                 :param page: default :1
                 :type page:
-                :return: json format data of max pain
+                :return: json format data of max pain monthly expiration
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1503,13 +1582,14 @@ class api():
                     api_url = self.url + "max_pain/" + market.lower() + "/" + currency.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def atm_iv(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1519,7 +1599,7 @@ class api():
                 :type limit:
                 :param page: default :1
                 :type page:
-                :return: json format data of atm iv
+                :return: json format data of at the money implied volatility (rolling maturity)
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1532,13 +1612,14 @@ class api():
                     api_url = self.url + "atm_iv/" + market.lower() + "/" + currency.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def volume_total(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1561,13 +1642,14 @@ class api():
                     api_url = self.url + "volume_total/" + market.lower() + "/" + currency.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def oi_pc_ratio(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1577,7 +1659,7 @@ class api():
                 :type limit:
                 :param page: default :1
                 :type page:
-                :return: json format data of oi pc ratio
+                :return: json format data of open interests put call ratio
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1590,13 +1672,14 @@ class api():
                     api_url = self.url + "oi_pc_ratio/" + market.lower() + "/" + currency.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def oi_total(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1606,7 +1689,7 @@ class api():
                 :type limit:
                 :param page: default :1
                 :type page:
-                :return: json format data of total oi
+                :return: json format data of total open interest
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1619,13 +1702,14 @@ class api():
                     api_url = self.url + "oi_total/" + market.lower() + "/" + currency.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def vix(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1635,7 +1719,7 @@ class api():
                 :type limit:
                 :param page: default :1
                 :type page:
-                :return: json format data of vix
+                :return: json format data of vol index
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1648,13 +1732,14 @@ class api():
                     api_url = self.url + "vix/" + market.lower() + "/" + currency.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def dvol(self, market: str, currency: str,start="", end="", limit="10", page="1"):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,SOL
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1664,7 +1749,7 @@ class api():
                 :type limit:
                 :param page: default :1
                 :type page:
-                :return: json format data of dvol
+                :return: json format data of deribit volatility index
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1677,6 +1762,7 @@ class api():
                     api_url = self.url + "dvol/" + market.lower() + "/" + currency.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def atm_iv_model(self, market: str, currency: str, type:str, start="", end="", limit="", page=""):
                 """
@@ -1695,7 +1781,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of atm iv model
+                :return: json data of at the money implied volatility model
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1708,15 +1794,16 @@ class api():
                     api_url = self.url + "type/atm_iv_model/" + market.lower() + "/" + currency.lower() + "/" + type
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def butterfly(self, market: str, currency: str, type:str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
-                :param type: 25d , 10d
+                :param type: 25d , 10d  (d: delta)
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1739,15 +1826,16 @@ class api():
                     api_url = self.url + "type/butterfly/" + market.lower() + "/" + currency.lower() + "/" + type
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def butterfly_model(self, market: str, currency: str, type:str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
                 :type currency:
-                :param type: 25d , 10d
+                :param type: 25d , 10d (d: delta)
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1770,15 +1858,16 @@ class api():
                     api_url = self.url + "type/butterfly_model/" + market.lower() + "/" + currency.lower() + "/" + type
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def skew(self, market: str, currency: str, type:str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :param type: 25d , 10d
+                :param type: 25d , 10d (d: delta)
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1801,15 +1890,16 @@ class api():
                     api_url = self.url + "type/skew/" + market.lower() + "/" + currency.lower() + "/" + type
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def skew_model(self, market: str, currency: str, type:str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :param type: 25d , 10d
+                :param type: 25d , 10d (d: delta)
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1832,15 +1922,16 @@ class api():
                     api_url = self.url + "type/skew_model/" + market.lower() + "/" + currency.lower() + "/" + type
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def risk_reversal(self, market: str, currency: str, type:str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :param type: 25d , 10d
+                :param type: 25d , 10d (d: delta)
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1863,15 +1954,16 @@ class api():
                     api_url = self.url + "type/risk_reversal/" + market.lower() + "/" + currency.lower() + "/" + type
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def risk_reversal_model(self, market: str, currency: str, type:str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :param type: 25d , 10d
+                :param type: 25d , 10d (d: delta)
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1894,15 +1986,16 @@ class api():
                     api_url = self.url + "type/risk_reversal_model/" + market.lower() + "/" + currency.lower() + "/" + type
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def gamma_bands(self, market: str, currency: str, type="1d", start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :param type: 1d default , 7d, 30d
+                :param type: 1d default , 7d, 30d (atm volatility)
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1925,11 +2018,12 @@ class api():
                     api_url = self.url + "type/gamma_bands/" + market.lower() + "/" + currency.lower() + "/" + type
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def iv_bid_ask(self, market: str, currency: str, type:str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
@@ -1943,7 +2037,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: iv bid ask, all data in json format or specific period in dataclass format
+                :return: implied volatility bid ask, all data in json format or specific period in dataclass format
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -1987,11 +2081,11 @@ class api():
             def total_oi(self, market: str, currency: str, maturity: str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :param maturity: all
+                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities
                 :type maturity:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2001,7 +2095,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total oi
+                :return: json data of total open interests
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -2015,16 +2109,15 @@ class api():
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
-
             @classmethod
             def total_volume(self, market: str, currency: str, maturity: str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
                 :type market:
                 :param currency: BTC,ETH,BCH
                 :type currency:
-                :param maturity: all
+                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities
                 :type maturity:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2052,9 +2145,9 @@ class api():
             def volumeOiByExchange(self,currency: str, maturity: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH,SOL
                 :type currency:
-                :param maturity: all
+                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities
                 :type maturity:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2064,7 +2157,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of oi volume by exchange
+                :return: json data of open interest and volume by exchange
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -2079,14 +2172,14 @@ class api():
                 return response
 
         class futures:
-            url = "https://gateway.devitas.ch/historical/futures/"
+            url = "https://api.laevitas.ch/historical/futures/"
             pass
 
             @classmethod
             def oi_weighted_funding (self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2096,7 +2189,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of oi weighted funding
+                :return: json data of open interest weighted funding
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -2114,7 +2207,7 @@ class api():
             def oi_weighted_volume_funding(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2142,7 +2235,7 @@ class api():
             def oi_weighted_basis(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2152,7 +2245,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of oi weighted basis
+                :return: json data of oi annualised basis
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -2170,7 +2263,7 @@ class api():
             def total_oi(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2180,7 +2273,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total oi
+                :return: json data of total open interest
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -2198,7 +2291,7 @@ class api():
             def total_oi_by_margin(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2208,7 +2301,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total oi by margin
+                :return: json data of total open interest by margin
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -2223,10 +2316,10 @@ class api():
                 return response
 
             @classmethod
-            def total_volume (self, currency: str, start="", end="", limit="", page=""):
+            def total_volume(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2254,7 +2347,7 @@ class api():
             def total_volume_by_margin(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2282,7 +2375,7 @@ class api():
             def realized_volatility(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2310,7 +2403,7 @@ class api():
             def alt_summary(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2338,7 +2431,7 @@ class api():
             def alt_markets(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2366,7 +2459,7 @@ class api():
             def market_index(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2394,7 +2487,7 @@ class api():
             def indices_price(self, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2419,13 +2512,13 @@ class api():
                 return response
 
             @classmethod
-            def futures_annualized_basis(self, currency: str,option:str, start="", end="", limit="", page=""):
+            def futures_annualized_basis(self, currency: str,period:str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
-                :param option: C,P
-                :type option:
+                :param period: 7 | 30 | 60 | 90 | 180 | 270 | 365
+                :type period:
                 :param start: EXP:2022-06-07
                 :type end:
                 :param end: EXP:2022-06-14
@@ -2441,10 +2534,10 @@ class api():
                 if currency.upper() not in CURRENCY.__members__:
                     raise TypeError("Currency not available")
                 elif makequery != "":
-                    api_url = self.url + "futures_annualized_basis/" + currency.lower() +"/"+ option + makequery
+                    api_url = self.url + "futures_annualized_basis/" + currency.lower() +"/"+ period + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "futures_annualized_basis/" + currency.lower()+ "/" + option
+                    api_url = self.url + "futures_annualized_basis/" + currency.lower()+ "/" + period
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
@@ -2452,9 +2545,9 @@ class api():
             def perpetual_funding_exchange(self, currency: str, option: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
-                :param option: C,P
+                :param option: C,D (C: centralize, D: decentralize)
                 :type option:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2482,9 +2575,9 @@ class api():
             def total_oi_by_exchange(self, currency: str, option: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
-                :param option: C,P
+                :param option: C,D (C: centralize, D: decentralize)
                 :type option:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2512,9 +2605,9 @@ class api():
             def total_volume_by_exchange(self, currency: str, option: str, start="", end="", limit="", page=""):
                 """
 
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
-                :param option: C,P
+                :param option: C,D (C: centralize, D: decentralize)
                 :type option:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2537,13 +2630,14 @@ class api():
                     api_url = self.url + "total_volume_by_exchange/" + currency.lower() + "/" + option
                     response = requests.get(api_url, headers=api.header).json()
                 return response
+
             @classmethod
             def perpetual_yield(self,market:str, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BINANCE | BYBIT | BITMEX | FTX | HUOBI  BITFINEX | DERIBIT | KRAKEN | OKEX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2573,9 +2667,9 @@ class api():
             def perpetual_funding(self, market: str, currency: str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BINANCE | BYBIT | BITMEX | FTX | HUOBI  BITFINEX | DERIBIT | KRAKEN | OKEX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2602,15 +2696,15 @@ class api():
                 return response
 
         class move:
-            url = "https://gateway.devitas.ch/historical/move/"
+            url = "https://api.laevitas.ch/historical/move/"
             pass
 
             @classmethod
             def total_oi(self,market="ftx" ,currency="btc",start="",end="",limit="",page=""):
                 """
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2685,9 +2779,9 @@ class api():
             def iv_type(self, market:str, currency:str,type:str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC
                 :type currency:
                 :param type: daily, weekly, quarterly
                 :type type:
@@ -2699,7 +2793,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of iv type
+                :return: json data of implied volatility type
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -2719,9 +2813,9 @@ class api():
             def iv_historical_open_future(self, market: str, currency: str, is_open: str, start="", end="", limit="", page=""):
                 """
 
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: FTX
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC
                 :type currency:
                 :param is_open : true or false
                 :type is_open :
@@ -2787,7 +2881,7 @@ class api():
 
                 :param market: FTX
                 :type market:
-                :param contract_name: BTC-MOVE-2022Q4
+                :param contract_name: try realtime.move.contract_name function for contract names. EXP : BTC-MOVE-2022Q4
                 :type contract_name:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2797,7 +2891,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of historical iv
+                :return: json data of historical implied volatility
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -2817,7 +2911,7 @@ class api():
 
                 :param market: FTX
                 :type market:
-                :param contract_name: BTC-MOVE-2022Q4
+                :param contract_name: try realtime.move.contract_name function for contract names. EXP : BTC-MOVE-2022Q4
                 :type contract_name:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2827,7 +2921,7 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of historical oi
+                :return: json data of historical open interest
                 :rtype:
                 """
                 makequery = query(start=start, end=end, limit=limit, page=page)
@@ -2847,7 +2941,7 @@ class api():
 
                 :param market: FTX
                 :type market:
-                :param contract_name: BTC-MOVE-2022Q4
+                :param contract_name: try realtime.move.contract_name function for contract names. EXP : BTC-MOVE-2022Q4
                 :type contract_name:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2877,7 +2971,7 @@ class api():
 
                 :param market: FTX
                 :type market:
-                :param contract_name: BTC-MOVE-2022Q4
+                :param contract_name: try realtime.move.contract_name function for contract names. EXP : BTC-MOVE-2022Q4
                 :type contract_name:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2952,7 +3046,7 @@ class api():
             @classmethod
             def perpetuals(self, market:str,symbol:str, start="", end="", limit="", page=""):
                 """
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: Full list of supported exchanges on instruments endpoint. exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
                 :type market:
                 :param symbol: exp : BTC-30DEC22, ETHUSDTH22, ETHUSD, BTCUSD
                 :type symbol:
@@ -2977,9 +3071,9 @@ class api():
                 return response
 
             @classmethod
-            def futures(self, market: str, symbol: str, date:str ):
+            def futures(self, market: str, symbol: str, start="", end="", limit="", page=""):
                 """
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: Full list of supported exchanges on instruments endpoint. exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
                 :type market:
                 :param symbol: exp : BTC-30DEC22, ETHUSDTH22, ETHUSD, BTCUSD
                 :type symbol:
@@ -2994,7 +3088,7 @@ class api():
                 :return: json data of futures
                 :rtype:
                 """
-                makequery = query(start=date)
+                makequery = query(start=start, end=end, limit=limit, page=page)
                 api_url = self.url + "futures/" + market.lower() + "/" + symbol + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
@@ -3002,7 +3096,7 @@ class api():
             @classmethod
             def summary(self, currency: str, start="", end="", limit="", page=""):
                 """
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC | ETH | ALTS (Full list of supported assets on instruments endpoint)
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:

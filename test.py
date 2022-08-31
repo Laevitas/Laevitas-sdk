@@ -1,8 +1,7 @@
 from Laevitas import SDK
 
 
-sdk = SDK.api()
-sdk.configure('api-key')
+
 """test1 = sdk.realtime.options.get_atm("deribit","btc")
 test2 = sdk.realtime.options.gex_date_all("deribit","btc")
 test3 = sdk.realtime.options.maturities("deribit","btc")
@@ -23,19 +22,16 @@ test12 = sdk.realtime.derivs.oi_gainers("deribit","future","ytd")
 test13 = sdk.historical.options.iv("DERIBIT","BTC-30SEP22-20000-C")
 test14 = sdk.historical.move.total_oi("btc","2022-06-07","2022-06-16","10","2")
 test15 = sdk.historical.options.iv_bid_ask("deribit","btc","c_10","2022-06-07","2022-06-16","10","2")"""
-test13 = sdk.realtime.futures.snapshot(market="deribit")
-test14 = sdk.historical.futures.perpetual_funding("deribit","BTC","2022-07-25","2022-08-01","10","1")
-test15 = sdk.realtime.derivs.price_gainers("deribit","future","2")
+#test13 = sdk.realtime.futures.snapshot(market="deribit")
+#test14 = sdk.historical.futures.perpetual_funding("deribit","BTC","2022-07-25","2022-08-01","10","1")
+#test15 = sdk.realtime.derivs.price_gainers("deribit","future","2")
 
 
-#test14 = sdk.historical.options.dvol("deribit","btc")
-print(test15)
+sdk = SDK.api()
+sdk.configure('api-key')
+test = sdk.realtime.options.get_atm(market="d")
 
 
-#print(test15.date)
-#print(test3.data)
-#for i in test9.data:
-#    print(i.strike)
 
 
 

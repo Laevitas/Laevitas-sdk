@@ -70,13 +70,15 @@ for i in response.items:
 |*realtime* | options   | iv_table(market, currency)                                                                       | Implied volatility table                           |
 |*realtime* | options   | oi_net_change(market, currency, maturity, hour)                                                  | Open Interest Change By Expiration                 |
 |*realtime* | options   | snapshot(market, currency)                                                                       | Snapshot                                           |
-|*realtime* | futures   | instruments()                                                                                    | Instruments                                        |
+|*realtime* | futures   | instruments()                                                                                    | available futures instruments                      |
+|*realtime* | futures   | alt_currency ()                                                                                  | available futures currency                         |
 |*realtime* | futures   | perpetual_funding(currency)                                                                      | Perpetual Funding                                  |
 |*realtime* | futures   | futures_yield(currency)                                                                          | Futures Yield                                      |
 |*realtime* | futures   | futures_basis(currency)                                                                          | Futures Basis                                      |
 |*realtime* | futures   | volume_breakdown(currency)                                                                       | Volume Breakdown                                   |
 |*realtime* | futures   | oi_breakdown(currency)                                                                           | Open Interest Breakdown                            |
-|*realtime* | futures   | markets_oi_gainers_and_losers(currency, option, hour)                                            | Futures OI Change                                  |
+|*realtime* | futures   | futures_curve(currency, market(opt))                                                             | futures term structure                             |
+|*realtime* | futures   | markets_oi_gainers_and_losers(currency, option, hour)                                            | Futures Open interest Change                       |
 |*realtime* | futures   | snapshot(market)                                                                                 | snapshot                                           |
 |*realtime* | move      | oi_group()                                                                                       | Open Interest group                                |
 |*realtime* | move      | oi_expiry()                                                                                      | Open Interest expiry                               |
@@ -85,6 +87,7 @@ for i in response.items:
 |*realtime* | move      | volume_expiry_buy_sell()                                                                         | Volume expiry buy sell                             |
 |*realtime* | move      | volume_contract_buy_sell()                                                                       | Volume contract buy sell                           |
 |*realtime* | move      | volume_top_contract()                                                                            | volume top contract                                |
+|*realtime* | move      | volume_type_buy_sell ()                                                                          | volume type buy/sell                               |
 |*realtime* | move      | oi_top_contract()                                                                                | Open Interest top contract                         |
 |*realtime* | move      | big_trades()                                                                                     | Big trades                                         |
 |*realtime* | move      | contract_name()                                                                                  | Contract names                                     |
@@ -161,9 +164,9 @@ for i in response.items:
 |*historical* | move      | historical_volume(contract_name, market, start(opt), end(opt), limit(opt), page(opt)             | historical volume                                  |
 |*historical* | move      | open_future(contract_type)                                                                       | open future                                        |
 |*historical* | defi      | dovs_auctions(protocol, start(opt), end(opt), currency(opt), limit(opt), page(opt))              | dov auctions                                       |
-|*historical* | derivs      | perpetuals(market, symbol, start(opt), end(opt), limit(opt), page(opt) )                         | perpetuals                                         |
-|*historical* | derivs      | futures(market, symbol, date)                                                                    | futures                                            |
-|*historical* | derivs      | summary(currency, start(opt), end(opt), limit(opt), page(opt) )                                  | summary                                            |
+|*historical* | derivs    | perpetuals(market, symbol, start(opt), end(opt), limit(opt), page(opt) )                         | perpetuals                                         |
+|*historical* | derivs    | futures(market, symbol, date)                                                                    | futures                                            |
+|*historical* | derivs    | summary(currency, start(opt), end(opt), limit(opt), page(opt) )                                  | summary                                            |
 
 
 
