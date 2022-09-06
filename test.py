@@ -28,8 +28,9 @@ test15 = sdk.historical.options.iv_bid_ask("deribit","btc","c_10","2022-06-07","
 
 
 sdk = SDK.api()
-sdk.configure('api-key')
-test = sdk.realtime.options.get_atm(market="d")
+sdk.configure('35ee699f-7003-4fad-948f-921d4fdb7603')
+test = sdk.realtime.options.instruments(market="deribit",currency="btc")
+print(test)
 
 
 

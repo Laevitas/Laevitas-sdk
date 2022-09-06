@@ -110,21 +110,7 @@ class api():
                 else:
                      api_url = self.url + "atm_iv_ts/" + market + "/" + currency
                      responsedata = requests.get(api_url, headers=api.header).json()
-                     resp = responsedata["data"]
-                     Response = data_atm(responsedata,responsedata['date'])
-                     for i in range(len(resp["Today"])):
-                        Response.Today.append(MaturityIV(resp["Today"][i]['maturity'], resp["Today"][i]['iv']))
-                     for i in range(len(resp["Yesterday"])):
-                        Response.Yesterday.append(MaturityIV(resp["Yesterday"][i]['maturity'], resp["Yesterday"][i]['iv']))
-                     for i in range(len(resp["2 Days Ago"])):
-                        Response.Two_days_ago.append(MaturityIV(resp["2 Days Ago"][i]['maturity'], resp["2 Days Ago"][i]['iv']))
-                     for i in range(len(resp["1 Week Ago"])):
-                        Response.One_week_ago.append(MaturityIV(resp["1 Week Ago"][i]['maturity'], resp["1 Week Ago"][i]['iv']))
-                     for i in range(len(resp["2 Weeks Ago"])):
-                        Response.Two_weeks_ago.append(MaturityIV(resp["2 Weeks Ago"][i]['maturity'], resp["2 Weeks Ago"][i]['iv']))
-                     for i in range(len(resp["3 Weeks Ago"])):
-                        Response.Three_weeks_ago.append(MaturityIV(resp["3 Weeks Ago"][i]['maturity'], resp["3 Weeks Ago"][i]['iv']))
-                     return Response
+                     return responsedata
 
             @classmethod
             def gex_date(self, market: str, currency: str, maturity: str):
@@ -1304,25 +1290,7 @@ class api():
                 elif makequery != "":
                     api_url = self.url+ "iv/" + market + "/" + instrument + makequery
                     response = requests.get(api_url,headers=api.header).json()
-                    Response = Ipaginationiv(response,
-                        Ipaginationmeta(response['meta']['total'],response['meta']['page'],response['meta']['items']),
-
-                    )
-                    for i in range(len(response['items'])):
-                        Response.items.append(ivdata(response['items'][i]['date'], response['items'][i]['mark_iv'],
-                                                     response['items'][i]['bid_iv'],response['items'][i]['ask_iv']))
-                    return Response
-                else:
-                    api_url = self.url+ "iv/" + market + "/" + instrument
-                    response = requests.get(api_url,headers=api.header).json()
-                    Response = Ipaginationiv(response,
-                        Ipaginationmeta(response['meta']['total'], response['meta']['page'], response['meta']['items']),
-
-                    )
-                    for i in range(len(response['items'])):
-                        Response.items.append(ivdata(response['items'][i]['date'], response['items'][i]['mark_iv'],
-                                                     response['items'][i]['bid_iv'], response['items'][i]['ask_iv']))
-                    return Response
+                return response
 
             @classmethod
             def price(self,market: str,instrument: str,start="",end="",limit="",page=""):
@@ -3008,7 +2976,7 @@ class api():
                 return response
 
         class defi:
-            url = "https://gateway.devitas.ch/historical/defi/"
+            url = "https://api.laevitas.ch/historical/defi/"
             pass
 
             @classmethod
@@ -3040,7 +3008,7 @@ class api():
                 return response
 
         class derivs:
-            url = "https://gateway.devitas.ch/historical/derivs/"
+            url = "https://api.laevitas.ch/historical/derivs/"
             pass
 
             @classmethod
