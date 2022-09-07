@@ -4,6 +4,7 @@ from Laevitas.dataclasses import *
 from enum import Enum
 # from typing import List
 
+
 def query(**kwargs):
     queryurl="?"
     for key, value in kwargs.items():

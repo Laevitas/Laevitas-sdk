@@ -1,6 +1,19 @@
+Metadata-Version: 2.1
+Name: SDK-Laevitas-test
+Version: 1.4.2
+Summary: SDK
+Home-page: https://github.com/Elyesbdakhlia
+Author: Elyes
+Author-email: elyes@laevitas.ch
+License: apache-2.0
+Download-URL: https://github.com/Elyesbdakhlia/API-SDK/archive/refs/tags/test-1.4.2.tar.gz
+Platform: UNKNOWN
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+
 # API-SDK
-First version:
-120 endpoints
+test version various endpoints:
+
 ## Requirements.
 
 Python 3.7+
@@ -70,15 +83,13 @@ for i in response.items:
 |*realtime* | options   | iv_table(market, currency)                                                                       | Implied volatility table                           |
 |*realtime* | options   | oi_net_change(market, currency, maturity, hour)                                                  | Open Interest Change By Expiration                 |
 |*realtime* | options   | snapshot(market, currency)                                                                       | Snapshot                                           |
-|*realtime* | futures   | instruments()                                                                                    | available futures instruments                      |
-|*realtime* | futures   | alt_currency ()                                                                                  | available futures currency                         |
+|*realtime* | futures   | instruments()                                                                                    | Instruments                                        |
 |*realtime* | futures   | perpetual_funding(currency)                                                                      | Perpetual Funding                                  |
 |*realtime* | futures   | futures_yield(currency)                                                                          | Futures Yield                                      |
 |*realtime* | futures   | futures_basis(currency)                                                                          | Futures Basis                                      |
 |*realtime* | futures   | volume_breakdown(currency)                                                                       | Volume Breakdown                                   |
 |*realtime* | futures   | oi_breakdown(currency)                                                                           | Open Interest Breakdown                            |
-|*realtime* | futures   | futures_curve(currency, market(opt))                                                             | futures term structure                             |
-|*realtime* | futures   | markets_oi_gainers_and_losers(currency, option, hour)                                            | Futures Open interest Change                       |
+|*realtime* | futures   | markets_oi_gainers_and_losers(currency, option, hour)                                            | Futures OI Change                                  |
 |*realtime* | futures   | snapshot(market)                                                                                 | snapshot                                           |
 |*realtime* | move      | oi_group()                                                                                       | Open Interest group                                |
 |*realtime* | move      | oi_expiry()                                                                                      | Open Interest expiry                               |
@@ -87,7 +98,6 @@ for i in response.items:
 |*realtime* | move      | volume_expiry_buy_sell()                                                                         | Volume expiry buy sell                             |
 |*realtime* | move      | volume_contract_buy_sell()                                                                       | Volume contract buy sell                           |
 |*realtime* | move      | volume_top_contract()                                                                            | volume top contract                                |
-|*realtime* | move      | volume_type_buy_sell ()                                                                          | volume type buy/sell                               |
 |*realtime* | move      | oi_top_contract()                                                                                | Open Interest top contract                         |
 |*realtime* | move      | big_trades()                                                                                     | Big trades                                         |
 |*realtime* | move      | contract_name()                                                                                  | Contract names                                     |
@@ -120,6 +130,7 @@ for i in response.items:
 |*historical* | options   | volume_total(market, currency, start(opt), end(opt), limit(opt), page(opt)                       | Volume total                                       |
 |*historical* | options   | oi_pc_ratio(market, currency, start(opt), end(opt), limit(opt), page(opt)                        | Open Interest Put/Call Ratio                       |
 |*historical* | options   | oi_total(market, currency, start(opt), end(opt), limit(opt), page(opt)                           | Instrument Historical Implied Volatility           |
+|*historical* | options   | realized_vol(market, currency, start(opt), end(opt), limit(opt), page(opt)                       | Realized Volatility                                |
 |*historical* | options   | vix(market, currency, start(opt), end(opt), limit(opt), page(opt)                                | Vol Index                                          |
 |*historical* | options   | dvol(market, currency, start(opt), end(opt), limit(opt), page(opt)                               | Deribit Volatility Index (DVOL)                    |
 |*historical* | options   | atm_iv_model(market, currency, type, start(opt), end(opt), limit(opt), page(opt)                 | At the money Implied Volatility model              |
@@ -164,9 +175,9 @@ for i in response.items:
 |*historical* | move      | historical_volume(contract_name, market, start(opt), end(opt), limit(opt), page(opt)             | historical volume                                  |
 |*historical* | move      | open_future(contract_type)                                                                       | open future                                        |
 |*historical* | defi      | dovs_auctions(protocol, start(opt), end(opt), currency(opt), limit(opt), page(opt))              | dov auctions                                       |
-|*historical* | derivs    | perpetuals(market, symbol, start(opt), end(opt), limit(opt), page(opt) )                         | perpetuals                                         |
-|*historical* | derivs    | futures(market, symbol, date)                                                                    | futures                                            |
-|*historical* | derivs    | summary(currency, start(opt), end(opt), limit(opt), page(opt) )                                  | summary                                            |
+|*historical* | derivs      | perpetuals(market, symbol, start(opt), end(opt), limit(opt), page(opt) )                         | perpetuals                                         |
+|*historical* | derivs      | futures(market, symbol, date)                                                                    | futures                                            |
+|*historical* | derivs      | summary(currency, start(opt), end(opt), limit(opt), page(opt) )                                  | summary                                            |
 
 
 
@@ -175,5 +186,7 @@ for i in response.items:
 
 
  
+
+
 
 
