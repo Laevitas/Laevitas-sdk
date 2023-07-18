@@ -1,1 +1,1 @@
-from .SDK import query
+from .consts import prepare_query
