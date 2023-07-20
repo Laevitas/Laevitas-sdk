@@ -22,7 +22,22 @@ class MARKET_CONSTS(Enum):
     BINANCE = 4
     DELTA_EXCHANGE = 5
     ZETA_EXCHANGE = 6
-    FTX = 7
+    BITMEX = 7
+    BYBIT = 8
+    DYDX = 9
+    BITFINEX = 10
+    HUOBI = 11
+    KRAKEN = 12
+    OKX = 13
+    KWENTA = 14
+    GMX = 15
+    VERTEX = 16
+    PERP_PROTOCOL = 17
+    BITGET = 18
+    AEVO = 19
+    LYRA = 20
+    LYRA_ARBITRUM = 21
+
 
 
 class MARKET_CONSTS_DERIVS(Enum):

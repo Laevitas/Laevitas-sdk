@@ -1048,150 +1048,6 @@ class api():
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
-        class move:
-            url = "https://api.laevitas.ch//analytics/move/"
-            pass
-
-            @classmethod
-            def oi_group(self):
-                """
-                :return: json data of open interest group
-                :rtype:
-                """
-                api_url = self.url + "oi_group"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def oi_expiry(self):
-                """
-                :return: json data of open interest expiry
-                :rtype:
-                """
-                api_url = self.url + "oi_expiry"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def volume_expiry(self):
-                """
-                :return: json data of volume expiry
-                :rtype:
-                """
-                api_url = self.url + "volume_expiry"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def volume_group(self):
-                """
-                :return: json data of volume group
-                :rtype:
-                """
-                api_url = self.url + "volume_group"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def volume_expiry_buy_sell(self):
-                """
-                :return: json data of volume expiry buy sell
-                :rtype:
-                """
-                api_url = self.url + "volume_expiry_buy_sell"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def volume_contract_buy_sell(self):
-                """
-                :return: json data of volume contract buy sell
-                :rtype:
-                """
-                api_url = self.url + "volume_contract_buy_sell"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def volume_top_contract(self):
-                """
-                :return: json data of volume top contract
-                :rtype:
-                """
-                api_url = self.url + "volume_top_contract"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def volume_type_buy_sell(self):
-                """
-                :return: json data of volume type buy/sell
-                :rtype:
-                """
-                api_url = self.url + "volume_type_buy_sell"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def oi_top_contract(self):
-                """
-                :return: json data of oi top contract
-                :rtype:
-                """
-                api_url = self.url + "oi_top_contract"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def big_trades(self):
-                """
-                :return: json data of big trades
-                :rtype:
-                """
-                api_url = self.url + "big_trades"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def contract_name(self):
-                """
-                :return: json data of contract names
-                :rtype:
-                """
-                api_url = self.url + "contract_name"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def expirations(self):
-                """
-                :return: json data of expirations
-                :rtype:
-                """
-                api_url = self.url + "expirations"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def ftx_vs_deribit(self):
-                """
-                :return: json data of ftx vs deribit
-                :rtype:
-                """
-                api_url = self.url + "ftx_vs_deribit"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
-            @classmethod
-            def live(self):
-                """
-                :return: json data of live
-                :rtype:
-                """
-                api_url = self.url + "live"
-                responsedata = requests.get(api_url, headers=api.header).json()
-                return responsedata
-
         class defi:
             url = "https://api.laevitas.ch/analytics/defi/"
             pass
@@ -1496,11 +1352,8 @@ class api():
                     raise TypeError("type in instument is either C or P")
                 elif market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "price/" + market + "/" + instrument + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "price/" + market + "/" + instrument
+                    api_url = self.url + "price/" + market + "/" + instrument + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
@@ -1559,7 +1412,7 @@ class api():
                 :param page: 1
                 :type page:
                 :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
-                :type end :
+                :type granularity :
                 :return: index and underlying historical data for a specific option contract
                 :rtype:
                 """
@@ -1581,64 +1434,84 @@ class api():
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
-            # @classmethod
-            # def oi_strike(self, market: str, currency: str, maturity: str, date: str):
-            #     """
-            #
-            #     :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
-            #     :type market:
-            #     :param currency: BTC,ETH,BCH,SOL,XRP,BNB , Check analytics/options/Instruments for more information about available currencies and instruments
-            #     :type currency:
-            #     :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
-            #     :type maturity:
-            #     :param date: YYYY-MM-DDTHH e.g., 2022-07-24T01
-            #     :type date :
-            #     :return: historical options open interest data
-            #     :rtype:
-            #     """
-            #     market = market.upper()
-            #     currency = currency.upper()
-            #     if currency not in CURRENCY.__members__:
-            #         raise TypeError("Currency not available")
-            #     elif market not in MARKET_CONSTS.__members__:
-            #         raise TypeError("Market not available")
-            #     else:
-            #         api_url = self.url + "oi_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "?date=" + date
-            #         responsedata = requests.get(api_url, headers=api.header).json()
-            #     return responsedata
-            #
-            # @classmethod
-            # def volume_strike(self, market: str, currency: str, maturity: str, date: str):
-            #     """
-            #
-            #     :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-            #     :type market:
-            #     :param currency: BTC,ETH,BCH,SOL,XRP,BNB
-            #     :type currency:
-            #     :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities
-            #     :type maturity:
-            #     :param date: YYYY-MM-DDTHH e.g., 2022-07-24T01
-            #     :type date :
-            #     :return: json data of historical volume by strike
-            #     :rtype:
-            #     """
-            #     market = market.upper()
-            #     currency = currency.upper()
-            #     if currency not in CURRENCY.__members__:
-            #         raise TypeError("Currency not available")
-            #     elif market not in MARKET_CONSTS.__members__:
-            #         raise TypeError("Market not available")
-            #     else:
-            #         api_url = self.url + "volume_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "?date=" + date
-            #         responsedata = requests.get(api_url, headers=api.header).json()
-            #     return responsedata
+            @classmethod
+            def oi_strike(self, market: str, currency: str, maturity: str, date_h: str):
+                """
+
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB , Check analytics/options/Instruments for more information about available currencies and instruments
+                :type currency:
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
+                :type maturity:
+                :param date_h: YYYY-MM-DDTHH e.g., 2022-07-24T01
+                :type date_h :
+                :return: historical options open interest data by strike
+                :rtype:
+                """
+                market = market.upper()
+                currency = currency.upper()
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "oi_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "?date_h=" + date_h
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def volume_strike(self, market: str, currency: str, maturity: str, date_h: str):
+                """
+
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB , Check analytics/options/Instruments for more information about available currencies and instruments
+                :type currency:
+                :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
+                :type maturity:
+                :param date_h: YYYY-MM-DDTHH e.g., 2022-07-24T01
+                :type date_h :
+                :return: historical options volume data by strike
+                :rtype:
+                """
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "volume_strike/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + "?date_h=" + date_h
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
+
+            @classmethod
+            def trades(self, market: str, currency: str, date: str, limit="", page=""):
+                """
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,BCH,SOL,XRP,BNB , Check analytics/options/Instruments for more information about available currencies and instruments
+                :type currency:
+                :param start: EXP:2023-07-11
+                :type end:
+                :param end: EXP:2023-07-18
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: historical options volume data by strike
+                :rtype:
+                """
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    makequery = prepare_query(date=date, limit=limit, page=page)
+                    api_url = self.url + "trades/" + market.upper() + "/" + currency.upper() + makequery
+                    responsedata = requests.get(api_url, headers=api.header).json()
+                return responsedata
 
             @classmethod
             def snapshot(self, market: str, currency: str, start="", end="", limit="10", page="1", timezone=""):
                 """
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: DERIBIT, OKX, BINANCE,BYBIT
                 :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
+                :param currency: BTC,ETH,SOL,BNB
                 :type currency:
                 :param start: EXP:2023-07-11
                 :type end:
@@ -1648,7 +1521,7 @@ class api():
                 :type limit:
                 :param page: default :1
                 :type page:
-                :param timezone: default :1
+                :param timezone: exp :0
                 :type timezone:
                 :return: json format data of historical snapshot of options
                 :rtype:
@@ -1656,293 +1529,438 @@ class api():
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, timezone=timezone)
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
+                else:
                     api_url = self.url + "snapshot/" + market.lower() + "/" + currency.lower() + makequery
                     response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "snapshot/" + market.lower() + "/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def volume_pc_ratio(self, market: str, currency: str, start="", end="", limit="10", page="1"):
+            def instrument_volume_buy_sell(self, market: str, instrument: str, start: str, end="", limit="", page=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
-                :type currency:
-                :param start: EXP:2022-06-07
+                :param instrument: Currency-Maturity-Strike-C/P e.g., BTC-30JUN23-80000-C Check analytics/options/Instruments for more information about available instrument
+                :type instrument:
+                :param start: EXP:2023-07-11
                 :type end:
-                :param end: EXP:2022-06-14
+                :param end: EXP:2023-07-18
                 :type end :
-                :param limit: default: 10
+                :param limit: 10
                 :type limit:
-                :param page: default :1
+                :param page: 1
                 :type page:
-                :return: json format data of volume put call ratio
+                :return: Retrives historical buy/sell volume data for a specific options instrument in a given market
                 :rtype:
                 """
+                market = market.upper()
+                instrument = instrument.upper()
+                x = instrument.split("-")
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
+                if len(x) != 4:
+                    raise TypeError("wrong instrument")
+                elif x[3] not in ["P", "C"]:
+                    raise TypeError("type in instument is either C or P")
+                elif market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "volume_pc_ratio/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "volume_pc_ratio/" + market.lower() + "/" + currency.lower()
+                    api_url = self.url + "instrument_volume_buy_sell/" + market + "/" + instrument + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def gex_index(self, market: str, currency: str, start="", end="", limit="10", page="1"):
+            def total_oi_by_market(self, market: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
-                :type currency:
-                :param start: EXP:2022-06-07
+                :param start: EXP:2023-07-11
                 :type end:
-                :param end: EXP:2022-06-14
+                :param end: EXP:2023-07-18
                 :type end :
-                :param limit: default: 10
+                :param limit: 10
                 :type limit:
-                :param page: default :1
+                :param page: 1
                 :type page:
-                :return: json format data of gamma exposure index
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type end :
+                :return: historical total notional value and open value by market
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
+                market = market.upper()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "gex_index/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "gex_index/" + market.lower() + "/" + currency.lower()
+                    api_url = self.url + "total/oi_by_market/" + market + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def max_pain(self, market: str, currency: str, start="", end="", limit="10", page="1"):
+            def total_volume_by_market(self, market: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
-                :type currency:
-                :param start: EXP:2022-06-07
+                :param start: EXP:2023-07-11
                 :type end:
-                :param end: EXP:2022-06-14
+                :param end: EXP:2023-07-18
                 :type end :
-                :param limit: default: 10
+                :param limit: 10
                 :type limit:
-                :param page: default :1
+                :param page: 1
                 :type page:
-                :return: json format data of max pain monthly expiration
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type end :
+                :return: historical total notional volume by market
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
+                market = market.upper()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "max_pain/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "max_pain/" + market.lower() + "/" + currency.lower()
+                    api_url = self.url + "total/volume_by_market/" + market + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def atm_iv(self, market: str, currency: str, start="", end="", limit="10", page="1"):
+            def total_oi_by_currency(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
+                :param currency: BTC,ETH,SOL,BNB,OP,TONCOIN,ARB,XRP ADA
                 :type currency:
-                :param start: EXP:2022-06-07
+                :param start: EXP:2023-07-11
                 :type end:
-                :param end: EXP:2022-06-14
+                :param end: EXP:2023-07-18
                 :type end :
-                :param limit: default: 10
+                :param limit: 10
                 :type limit:
-                :param page: default :1
+                :param page: 1
                 :type page:
-                :return: json format data of at the money implied volatility (rolling maturity)
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type end :
+                :return: historical total open interest per currency
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "atm_iv/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "atm_iv/" + market.lower() + "/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "total/oi_by_currency/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
+
                 return response
 
             @classmethod
-            def volume_total(self, market: str, currency: str, start="", end="", limit="10", page="1"):
+            def total_volume_by_currency(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
+                :param currency: BTC,ETH,SOL,BNB,OP,TONCOIN,ARB,XRP ADA
                 :type currency:
-                :param start: EXP:2022-06-07
+                :param start: EXP:2023-07-11
                 :type end:
-                :param end: EXP:2022-06-14
+                :param end: EXP:2023-07-18
                 :type end :
-                :param limit: default: 10
+                :param limit: 10
                 :type limit:
-                :param page: default :1
+                :param page: 1
                 :type page:
-                :return: json format data of total volume
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type end :
+                :return: historical total volume per currency
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "volume_total/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "volume_total/" + market.lower() + "/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "total/volume_by_currency/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
+
                 return response
 
             @classmethod
-            def oi_pc_ratio(self, market: str, currency: str, start="", end="", limit="10", page="1"):
+            def iv_rv(self, market: str, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
+                :param currency: BTC,ETH,SOL,BNB,OP,TONCOIN,ARB,XRP ADA
                 :type currency:
-                :param start: EXP:2022-06-07
+                :param start: EXP:2023-07-11
                 :type end:
-                :param end: EXP:2022-06-14
+                :param end: EXP:2023-07-18
                 :type end :
-                :param limit: default: 10
+                :param limit: 10
                 :type limit:
-                :param page: default :1
+                :param page: 1
                 :type page:
-                :return: json format data of open interests put call ratio
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type end :
+                :return: historical implied volatility (IV) and realized volatility (RV) by market and currency
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "oi_pc_ratio/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "oi_pc_ratio/" + market.lower() + "/" + currency.lower()
+                    api_url = self.url + "iv_rv/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_total(self, market: str, currency: str, start="", end="", limit="10", page="1"):
+            def dvol(self, market: str, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: DERIBIT
                 :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
+                :param currency: BTC,ETH
                 :type currency:
-                :param start: EXP:2022-06-07
+                :param start: EXP:2023-07-11
                 :type end:
-                :param end: EXP:2022-06-14
+                :param end: EXP:2023-07-18
                 :type end :
-                :param limit: default: 10
+                :param limit: 10
                 :type limit:
-                :param page: default :1
+                :param page: 1
                 :type page:
-                :return: json format data of total open interest
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type end :
+                :return: historical delta volatility (DVOL) data by market and currency
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "oi_total/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "oi_total/" + market.lower() + "/" + currency.lower()
+                    api_url = self.url + "dvol/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def vix(self, market: str, currency: str, start="", end="", limit="10", page="1"):
+            def vix(self, market: str, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: DERIBIT
                 :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
+                :param currency: BTC,ETH
                 :type currency:
-                :param start: EXP:2022-06-07
+                :param start: EXP:2023-07-11
                 :type end:
-                :param end: EXP:2022-06-14
+                :param end: EXP:2023-07-18
                 :type end :
-                :param limit: default: 10
+                :param limit: 10
                 :type limit:
-                :param page: default :1
+                :param page: 1
                 :type page:
-                :return: json format data of vol index
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type end :
+                :return: historical volatility index (VIX) data by market and currency
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "vix/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "vix/" + market.lower() + "/" + currency.lower()
+                    api_url = self.url + "vix/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def dvol(self, market: str, currency: str, start="", end="", limit="10", page="1"):
+            def oi_total(self, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA
+                :type currency:
+                :param start: EXP:2023-07-11
+                :type end:
+                :param end: EXP:2023-07-18
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type end :
+                :return: historical total open interest (OI) data by market and currency
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "oi_total/" + market.upper() + "/" + currency.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
 
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+            @classmethod
+            def oi_pc_ratio(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
+                            granularity=""):
+                """
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA
+                :type currency:
+                :param start: EXP:2023-07-11
+                :type end:
+                :param end: EXP:2023-07-18
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type end :
+                :return: historical pull cal ratio (PC) data by market and currency
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "oi_pc_ratio/" + market.upper() + "/" + currency.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def volume_total(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
+                             granularity=""):
+                """
+                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                 :type market:
+                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA
+                 :type currency:
+                 :param start: EXP:2023-07-11
+                 :type end:
+                 :param end: EXP:2023-07-18
+                 :type end :
+                 :param limit: 10
+                 :type limit:
+                 :param page: 1
+                 :type page:
+                 :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                 :type end :
+                 :return: historical total volume data by market and currency
+                 :rtype:
+                 """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "volume_total/" + market.upper() + "/" + currency.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def atm_iv(self, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
+                """
+                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                 :type market:
+                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TONCOIN
+                 :type currency:
+                 :param start: EXP:2023-07-11
+                 :type end:
+                 :param end: EXP:2023-07-18
+                 :type end :
+                 :param limit: 10
+                 :type limit:
+                 :param page: 1
+                 :type page:
+                 :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                 :type end :
+                 :return: historical ATM implied volatility data by market and currency
+                 :rtype:
+                 """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "atm_iv/" + market.upper() + "/" + currency.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def gex_index(self, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
+                """
+                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                 :type market:
+                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA
+                 :type currency:
+                 :param start: EXP:2023-07-11
+                 :type end:
+                 :param end: EXP:2023-07-18
+                 :type end :
+                 :param limit: 10
+                 :type limit:
+                 :param page: 1
+                 :type page:
+                 :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                 :type end :
+                 :return: historical GEX index data by market and currency
+                 :rtype:
+                 """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "gex_index/" + market.upper() + "/" + currency.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def max_pain(self, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
+                """
+                 :param market: AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                 :type market:
+                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TONCOIN
+                 :type currency:
+                 :param start: EXP:2023-07-11
+                 :type end:
+                 :param end: EXP:2023-07-18
+                 :type end :
+                 :param limit: 10
+                 :type limit:
+                 :param page: 1
+                 :type page:
+                 :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                 :type end :
+                 :return: historical MAX pain data by market and currency
+                 :rtype:
+                 """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "max_pain/" + market.upper() + "/" + currency.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def volume_pc_ratio(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
+                                granularity=""):
+                """
+                 :param market: AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                 :type market:
+                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TONCOIN
+                 :type currency:
+                 :param start: EXP:2023-07-11
+                 :type end:
+                 :param end: EXP:2023-07-18
+                 :type end :
+                 :param limit: 10
+                 :type limit:
+                 :param page: 1
+                 :type page:
+                 :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                 :type granularity :
+                 :return: historical pull/call ratio data by market and currency
+                 :rtype:
+                 """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "volume_pc_ratio/" + market.upper() + "/" + currency.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def iv_bid_ask(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+                           granularity=""):
+                """
+                :param market: BYBIT, DERIBIT,
                 :type market:
                 :param currency: BTC,ETH,SOL
                 :type currency:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: default: 10
-                :type limit:
-                :param page: default :1
-                :type page:
-                :return: json format data of deribit volatility index
-                :rtype:
-                """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "dvol/" + market.lower() + "/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "dvol/" + market.lower() + "/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-
-            @classmethod
-            def atm_iv_model(self, market: str, currency: str, type: str, start="", end="", limit="", page=""):
-                """
-
-                :param market: BIT, DERIBIT, BITCOM, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH
-                :type currency:
-                :param type: 25p , 10p , 25c, 10c
+                :param type: p_25, p_10, c_25, c_10 , p_atm , c_atm
                 :type type:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -1952,312 +1970,29 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of at the money implied volatility model
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: historical implied volatility bid ask by market currency and type
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "type/atm_iv_model//" + market.lower() + "/" + currency.lower() + "/" + type + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "type/atm_iv_model/" + market.lower() + "/" + currency.lower() + "/" + type
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-
-            @classmethod
-            def butterfly(self, market: str, currency: str, type: str, start="", end="", limit="", page=""):
-                """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
-                :type currency:
-                :param type: 25d , 10d  (d: delta)
-                :type type:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: 10
-                :type limit:
-                :param page: 1
-                :type page:
-                :return: json data of butterfly
-                :rtype:
-                """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "type/butterfly/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "type/butterfly/" + market.lower() + "/" + currency.lower() + "/" + type
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-
-            @classmethod
-            def butterfly_model(self, market: str, currency: str, type: str, start="", end="", limit="", page=""):
-                """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH,SOL,XRP,BNB
-                :type currency:
-                :param type: 25d , 10d (d: delta)
-                :type type:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: 10
-                :type limit:
-                :param page: 1
-                :type page:
-                :return: json data of butterfly model
-                :rtype:
-                """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "type/butterfly_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "type/butterfly_model/" + market.lower() + "/" + currency.lower() + "/" + type
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-
-            @classmethod
-            def skew(self, market: str, currency: str, type: str, start="", end="", limit="", page=""):
-                """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH
-                :type currency:
-                :param type: 25d , 10d (d: delta)
-                :type type:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: 10
-                :type limit:
-                :param page: 1
-                :type page:
-                :return: json data of skew
-                :rtype:
-                """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "type/skew/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "type/skew/" + market.lower() + "/" + currency.lower() + "/" + type
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-
-            @classmethod
-            def skew_model(self, market: str, currency: str, type: str, start="", end="", limit="", page=""):
-                """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH
-                :type currency:
-                :param type: 25d , 10d (d: delta)
-                :type type:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: 10
-                :type limit:
-                :param page: 1
-                :type page:
-                :return: json data of skew model
-                :rtype:
-                """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "type/skew_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "type/skew_model/" + market.lower() + "/" + currency.lower() + "/" + type
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-
-            @classmethod
-            def risk_reversal(self, market: str, currency: str, type: str, start="", end="", limit="", page=""):
-                """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH
-                :type currency:
-                :param type: 25d , 10d (d: delta)
-                :type type:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: 10
-                :type limit:
-                :param page: 1
-                :type page:
-                :return: json data of risk reversal
-                :rtype:
-                """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "type/risk_reversal/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "type/risk_reversal/" + market.lower() + "/" + currency.lower() + "/" + type
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-
-            @classmethod
-            def risk_reversal_model(self, market: str, currency: str, type: str, start="", end="", limit="", page=""):
-                """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH
-                :type currency:
-                :param type: 25d , 10d (d: delta)
-                :type type:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: 10
-                :type limit:
-                :param page: 1
-                :type page:
-                :return: json data of risk reversal model
-                :rtype:
-                """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "type/risk_reversal_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "type/risk_reversal_model/" + market.lower() + "/" + currency.lower() + "/" + type
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-
-            @classmethod
-            def gamma_bands(self, market: str, currency: str, type="1d", start="", end="", limit="", page=""):
-                """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH
-                :type currency:
-                :param type: 1d default , 7d, 30d (atm volatility)
-                :type type:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: 10
-                :type limit:
-                :param page: 1
-                :type page:
-                :return: json data of gamma bands
-                :rtype:
-                """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "type/gamma_bands/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "type/gamma_bands/" + market.lower() + "/" + currency.lower() + "/" + type
-                    response = requests.get(api_url, headers=api.header).json()
-                return response
-
-            @classmethod
-            def iv_bid_ask(self, market: str, currency: str, type: str, start="", end="", limit="", page=""):
-                """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
-                :type market:
-                :param currency: BTC,ETH,BCH
-                :type currency:
-                :param type: p_25, p_10, c_25, c_10
-                :type type:
-                :param start: EXP:2022-06-07
-                :type end:
-                :param end: EXP:2022-06-14
-                :type end :
-                :param limit: 10
-                :type limit:
-                :param page: 1
-                :type page:
-                :return: implied volatility bid ask, all data in json format or specific period in dataclass format
-                :rtype:
-                """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
                     api_url = self.url + "type/iv_bid_ask/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "type/iv_bid_ask/" + market.lower() + "/" + currency.lower() + "/" + type
-                    response = requests.get(api_url, headers=api.header).json()
-
-                Response = IpaginationIv_bid_ask(response,
-                                                 Ipaginationmeta(response['meta']['total'], response['meta']['page'],
-                                                                 response['meta']['items']))
-
-                for i in range(len(response["items"])):
-                    Response.date.append(response["items"][i]['date'])
-                    Response.week.append(iv_bid_ask_data(response['items'][i]['7']['ask'],
-                                                         response['items'][i]['7']['bid'],
-                                                         response['items'][i]['7']['mark']))
-                    Response.two_weeks.append(iv_bid_ask_data(response['items'][i]['14']['ask'],
-                                                              response['items'][i]['14']['bid'],
-                                                              response['items'][i]['14']['mark']))
-                    Response.one_month.append(iv_bid_ask_data(response['items'][i]['30']['ask'],
-                                                              response['items'][i]['30']['bid'],
-                                                              response['items'][i]['30']['mark']))
-                    Response.two_months.append(iv_bid_ask_data(response['items'][i]['60']['ask'],
-                                                               response['items'][i]['60']['bid'],
-                                                               response['items'][i]['60']['mark']))
-                    Response.half_a_year.append(iv_bid_ask_data(response['items'][i]['180']['ask'],
-                                                                response['items'][i]['180']['bid'],
-                                                                response['items'][i]['180']['mark']))
-                    Response.year.append(iv_bid_ask_data(response['items'][i]['365']['ask'],
-                                                         response['items'][i]['365']['bid'],
-                                                         response['items'][i]['365']['mark']))
-
-                return Response
+                return response
 
             @classmethod
-            def total_oi(self, market: str, currency: str, maturity: str, start="", end="", limit="", page=""):
+            def atm_iv_model(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+                             granularity=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: DERIBIT
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH
                 :type currency:
-                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities
-                :type maturity:
+                :param type: 25P ,15P, 10P , 25C, 10C, 15C, 25C, 35C, 35P, ATM
+                :type type:
                 :param start: EXP:2022-06-07
                 :type end:
                 :param end: EXP:2022-06-14
@@ -2266,30 +2001,29 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total open interests
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: historical At-The-Money Implied Volatility (ATM IV) Model data for the specified currency, market, and option type.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "maturity/total_oi/" + market.lower() + "/" + currency.lower() + "/" + maturity + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "maturity/total_oi/" + market.lower() + "/" + currency.lower() + "/" + maturity
+                    api_url = self.url + "type/butterfly_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_volume(self, market: str, currency: str, maturity: str, start="", end="", limit="", page=""):
+            def butterfly(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+                          granularity=""):
                 """
-
-                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, ZETA_EXCHANGE, FTX
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,BCH
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TONCOIN
                 :type currency:
-                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities
-                :type maturity:
+                :param type:  10D , 25D
+                :type type:
                 :param start: EXP:2022-06-07
                 :type end:
                 :param end: EXP:2022-06-14
@@ -2298,27 +2032,243 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total volume
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: historical butterfly data by market currency and type
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "maturity/total_volume/" + market.lower() + "/" + currency.lower() + "/" + maturity + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "maturity/total_volume/" + market.lower() + "/" + currency.lower() + "/" + maturity
+                    api_url = self.url + "type/butterfly/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def volumeOiByExchange(self, currency: str, maturity: str, start="", end="", limit="", page=""):
+            def butterfly_model(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+                                granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH,SOL
+                :param market: DERIBIT
+                :type market:
+                :param currency: BTC,ETH
                 :type currency:
-                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Active expirations endpoint provide available maturities
+                :param type: 25D , 15D, 10D, 35D
+                :type type:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: historical butterfly model data by market currency and type
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "type/butterfly_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def skew(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+                     granularity=""):
+                """
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA
+                :type currency:
+                :param type:  10D , 25D
+                :type type:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: historical skew data by market currency and type
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "type/skew/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def skew_model(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+                           granularity=""):
+                """
+                :param market: DERIBIT
+                :type market:
+                :param currency: BTC,ETH
+                :type currency:
+                :param type: 25D , 15D, 10D, 35D
+                :type type:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: historical skew model by market currency and type
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "type/skew_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def risk_reversal(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+                              granularity=""):
+                """
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA
+                :type currency:
+                :param type:  10D , 25D
+                :type type:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: historical risk reversal data by market currency and type
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "type/risk_reversal/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def risk_reversal_model(self, market: str, currency: str, type: str, start: str, end: str, limit="10",
+                                    page="1",
+                                    granularity=""):
+                """
+                :param market: DERIBIT
+                :type market:
+                :param currency: BTC,ETH
+                :type currency:
+                :param type: 25D , 15D, 10D, 35D
+                :type type:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: historical risk_reversal_model by market currency and type
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "type/risk_reversal_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def gamma_bands(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+                            granularity=""):
+                """
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA
+                :type currency:
+                :param type: 1D , 7D 30D
+                :type type:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: historical gamma bands by market currency and type
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "type/gamma_bands/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def spread_skew(self, market: str, type: str, start: str, end: str, limit="10", page="1", granularity=""):
+                """
+                :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param type:  10D , 25D
+                :type type:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: This endpoint provides historical skew data for the specified market and type for a spread (ETH - BTC). The skew values are given for various days to maturity. In options trading, skew refers to the difference in implied volatility of different strike prices across the same maturity options. This can be used as an indicator of the market's sentiment about the future variability of the underlying assets in the context of the spread (ETH - BTC).
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "spread/type/skew/" + market.lower() + "/" + type + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def maturity_total_oi(self, market: str, currency: str, maturity: str, start: str, end: str, limit="10",
+                                  page="1", granularity=""):
+                """
+                :param market:  AGGREGATE,BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA,TONCOIN
+                :type currency:
+                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
                 :type maturity:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2328,15 +2278,236 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of open interest and volume by exchange
+                :return: This endpoint provides historical total open interest (OI) data for the specified market, currency, and maturity. The open interest data is given in total, for put options, for call options, and the ratio between put and call. Open interest represents the total number of outstanding derivative contracts, such as options or futures, that have not been settled. This can be used as an indicator of the market's liquidity and activity for the specific maturity.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "maturity/total_oi/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+
+                return response
+
+            @classmethod
+            def maturity_total_volume(self, market: str, currency: str, maturity: str, start: str, end: str, limit="10",
+                                      page="1", granularity=""):
+                """
+                :param market:  AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA,TONCOIN
+                :type currency:
+                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
+                :type maturity:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: This endpoint provides historical total volume data for the specified market, currency, and maturity. The volume data is given in total, for put options, for call options, and the ratio between put and call. Volume represents the number of contracts traded during a given period. This can be used as an indicator of the market's activity and liquidity for the specific maturity.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "maturity/total_volume/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+
+                return response
+
+            @classmethod
+            def atm_iv_h(self, market: str, currency: str, maturity: str, start: str, end: str, limit="10", page="1",
+                         granularity=""):
+                """
+                :param market:  BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA
+                :type currency:
+                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
+                :type maturity:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: This endpoint provides historical ATM IV data for the specified market, currency, and maturity. ATM IV is a key metric in options pricing, as it provides a measure of the market's expectations for future volatility. High IV values generally suggest that the market anticipates significant price movement, while low IV values indicate an expectation of relatively stable prices.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "maturity/atm_iv_h/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+
+                return response
+
+            @classmethod
+            def maturity_oi_volume(self, market: str, currency: str, maturity: str, start: str, end: str, limit="10",
+                                   page="1", granularity=""):
+                """
+                :param market:  AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
+                :type market:
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA,TONCOIN
+                :type currency:
+                :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
+                :type maturity:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: This endpoint provides historical OI and volume data for the specified market, currency, and maturity. These metrics provide insights into market activity and investor sentiment. High OI values suggest that a large number of contracts are open and could result in significant future trading activity, while high volume values indicate a high level of recent trading activity.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "maturity/oi_volume/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+
+                return response
+
+            @classmethod
+            def orbit_dig(self, currency: str, maturity_name: str, field: str, start: str, end: str, limit="", page=""):
+                """
+
+                :param currency: BTC,ETH,AVAX,SOL
+                :type currency:
+                :param maturity_name: 1W , 2W, 1M, 3M, 6M
+                :type maturity_name:
+                :param field: 5,10,15,20
+                :type field:
+                :param start: EXP:2023-07-13
+                :type end:
+                :param end: EXP:2023-07-20
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :return: This endpoint provides historical options orbit data for the specified currency and maturity. The orbit data, including the strike prices for call and put options and the price of the underlying index, are key factors that traders consider when analyzing and predicting market trends.
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "maturity/VolumeOiByExchange/" + currency.lower() + "/" + maturity + makequery
-                    response = requests.get(api_url, headers=api.header).json()
+                api_url = self.url + "orbit_dig/" + currency.upper() + "/" + maturity_name + "/" + field + makequery
+                response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def actual_vol_risk_reversal_model(self, market: str, currency: str, type: str, days: str, start: str,
+                                               end: str, limit="10", page="1",
+                                               granularity=""):
+                """
+                :param market: DERIBIT
+                :type market:
+                :param currency: BTC,ETH
+                :type currency:
+                :param type: 25 , 15, 10, 35
+                :type type:
+                :param days: 7,30,60,90,180,365
+                :type days:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: This endpoint provides historical options actual volatility data using the Skew Model for the specified market, currency, option type (call or put), and a certain number of days. Volatility skew is a measure of the disparity of option volatility for option contracts with different strikes but the same expiration.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "maturity/VolumeOiByExchange/" + currency.lower() + "/" + maturity
+                    api_url = self.url + "actual_vol/risk_reversal_model/" + market.upper() + "/" + currency.upper() + "/" + str(
+                        type) + "/" + str(days) + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def actual_vol_skew_model(self, market: str, currency: str, type: str, days: str, start: str, end: str,
+                                      limit="10", page="1",
+                                      granularity=""):
+                """
+                :param market: DERIBIT
+                :type market:
+                :param currency: BTC,ETH
+                :type currency:
+                :param type: 25 , 15, 10, 35
+                :type type:
+                :param days: 7,30,60,90,180,365
+                :type days:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: This endpoint provides historical options actual volatility data using the Skew Model for the specified market, currency, option type (call or put), and a certain number of days. Volatility skew is a measure of the disparity of option volatility for option contracts with different strikes but the same expiration.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "actual_vol/skew_model/" + market.upper() + "/" + currency.upper() + "/" + str(
+                        type) + "/" + str(days) + makequery
+                    response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def actual_vol_butterfly_model(self, market: str, currency: str, type: str, days: str, start: str, end: str,
+                                           limit="10", page="1",
+                                           granularity=""):
+                """
+                :param market: DERIBIT
+                :type market:
+                :param currency: BTC,ETH
+                :type currency:
+                :param type: 25 , 15, 10, 35
+                :type type:
+                :param days: 7,30,60,90,180,365
+                :type days:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return: This endpoint provides historical options actual volatility data using the Butterfly Model for the specified market, currency, option type (call or put), and a certain number of days. Volatility is a key factor that traders consider when analyzing and predicting market trends.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                if market.upper() not in MARKET_CONSTS.__members__:
+                    raise TypeError("Market not available")
+                else:
+                    api_url = self.url + "actual_vol/butterfly_model/" + market.upper() + "/" + currency.upper() + "/" + str(
+                        type) + "/" + str(days) + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
@@ -2345,10 +2516,11 @@ class api():
             pass
 
             @classmethod
-            def oi_weighted_funding(self, currency: str, start="", end="", limit="", page=""):
+            def snapshot(self, market: str, currency: str, start: str, end: str, limit="10", page="1", timezone="0"):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param market: BINANCE, BITMEX, BYBIT, DERIBIT, HUOBI, KRAKEN, OKX
+                :type market:
+                :param currency: BTC,ETH,ADA... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2358,23 +2530,20 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of open interest weighted funding
+                :param timezone: exp : 0
+                :type timezone:
+                :return: This endpoint provides historical futures snapshot data for the specified market and currency. A futures contract is a legal agreement to buy or sell a particular commodity or asset at a predetermined price at a specified time in the future.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "oi_weighted_funding/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "oi_weighted_funding/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, timezone=timezone)
+                api_url = self.url + "snapshot/" + market.upper() + '/' + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_weighted_volume_funding(self, currency: str, start="", end="", limit="", page=""):
+            def realized_volatility(self, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2384,23 +2553,20 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of oi weighted volume funding
+                :param granularity: 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical futures realized volatility data for the specified currency. Realized volatility is a measure of price changes of an asset or currency over time, showing how much the price deviated from its mean in the past.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "oi_weighted_volume_funding/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "oi_weighted_volume_funding/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "realized_volatility/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_weighted_basis(self, currency: str, start="", end="", limit="", page=""):
+            def oi_weighted_funding(self, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2410,23 +2576,21 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of oi annualised basis
+                :param granularity: 5m, 15m, 30m 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical futures open interest weighted funding data for the specified currency. Open interest weighted funding represents the funding costs associated with holding positions in futures contracts, taking into account the open interest and the funding rates.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "oi_weighted_basis/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "oi_weighted_basis/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "oi_weighted_funding/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_oi(self, currency: str, start="", end="", limit="", page=""):
+            def oi_weighted_volume_funding(self, currency: str, start: str, end: str, limit="10", page="1",
+                                           granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2436,23 +2600,20 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total open interest
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical futures open interest weighted funding data
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "total_oi/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "total_oi/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "oi_weighted_volume_funding/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_oi_by_margin(self, currency: str, start="", end="", limit="", page=""):
+            def oi_weighted_basis(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2462,23 +2623,20 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total open interest by margin
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return:
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "total_oi_by_margin/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "total_oi_by_margin/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "oi_weighted_basis/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_volume(self, currency: str, start="", end="", limit="", page=""):
+            def total_oi(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2488,23 +2646,20 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total volume
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical futures total open interest data for the specified currency. The data includes open interest and notional value for both perpetual futures contracts and futures contracts with specific expiration dates on various exchanges.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "total_volume/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "total_volume/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "total_oi/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_volume_by_margin(self, currency: str, start="", end="", limit="", page=""):
+            def total_oi_by_margin(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2514,23 +2669,20 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total volume by margin
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical futures total open interest data for the specified currency. The data includes open interest and notional value for both perpetual futures contracts and futures contracts with specific expiration dates on various exchanges.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "total_volume_by_margin/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "total_volume_by_margin/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "total_oi_by_margin/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def realized_volatility(self, currency: str, start="", end="", limit="", page=""):
+            def total_volume(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2540,23 +2692,20 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of realized volatility
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical futures total volume for the specified currency. The data includes volume and notional value for both perpetual futures contracts and futures contracts on various exchanges.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "realized_volatility/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "realized_volatility/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "total_volume/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def alt_summary(self, currency: str, start="", end="", limit="", page=""):
+            def total_volume_by_margin(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2566,23 +2715,20 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of alt summary
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical futures total volume by margin for the specified currency. The data includes volume and notional value for futures contracts and perpetual futures contracts on both centralized and decentralized exchanges.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "alt_summary/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "alt_summary/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "total_volume_by_margin/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def alt_markets(self, currency: str, start="", end="", limit="", page=""):
+            def alt_summary(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -2592,24 +2738,21 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of alt markets
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical altcoin summary for the specified currency in futures trading. The data includes price, open interest, volume, funding rate, yield, liquidations, market capitalization, and open interest volume for the past 24 hours.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "alt_markets/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "alt_markets/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "alt_summary/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def market_index(self, currency: str, start="", end="", limit="", page=""):
+            def market_index(self, index: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
-                :type currency:
+                :param index: privacy, oracle_data nft_gaming, memecoin, layer1 , layer2, exchange, defi , digital_asset
+                :type index:
                 :param start: EXP:2022-06-07
                 :type end:
                 :param end: EXP:2022-06-14
@@ -2618,24 +2761,21 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of market index
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical market index data for the specified index in futures trading. The data includes information about each altcoin in the index, such as open interest, trading volume, market capitalization, liquidations, funding rate, yield, and price.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "market_index/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "market_index/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "market_index/" + index.lower() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def indices_price(self, currency: str, start="", end="", limit="", page=""):
+            def alt_markets(self, market: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
-                :type currency:
+                :param market: DERIBIT, GMX, BITGET, BITMEX, VERTEX, BITFINEX, OKEX, BINANCE, KRAKEN, KWENTA, PERP-PROTOCOL, BYBIT, DYDX, HUOBI
+                :type market:
                 :param start: EXP:2022-06-07
                 :type end:
                 :param end: EXP:2022-06-14
@@ -2644,26 +2784,21 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of indices price
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for altcoin markets in futures trading. The data includes information such as open interest, trading volume, funding rate, and liquidations (both long and short). The data is organized by date for each altcoin market within the specified market.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "indices_price/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "indices_price/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "market_index/" + market.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def futures_annualized_basis(self, currency: str, period: str, start="", end="", limit="", page=""):
+            def indices_price(self, index: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
-                :type currency:
-                :param period: 7 | 30 | 60 | 90 | 180 | 270 | 365
-                :type period:
+                :param index: privacy,oracle_data,nft_gaming,memecoin,layer2,layer1,exchange,digital_asset,defi
+                :type index:
                 :param start: EXP:2022-06-07
                 :type end:
                 :param end: EXP:2022-06-14
@@ -2672,26 +2807,24 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of futures annualized basis
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical price data for indices. The data includes the date and price for each index.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "futures_annualized_basis/" + currency.lower() + "/" + period + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "futures_annualized_basis/" + currency.lower() + "/" + period
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "indices_price/" + index.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def perpetual_funding_exchange(self, currency: str, option: str, start="", end="", limit="", page=""):
+            def futures_annualized_basis(self, currency: str, days: str, start: str, end: str, limit="10", page="1",
+                                         granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
-                :param option: C,D (C: centralize, D: decentralize)
-                :type option:
+                :param days : 3 | 7 | 30 | 60 | 90 | 180 | 270 | 365
+                :type days :
                 :param start: EXP:2022-06-07
                 :type end:
                 :param end: EXP:2022-06-14
@@ -2700,26 +2833,24 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of perpetual funding exchange
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for the annualized basis of futures contracts. The data includes the date and the annualized basis values for different exchanges such as DERIBIT, HUOBI, and OKEX.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "perpetual_funding_exchange/" + currency.lower() + "/" + option + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "perpetual_funding_exchange/" + currency.lower() + "/" + option
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "futures_annualized_basis/" + currency.upper() + "/" + str(days) + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_oi_by_exchange(self, currency: str, option: str, start="", end="", limit="", page=""):
+            def perpetual_funding_exchange(self, currency: str, option: str, start: str, end: str, limit="10", page="1",
+                                           granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
-                :param option: C,D (C: centralize, D: decentralize)
-                :type option:
+                :param option  : C , D
+                :type option  :
                 :param start: EXP:2022-06-07
                 :type end:
                 :param end: EXP:2022-06-14
@@ -2728,51 +2859,73 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total oi by exchange
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for the funding rates and yields of perpetual contracts on various exchanges. The data includes the date, as well as information such as the yield, funding rate, market name, and symbol for each perpetual contract.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "total_oi_by_exchange/" + currency.lower() + "/" + option + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "total_oi_by_exchange/" + currency.lower() + "/" + option
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "perpetual_funding_exchange/" + currency.upper() + "/" + option.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_volume_by_exchange(self, currency: str, option: str, start="", end="", limit="", page=""):
+            def total_oi_by_exchange(self, currency: str, option: str, start: str, end: str, limit="10", page="1",
+                                     granularity=""):
                 """
-
-                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
-                :param option: C,D (C: centralize, D: decentralize)
-                :type option:
-                :param start: EXP:2022-06-07
+                :param option  : C , D
+                :type option  :
+                :param start: EXP:2023-07-13
                 :type end:
-                :param end: EXP:2022-06-14
+                :param end: EXP:2023-07-20
                 :type end :
                 :param limit: 10
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of total volume by exchange
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for the total open interest and notional values of perpetual and futures contracts on various exchanges. The data includes the date, as well as the open interest and notional values for each exchange and contract type (perpetual or future).
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "total_volume_by_exchange/" + currency.lower() + "/" + option + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "total_volume_by_exchange/" + currency.lower() + "/" + option
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "total_oi_by_exchange/" + currency.upper() + "/" + option.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def perpetual_yield(self, market: str, currency: str, start="", end="", limit="", page=""):
+            def total_volume_by_exchange(self, currency: str, option: str, start: str, end: str, limit="10", page="1",
+                                     granularity=""):
                 """
+                :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
+                :type currency:
+                :param option  : C , D
+                :type option  :
+                :param start: EXP:2023-07-13
+                :type end:
+                :param end: EXP:2023-07-20
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for the total trading volume and notional values of perpetual and futures contracts on various exchanges. The data includes the date, as well as the volume and notional values for each exchange and contract type (perpetual or future).
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "total_volume_by_exchange/" + currency.upper() + "/" + option.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
+                return response
 
-                :param market: BINANCE | BYBIT | BITMEX | FTX | HUOBI  BITFINEX | DERIBIT | KRAKEN | OKEX
+            @classmethod
+            def perpetual_yield(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
+                                     granularity=""):
+                """
+                :param market: DERIBIT, GMX, BITGET, BITMEX, VERTEX, BITFINEX, OKEX, BINANCE, KRAKEN, KWENTA, PERP-PROTOCOL, BYBIT, DYDX, HUOBI
                 :type market:
                 :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
@@ -2784,25 +2937,21 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of perpetual yield
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for the yield of perpetual contracts in a specific currency and market. The data includes the date and the yield value for each perpetual contract symbol.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if market.upper() not in MARKET_CONSTS.__members__:
-                    raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "perpetual_yield/" + currency.lower() + "/" + market.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "perpetual_yield/" + currency.lower() + "/" + market.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page,granularity=granularity)
+                api_url = self.url + "perpetual_yield/" + currency.upper() + "/" + market.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def perpetual_funding(self, market: str, currency: str, start="", end="", limit="", page=""):
+            def perpetual_funding(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
+                                     granularity=""):
                 """
-
-                :param market: BINANCE | BYBIT | BITMEX | FTX | HUOBI  BITFINEX | DERIBIT | KRAKEN | OKEX
+                :param market: DERIBIT, GMX, BITGET, BITMEX, VERTEX, BITFINEX, OKEX, BINANCE, KRAKEN, KWENTA, PERP-PROTOCOL, BYBIT, DYDX, HUOBI
                 :type market:
                 :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
                 :type currency:
@@ -2814,18 +2963,86 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of perpetual funding
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for the funding of perpetual contracts in a specific currency and market. The data includes the date and the funding value for each perpetual contract symbol.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page,granularity=granularity)
+                api_url = self.url + "perpetual_funding/" + currency.upper() + "/" + market.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def global_activity_futures(self, market: str, start: str, end: str, limit="10", page="1",
+                                     granularity=""):
+                """
+                :param market: DERIBIT, BITGET, BITMEX, OKEX, BINANCE, KRAKEN, BYBIT, HUOBI
+                :type market:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for the global activity of futures in a specific market. The data includes the date, open interest, trading volume, yield value, and the number of liquidations for long and short positions.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page,granularity=granularity)
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
-                elif makequery != "":
-                    api_url = self.url + "perpetual_funding/" + currency.lower() + "/" + market.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "perpetual_funding/" + currency.lower() + "/" + market.lower()
+                    api_url = self.url + "global_activity_futures/" + market.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
+                return response
+
+            @classmethod
+            def oi_total_global_activity(self,start: str, end: str, limit="10", page="1",
+                                        granularity=""):
+                """
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for the total global open interest activity. It includes the date and the total open interest for futures, options, and perpetual contracts.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "oi_total_global_activity" + makequery
+                response = requests.get(api_url, headers=api.header).json()
+                return response
+
+
+            @classmethod
+            def volume_total_global_activity(self,start: str, end: str, limit="10", page="1",
+                                        granularity=""):
+                """
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param granularity: 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d
+                :type granularity:
+                :return: This endpoint provides historical data for the total global volume activity. It includes the date and the total volume for futures, options, and perpetual contracts.
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "volume_total_global_activity" + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
         # class move:
@@ -3180,11 +3397,11 @@ class api():
             pass
 
             @classmethod
-            def perpetuals(self, market: str, symbol: str, start="", end="", limit="", page=""):
+            def perpetuals(self, market: str, symbol: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
-                :param market: Full list of supported exchanges on instruments endpoint. exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
+                :param market:  BITMEX | BINANCE | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX | KWENTA | GMX | VERTEX | PERP-PROTOCOL | BITGET
                 :type market:
-                :param symbol: exp : BTC-30DEC22, ETHUSDTH22, ETHUSD, BTCUSD
+                :param symbol: exp : BTC-USDT , BTCUSDT , XBTUSD , depending on the market
                 :type symbol:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -3194,24 +3411,23 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of dovs auctions
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return:
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
                 if makequery != "":
-                    api_url = self.url + "perpetuals/" + market.lower() + "/" + symbol + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "perpetuals/" + market.lower() + "/" + symbol
+                    api_url = self.url + "perpetuals/" + market.upper() + "/" + symbol.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def futures(self, market: str, symbol: str, start="", end="", limit="", page=""):
+            def futures(self, market: str, symbol: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
-                :param market: Full list of supported exchanges on instruments endpoint. exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
+                :param market: BITMEX | BINANCE | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX | KWENTA | GMX | VERTEX | PERP-PROTOCOL | BITGET
                 :type market:
-                :param symbol: exp : BTC-30DEC22, ETHUSDTH22, ETHUSD, BTCUSD
+                :param symbol: exp : ETH-USDT-230707 , XBTZ23 depending on the market
                 :type symbol:
                 :param start: EXP:2022-06-07
                 :type end:
@@ -3221,16 +3437,18 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
-                :return: json data of futures
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
+                :return:
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                api_url = self.url + "futures/" + market.lower() + "/" + symbol + makequery
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "futures/" + market.upper() + "/" + symbol.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def summary(self, currency: str, start="", end="", limit="", page=""):
+            def summary(self, currency: str, start="", end="", limit="10", page="1", granularity=""):
                 """
                 :param currency: BTC | ETH | ALTS (Full list of supported assets on instruments endpoint)
                 :type currency:
@@ -3242,14 +3460,93 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
                 :return: json data of summary
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                if makequery != "":
-                    api_url = self.url + "summary/" + currency.lower() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
-                else:
-                    api_url = self.url + "summary/" + currency.lower()
-                    response = requests.get(api_url, headers=api.header).json()
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = self.url + "summary/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
+
+
+            @classmethod
+            def snapshot(self, market: str, currency: str, start: str, end: str, limit="10", page="1", timezone="0"):
+                """
+                :param market: BITMEX | BINANCE | BYBIT |  BITFINEX | DERIBIT | HUOBI | KRAKEN | OKX
+                :type market:
+                :param currency: BTC,ETH,BCH try the analytics future alt_currency function for more available currency
+                :type currency:
+                :param start: EXP:2022-06-07
+                :type end:
+                :param end: EXP:2022-06-14
+                :type end :
+                :param limit: 10
+                :type limit:
+                :param page: 1
+                :type page:
+                :param timezone: exp : 0
+                :type timezone :
+                :return:
+                :rtype:
+                """
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, timezone=timezone)
+                api_url = self.url + "snapshot/" + market.upper() + "/" + currency.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
+                return response
+
+    class pricer:
+        url = "https://api.laevitas.ch/pricer/"
+        pass
+
+        @classmethod
+        def risk_slide_shocked(self, market: str, currency: str, atm_iv_shock, spot_shock):
+            """
+            :param market: deribit , binance
+            :type market:
+            :param currency: BTC | ETH ... check risk_slide_instruments
+            :type currency:
+            :param atm_iv_shock: -5
+            :type atm_iv_shock:
+            :param spot_shock: 0.1
+            :type spot_shock:
+            :return:
+            :rtype:
+            """
+            makequery = prepare_query(atm_iv_shock=atm_iv_shock, spot_shock=spot_shock)
+            api_url = self.url + "risk_slide_shocked" + "/" + market.lower() + "/" + currency.upper() + makequery
+            responsedata = requests.get(api_url, headers=api.header).json()
+            return responsedata
+
+        @classmethod
+        def risk_slide_instruments(self, market: str):
+            """
+            :param market: deribit , binance
+            :type market:
+            :return:
+            :rtype:
+            """
+            api_url = self.url + "risk_slide_instruments" + "/" + market.lower()
+            responsedata = requests.get(api_url, headers=api.header).json()
+            return responsedata
+
+
+        @classmethod
+        def risk_slide(self, market: str, currency: str, atm_iv_shock, spot_shock):
+            """
+            :param market: deribit , binance
+            :type market:
+            :param currency: BTC | ETH ... check risk_slide_instruments
+            :type currency:
+            :param atm_iv_shock: -5
+            :type atm_iv_shock:
+            :param spot_shock: 0.1
+            :type spot_shock:
+            :return:
+            :rtype:
+            """
+            makequery = prepare_query(atm_iv_shock=atm_iv_shock, spot_shock=spot_shock)
+            api_url = self.url + "risk_slide_shocked" + "/" + market.lower() + "/" + currency.upper() + makequery
+            responsedata = requests.get(api_url, headers=api.header).json()
+            return responsedata
