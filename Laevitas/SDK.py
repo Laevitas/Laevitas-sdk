@@ -52,7 +52,7 @@ class api:
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
                 :type market:
-                :param currency: ADA,BTC,ETH,TONCOIN,1MLADYS,SOL,BNB,XRP , Check analytics/options/Instruments for more information about available currency
+                :param currency: ADA,BTC,ETH,TON,1MLADYS,SOL,BNB,XRP , Check analytics/options/Instruments for more information about available currency
                 :type currency:
                 :return: This endpoint retrieves ATM (At-The-Money) implied volatility time-lapse for a specific market and currency. The response includes implied volatility data for various time periods, such as today, yesterday, 2 days ago, 1 week ago, 2 weeks ago, 3 weeks ago, and 1 month ago. For each time period, the response includes an array of objects with the maturity of the option and the corresponding implied volatility.
                 :rtype:
@@ -343,7 +343,7 @@ class api:
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
                 :type market:
-                :param currency: BTC | ETH | ADA | BNB | SOL | XRP | TONCOIN , Check analytics/options/Instruments for more information about available currency
+                :param currency: BTC | ETH | ADA | BNB | SOL | XRP | TON , Check analytics/options/Instruments for more information about available currency
                 :type currency:
                 :param hours: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
                 :type hours:
@@ -365,7 +365,7 @@ class api:
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
                 :type market:
-                :param currency: BTC | ETH | ADA | BNB | SOL | XRP | TONCOIN , Check analytics/options/Instruments for more information about available currency
+                :param currency: BTC | ETH | ADA | BNB | SOL | XRP | TON , Check analytics/options/Instruments for more information about available currency
                 :type currency:
                 :param hours: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
                 :type hours:
@@ -537,7 +537,7 @@ class api:
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
                 :type market:
-                :param currency: BTC | ETH | ADA | SOL | XRP | BNB | TONCOIN , Check analytics/options/Instruments for more information about available currency
+                :param currency: BTC | ETH | ADA | SOL | XRP | BNB | TON , Check analytics/options/Instruments for more information about available currency
                 :type currency:
                 :param maturity: Uppercase (DMMMYY), e.g., 30JUN23 or "all" ,Check analytics/options/maturities for more information about available maturity
                 :type maturity:
@@ -799,7 +799,7 @@ class api:
             @classmethod
             def iv_currency(cls, currency: str):
                 """
-                :param currency: BTC | ETH  | SOL | ADA | TONCOIN | BNB | XRP | ARB | OP
+                :param currency: BTC | ETH  | SOL | ADA | TON | BNB | XRP | ARB | OP
                 :type currency:
                 :return: Implied volatility (IV) is a key parameter in option pricing models. It represents the market's expectation of the future volatility of the underlying asset. IV data provides insights into the perceived level of risk and uncertainty in the market
                 :rtype:
@@ -1622,7 +1622,7 @@ class api:
             @classmethod
             def total_oi_by_currency(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-                :param currency: BTC,ETH,SOL,BNB,OP,TONCOIN,ARB,XRP ADA
+                :param currency: BTC,ETH,SOL,BNB,OP,TON,ARB,XRP ADA
                 :type currency:
                 :param start: EXP:2023-07-11
                 :type end:
@@ -1646,7 +1646,7 @@ class api:
             @classmethod
             def total_volume_by_currency(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
-                :param currency: BTC,ETH,SOL,BNB,OP,TONCOIN,ARB,XRP ADA
+                :param currency: BTC,ETH,SOL,BNB,OP,TON,ARB,XRP ADA
                 :type currency:
                 :param start: EXP:2023-07-11
                 :type end:
@@ -1672,7 +1672,7 @@ class api:
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,SOL,BNB,OP,TONCOIN,ARB,XRP ADA
+                :param currency: BTC,ETH,SOL,BNB,OP,TON,ARB,XRP ADA
                 :type currency:
                 :param start: EXP:2023-07-11
                 :type end:
@@ -1842,7 +1842,7 @@ class api:
                 """
                  :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                  :type market:
-                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TONCOIN
+                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TON
                  :type currency:
                  :param start: EXP:2023-07-11
                  :type end:
@@ -1898,7 +1898,7 @@ class api:
                 """
                  :param market: AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                  :type market:
-                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TONCOIN
+                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TON
                  :type currency:
                  :param start: EXP:2023-07-11
                  :type end:
@@ -1927,7 +1927,7 @@ class api:
                 """
                  :param market: AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                  :type market:
-                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TONCOIN
+                 :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TON
                  :type currency:
                  :param start: EXP:2023-07-11
                  :type end:
@@ -2018,7 +2018,7 @@ class api:
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TONCOIN
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP ADA, TON
                 :type currency:
                 :param type:  10D , 25D
                 :type type:
@@ -2264,7 +2264,7 @@ class api:
                 """
                 :param market:  AGGREGATE,BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA,TONCOIN
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA,TON
                 :type currency:
                 :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
                 :type maturity:
@@ -2296,7 +2296,7 @@ class api:
                 """
                 :param market:  AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA,TONCOIN
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA,TON
                 :type currency:
                 :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
                 :type maturity:
@@ -2360,7 +2360,7 @@ class api:
                 """
                 :param market:  AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
-                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA,TONCOIN
+                :param currency: BTC,ETH,SOL,BNB,ARB,XRP,ADA,TON
                 :type currency:
                 :param maturity: all | Uppercase (DMMMYY), e.g., 30JUN23 Check analytics/options/Instruments for more information about available maturity
                 :type maturity:
