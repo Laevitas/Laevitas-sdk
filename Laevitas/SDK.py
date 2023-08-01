@@ -4,7 +4,7 @@ from Laevitas.dataclasses import *
 from Laevitas.consts import prepare_query, MARKET_CONSTS
 
 
-class api():
+class api:
     header = {"apiKey": 'none'}
 
     def __init__(self, key="none"):
@@ -12,8 +12,8 @@ class api():
         self.r = self.analytics()
 
     @classmethod
-    def configure(self, header):
-        self.header["apiKey"] = header
+    def configure(cls, header):
+        cls.header["apiKey"] = header
 
     class analytics:
         def __init__(self):
@@ -24,7 +24,7 @@ class api():
             pass
 
             @classmethod
-            def instruments(self, market="BINANCE", currency="BTC", maturity="", strike="", optiontype="C"):
+            def instruments(cls, market="BINANCE", currency="BTC", maturity="", strike="", optiontype="C"):
 
                 """
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -42,19 +42,19 @@ class api():
                 """
                 makequery = prepare_query(market=market, currency=currency, maturity=maturity, strike=strike,
                                           optiontype=optiontype)
-                api_url = self.url + "Instruments" + makequery
+                api_url = cls.url + "Instruments" + makequery
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def atm_iv_ts(self, market: str, currency: str):
+            def atm_iv_ts(cls, market: str, currency: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
                 :type market:
                 :param currency: ADA,BTC,ETH,TONCOIN,1MLADYS,SOL,BNB,XRP , Check analytics/options/Instruments for more information about available currency
                 :type currency:
-                :return: This endpoint retrieves ATM (At-The-Money) implied volatility time lapse for a specific market and currency. The response includes implied volatility data for various time periods, such as today, yesterday, 2 days ago, 1 week ago, 2 weeks ago, 3 weeks ago, and 1 month ago. For each time period, the response includes an array of objects with the maturity of the option and the corresponding implied volatility.
+                :return: This endpoint retrieves ATM (At-The-Money) implied volatility time-lapse for a specific market and currency. The response includes implied volatility data for various time periods, such as today, yesterday, 2 days ago, 1 week ago, 2 weeks ago, 3 weeks ago, and 1 month ago. For each time period, the response includes an array of objects with the maturity of the option and the corresponding implied volatility.
                 :rtype:
                 """
                 market = market.upper()
@@ -62,12 +62,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "atm_iv_ts/" + market + "/" + currency
+                    api_url = cls.url + "atm_iv_ts/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def gex_date(self, market: str, currency: str, maturity: str):
+            def gex_date(cls, market: str, currency: str, maturity: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -85,13 +85,13 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "gex_date/" + market + "/" + currency + "/" + maturity
+                    api_url = cls.url + "gex_date/" + market + "/" + currency + "/" + maturity
                     responsedata = requests.get(api_url, headers=api.header).json()
 
                 return responsedata
 
             @classmethod
-            def gex_date_all(self, market: str, currency: str):
+            def gex_date_all(cls, market: str, currency: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -106,13 +106,13 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "gex_date_all/" + market + "/" + currency
+                    api_url = cls.url + "gex_date_all/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
 
                 return responsedata
 
             @classmethod
-            def maturities(self, market: str, currency: str):
+            def maturities(cls, market: str, currency: str):
                 """
 
                 :param market: AGGREGATE | BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -127,12 +127,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "maturities/" + market + "/" + currency
+                    api_url = cls.url + "maturities/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def oi_expiry(self, market: str, currency: str):
+            def oi_expiry(cls, market: str, currency: str):
                 """
 
                 :param market: AGGREGATE | BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -147,12 +147,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "oi_expiry/" + market + "/" + currency
+                    api_url = cls.url + "oi_expiry/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def oi_strike_all(self, market: str, currency: str):
+            def oi_strike_all(cls, market: str, currency: str):
                 """
 
                 :param market: AGGREGATE | BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -167,7 +167,7 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "oi_strike_all/" + market + "/" + currency
+                    api_url = cls.url + "oi_strike_all/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     Response = Ioi_strike_all(responsedata, responsedata['date'])
                     for i in range(len(responsedata['data'])):
@@ -179,7 +179,7 @@ class api():
                     return Response
 
             @classmethod
-            def oi_type(self, market: str, currency: str):
+            def oi_type(cls, market: str, currency: str):
                 """
 
                 :param market: AGGREGATE | BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -194,12 +194,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "oi_type/" + market + "/" + currency
+                    api_url = cls.url + "oi_type/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def top_traded_option(self, market: str, currency: str):
+            def top_traded_option(cls, market: str, currency: str):
                 """
 
                 :param market: AGGREGATE | BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -214,12 +214,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "top_traded_option/" + market + "/" + currency
+                    api_url = cls.url + "top_traded_option/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def v_expiry(self, market: str, currency: str):
+            def v_expiry(cls, market: str, currency: str):
                 """
 
                 :param market: AGGREGATE | BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -234,7 +234,7 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "v_expiry/" + market + "/" + currency
+                    api_url = cls.url + "v_expiry/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     Response = Iexpiry(responsedata, responsedata['date'])
                     for i in range(len(responsedata['data'])):
@@ -246,7 +246,7 @@ class api():
                     return Response
 
             @classmethod
-            def v_strike_all(self, market: str, currency: str):
+            def v_strike_all(cls, market: str, currency: str):
                 """
 
                 :param market: AGGREGATE | BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -261,7 +261,7 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "v_strike_all/" + market + "/" + currency
+                    api_url = cls.url + "v_strike_all/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     Response = v_strike_alli(responsedata, responsedata['date'])
                     for i in range(len(responsedata['data'])):
@@ -273,7 +273,7 @@ class api():
                     return Response
 
             @classmethod
-            def volume_buy_sell_all(self, market: str, currency: str):
+            def volume_buy_sell_all(cls, market: str, currency: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT | OKEX
@@ -288,12 +288,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "volume_buy_sell_all/" + market.lower() + "/" + currency.lower()
+                    api_url = cls.url + "volume_buy_sell_all/" + market.lower() + "/" + currency.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def iv_strike(self, market: str, currency: str, strike: str):
+            def iv_strike(cls, market: str, currency: str, strike: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -310,12 +310,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "iv_strike/" + market + "/" + currency + "/" + str(strike)
+                    api_url = cls.url + "iv_strike/" + market + "/" + currency + "/" + str(strike)
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def oi_strike(self, market: str, currency: str, maturity: str):
+            def oi_strike(cls, market: str, currency: str, maturity: str):
                 """
 
                 :param market: AGGREGATE | BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -333,12 +333,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "oi_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
+                    api_url = cls.url + "oi_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def oi_net_change_all(self, market: str, currency: str, hours: str):
+            def oi_net_change_all(cls, market: str, currency: str, hours: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -355,12 +355,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "oi_net_change_all/" + market + "/" + currency + "/" + hours
+                    api_url = cls.url + "oi_net_change_all/" + market + "/" + currency + "/" + hours
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def top_instrument_oi_change(self, market: str, currency: str, hours: str):
+            def top_instrument_oi_change(cls, market: str, currency: str, hours: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -377,13 +377,13 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "top_instrument_oi_change/" + market.lower() + "/" + currency.lower() + "/" + str(
+                    api_url = cls.url + "top_instrument_oi_change/" + market.lower() + "/" + currency.lower() + "/" + str(
                         hours)
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def volume_buy_sell(self, market: str, currency: str, maturity: str):
+            def volume_buy_sell(cls, market: str, currency: str, maturity: str):
                 """
 
                 :param market: BIT | DERIBIT | BYBIT | OKEX
@@ -401,12 +401,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
+                    api_url = cls.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def v_strike(self, market: str, currency: str, maturity: str):
+            def v_strike(cls, market: str, currency: str, maturity: str):
                 """
 
                 :param market: AGGREGATE | BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -424,12 +424,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "v_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
+                    api_url = cls.url + "v_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def summary_trades(self, market: str, currency: str, hours: str):
+            def summary_trades(cls, market: str, currency: str, hours: str):
                 """
 
                 :param market: BIT | DERIBIT
@@ -446,12 +446,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "summary_trades/" + market + "/" + currency + "/" + str(hours)
+                    api_url = cls.url + "summary_trades/" + market + "/" + currency + "/" + str(hours)
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def greeks(self, market: str, currency: str, maturity: str, optiontype: str):
+            def greeks(cls, market: str, currency: str, maturity: str, optiontype: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -475,7 +475,7 @@ class api():
                     raise TypeError("type is either C or P")
                 else:
                     maturity = maturity.upper()
-                    api_url = self.url + "greeks/" + market + "/" + currency + "/" + maturity + "/" + optiontype
+                    api_url = cls.url + "greeks/" + market + "/" + currency + "/" + maturity + "/" + optiontype
                     responsedata = requests.get(api_url, headers=api.header).json()
                     # Response = Igreeks(responsedata, responsedata['date'])
                     # for i in range(len(responsedata['data'])):
@@ -489,9 +489,8 @@ class api():
                     return responsedata
 
             @classmethod
-            def iv_all(self, market: str, currency: str, maturity: str, type: str):
+            def iv_all(cls, market: str, currency: str, maturity: str, type: str):
                 """
-
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
                 :type market:
                 :param currency: BTC | ETH | SOL | XRP | BNB | ADA | ARB | OP , Check analytics/options/Instruments for more information about available currency
@@ -508,12 +507,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "iv_all/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "/" + type.upper()
+                    api_url = cls.url + "iv_all/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "/" + type.upper()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def iv_table(self, market: str, currency: str):
+            def iv_table(cls, market: str, currency: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -528,12 +527,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "iv_table/" + market + "/" + currency
+                    api_url = cls.url + "iv_table/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def oi_net_change(self, market: str, currency: str, maturity: str, hour: str):
+            def oi_net_change(cls, market: str, currency: str, maturity: str, hour: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -552,12 +551,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "oi_net_change/" + market + "/" + currency + "/" + maturity + "/" + str(hour)
+                    api_url = cls.url + "oi_net_change/" + market + "/" + currency + "/" + maturity + "/" + str(hour)
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def snapshot(self, market: str, currency: str):
+            def snapshot(cls, market: str, currency: str):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -572,50 +571,52 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "snapshot/" + market.lower() + "/" + currency.lower()
+                    api_url = cls.url + "snapshot/" + market.lower() + "/" + currency.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def oi_breakdown(self):
+            def oi_breakdown(cls):
                 """
                 :return: This endpoint is essential for obtaining insights into the distribution of open interest and open value for options across different exchanges. By providing the breakdown of notional and open value data, the API response enables users to analyze the significance of options trading activity on various exchanges. Traders, investors, and analysts can leverage this information to assess market sentiment, identify liquidity sources, and make informed decisions about options trading strategies. Additionally, this endpoint facilitates the monitoring and comparison of options market participation among different exchanges, aiding in the evaluation of market dynamics and exchange performance.
                 :rtype:
                 """
-                api_url = self.url + "oi_breakdown"
+                api_url = cls.url + "oi_breakdown"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def volume_breakdown(self):
+            def volume_breakdown(cls):
                 """
                 :return: This endpoint is crucial for obtaining insights into the distribution of trading volume and open value for options across different exchanges. By providing the breakdown of notional and open value data, the API response enables users to analyze the significance of options trading activity on various exchanges. Traders, investors, and analysts can leverage this information to assess market liquidity, identify trading opportunities, and monitor the overall trading activity for options. Additionally, this endpoint facilitates the comparison of trading volume and open value among different exchanges, aiding in the evaluation of market dynamics and exchange performance.
                 :rtype:
                 """
-                api_url = self.url + "volume_breakdown"
+                api_url = cls.url + "volume_breakdown"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def oi_breakdown_by_currency(self):
+            def oi_breakdown_by_currency(cls):
                 """
                 :return: This endpoint is useful for obtaining insights into the distribution of open interest and open value for options by currency. By providing the breakdown of notional and open value data, the API response enables users to analyze the significance of options trading activity in different currencies. Traders, investors, and analysts can leverage this information to assess the popularity and liquidity of options contracts in various currencies. It allows for the identification of dominant currencies in options trading and provides an understanding of the market dynamics specific to each currency. Additionally, this endpoint facilitates the comparison of open interest and open value among different currencies, aiding in the evaluation of market trends and currency-specific trading opportunities.
                 :rtype:
                 """
-                api_url = self.url + "oi_breakdown_by_currency"
+                api_url = cls.url + "oi_breakdown_by_currency"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
-            def volume_breakdown_by_currency(self):
+            @classmethod
+            def volume_breakdown_by_currency(cls):
                 """
                 :return: This endpoint is useful for obtaining insights into the distribution of trading volume and open value for options by currency. By providing the breakdown of notional and open value data, the API response enables users to analyze the significance of options trading activity in different currencies. Traders, investors, and analysts can leverage this information to assess the popularity and liquidity of options contracts in various currencies. It allows for the identification of dominant currencies in options trading and provides an understanding of the market dynamics specific to each currency. Additionally, this endpoint facilitates the comparison of trading volume and open value among different currencies, aiding in the evaluation of market trends and currency-specific trading opportunities.
                 :rtype:
                 """
-                api_url = self.url + "volume_breakdown_by_currency"
+                api_url = cls.url + "volume_breakdown_by_currency"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
-            def expired_expiries(self, market: str, currency: str, maturity=None):
+            @classmethod
+            def expired_expiries(cls, market: str, currency: str, maturity=None):
                 """
 
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
@@ -633,15 +634,16 @@ class api():
                     raise TypeError("Market not available")
                 elif maturity:
                     makequery = prepare_query(maturity=maturity)
-                    api_url = self.url + "expired_expiries/" + market + "/" + currency + makequery
+                    api_url = cls.url + "expired_expiries/" + market + "/" + currency + makequery
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
                 else:
-                    api_url = self.url + "expired_expiries/" + market + "/" + currency
+                    api_url = cls.url + "expired_expiries/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
-            def custom_change(self, name: str, market: str, currency: str, end="", start=""):
+            @classmethod
+            def custom_change(cls, name: str, market: str, currency: str, end="", start=""):
                 """
                 :param name: historical_buy_sell_volume , atmivts_historical , heatmap_change , oi_net_change , iv_table_change , time_skew, oi_gainers_and_losers
                 :type name:
@@ -663,16 +665,16 @@ class api():
                     raise TypeError("Market not available")
                 elif start or end:
                     makequery = prepare_query(start=start, end=end)
-                    api_url = self.url + "custom_change/" + name + "/" + market + "/" + currency + makequery
+                    api_url = cls.url + "custom_change/" + name + "/" + market + "/" + currency + makequery
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
                 else:
-                    api_url = self.url + "custom_change/" + name + "/" + market + "/" + currency
+                    api_url = cls.url + "custom_change/" + name + "/" + market + "/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def skew(self, currency: str, maturity: str, type: str, timelapse: False):
+            def skew(cls, currency: str, maturity: str, type: str, timelapse: False):
                 """
                 :param currency: BTC | ETH
                 :type currency:
@@ -689,16 +691,16 @@ class api():
                 currency = currency.upper()
                 maturity = maturity.upper()
                 if timelapse is True:
-                    api_url = self.url + "model_charts/skew/" + currency + "/" + maturity + "/" + type + '/time_lapse'
+                    api_url = cls.url + "model_charts/skew/" + currency + "/" + maturity + "/" + type + '/time_lapse'
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
                 else:
-                    api_url = self.url + "model_charts/skew/" + currency + "/" + maturity + "/" + type
+                    api_url = cls.url + "model_charts/skew/" + currency + "/" + maturity + "/" + type
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def vol_run(self, currency: str, maturity: str):
+            def vol_run(cls, currency: str, maturity: str):
                 """
                 :param currency: BTC | ETH
                 :type currency:
@@ -709,12 +711,12 @@ class api():
                 """
                 currency = currency.upper()
                 maturity = maturity.upper()
-                api_url = self.url + "model_charts/vol_run/" + currency + "/" + maturity
+                api_url = cls.url + "model_charts/vol_run/" + currency + "/" + maturity
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def forward_curve(self, currency: str):
+            def forward_curve(cls, currency: str):
                 """
                 :param currency: BTC | ETH
                 :type currency:
@@ -722,12 +724,12 @@ class api():
                 :rtype:
                 """
                 currency = currency.upper()
-                api_url = self.url + "model_charts/forward_curve/" + currency
+                api_url = cls.url + "model_charts/forward_curve/" + currency
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def term_structure_atm(self, currency: str, timelapse: False):
+            def term_structure_atm(cls, currency: str, timelapse: False):
                 """
                 :param currency: BTC | ETH
                 :type currency:
@@ -738,16 +740,16 @@ class api():
                 """
                 currency = currency.upper()
                 if timelapse is True:
-                    api_url = self.url + "model_charts/term_structure_atm/" + currency + '/time_lapse'
+                    api_url = cls.url + "model_charts/term_structure_atm/" + currency + '/time_lapse'
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
                 else:
-                    api_url = self.url + "model_charts/term_structure_atm/" + currency
+                    api_url = cls.url + "model_charts/term_structure_atm/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def term_structure(self, currency: str, type: str):
+            def term_structure(cls, currency: str, type: str):
                 """
                 :param currency: BTC | ETH
                 :type currency:
@@ -758,12 +760,12 @@ class api():
                 """
                 currency = currency.upper()
                 type = type.lower()
-                api_url = self.url + "model_charts/term_structure/" + currency + "/" + type
+                api_url = cls.url + "model_charts/term_structure/" + currency + "/" + type
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def skew_currency(self, currency: str, maturity: str):
+            def skew_currency(cls, currency: str, maturity: str):
                 """
                 :param currency: BTC | ETH
                 :type currency:
@@ -774,12 +776,12 @@ class api():
                 """
                 currency = currency.upper()
                 maturity = maturity.upper()
-                api_url = self.url + "skew_currency/" + currency + "/" + maturity
+                api_url = cls.url + "skew_currency/" + currency + "/" + maturity
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def skew_market(self, market: str, maturity: str):
+            def skew_market(cls, market: str, maturity: str):
                 """
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
                 :type market:
@@ -790,12 +792,12 @@ class api():
                 """
                 market = market.upper()
                 maturity = maturity.upper()
-                api_url = self.url + "skew_market/" + market + "/" + maturity
+                api_url = cls.url + "skew_market/" + market + "/" + maturity
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def iv_currency(self, currency: str):
+            def iv_currency(cls, currency: str):
                 """
                 :param currency: BTC | ETH  | SOL | ADA | TONCOIN | BNB | XRP | ARB | OP
                 :type currency:
@@ -803,12 +805,12 @@ class api():
                 :rtype:
                 """
                 currency = currency.upper()
-                api_url = self.url + "iv_currency/" + currency
+                api_url = cls.url + "iv_currency/" + currency
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def iv_market(self, market: str):
+            def iv_market(cls, market: str):
                 """
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
                 :type market:
@@ -816,22 +818,22 @@ class api():
                 :rtype:
                 """
                 market = market.upper()
-                api_url = self.url + "iv_market/" + market
+                api_url = cls.url + "iv_market/" + market
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def eth_btc_atm_iv_term_structure(self):
+            def eth_btc_atm_iv_term_structure(cls):
                 """
                 :return: The term structure of at-the-money (ATM) implied volatility (IV) provides valuable information about the market's expectations of future volatility for Ethereum-Bitcoin (ETH-BTC) options. By analyzing the IV term structure, traders and investors can gain insights into how the market perceives the potential price movements of ETH-BTC options over different time periods
                 :rtype:
                 """
-                api_url = self.url + "eth-btc_atm_iv_term_structure"
+                api_url = cls.url + "eth-btc_atm_iv_term_structure"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def skew_currency_market(self, currency: str, market: str):
+            def skew_currency_market(cls, currency: str, market: str):
                 """
                 :param market: BIT  | DERIBIT  | BYBIT  | OKEX  | POWERTRADE | DELTA_EXCHANGE | LYRA_ARBITRUM | AEVO | BINANCE | LYRA
                 :type market:
@@ -842,7 +844,7 @@ class api():
                 """
                 currency = currency.upper()
                 market = market.upper()
-                api_url = self.url + "skew/" + market + "/" + currency
+                api_url = cls.url + "skew/" + market + "/" + currency
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -851,27 +853,27 @@ class api():
             pass
 
             @classmethod
-            def instruments(self):
+            def instruments(cls):
                 """
                 :return: This endpoint provides information about futures instruments, including the market, type, currency, instrument name or identifier, and expiry date.
                 :rtype:
                 """
-                api_url = self.url + "instruments"
+                api_url = cls.url + "instruments"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def alt_currency(self):
+            def alt_currency(cls):
                 """
                 :return: json data of available futures currency
                 :rtype:
                 """
-                api_url = self.url + "alt_currency"
+                api_url = cls.url + "alt_currency"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def perpetual_funding(self, currency: str, type=""):
+            def perpetual_funding(cls, currency: str, type=""):
                 """
 
                 :param currency: BTC,ETH ... Check analytics/futures/alt_currency For more information about available currencies
@@ -883,15 +885,15 @@ class api():
                 """
                 currency = currency.upper()
                 if len(type) == 1:
-                    api_url = self.url + "perpetual_funding/" + currency + "/" + type.lower()
+                    api_url = cls.url + "perpetual_funding/" + currency + "/" + type.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "perpetual_funding/" + currency
+                    api_url = cls.url + "perpetual_funding/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def futures_yield(self, currency: str):
+            def futures_yield(cls, currency: str):
                 """
 
                 :param currency: ADA,BCH,BNB ... Check analytics/futures/alt_currency For more information about available currencies
@@ -900,12 +902,12 @@ class api():
                 :rtype:
                 """
                 currency = currency.upper()
-                api_url = self.url + "futures_yield/" + currency
+                api_url = cls.url + "futures_yield/" + currency
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def futures_basis(self, currency: str):
+            def futures_basis(cls, currency: str):
                 """
                 :param currency: ADA,BCH,BNB ... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -913,12 +915,12 @@ class api():
                 :rtype:
                 """
                 currency = currency.upper()
-                api_url = self.url + "futures_basis/" + currency
+                api_url = cls.url + "futures_basis/" + currency
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def volume_breakdown(self, currency: str, type=""):
+            def volume_breakdown(cls, currency: str, type=""):
                 """
 
                 :param currency: BTC,ETH ... Check analytics/futures/alt_currency For more information about available currencies
@@ -930,15 +932,15 @@ class api():
                 """
                 currency = currency.upper()
                 if len(type) == 1:
-                    api_url = self.url + "volume_breakdown/" + currency + '/' + type.lower()
+                    api_url = cls.url + "volume_breakdown/" + currency + '/' + type.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "volume_breakdown/" + currency
+                    api_url = cls.url + "volume_breakdown/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def oi_breakdown(self, currency: str, type=""):
+            def oi_breakdown(cls, currency: str, type=""):
                 """
 
                 :param currency: BTC,ETH ... Check analytics/futures/alt_currency For more information about available currencies
@@ -950,16 +952,16 @@ class api():
                 """
                 currency = currency.upper()
                 if len(type) == 1:
-                    api_url = self.url + "oi_breakdown/" + currency + '/' + type.lower()
+                    api_url = cls.url + "oi_breakdown/" + currency + '/' + type.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "oi_breakdown/" + currency
+                    api_url = cls.url + "oi_breakdown/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
 
                 return responsedata
 
             @classmethod
-            def futures_curve(self, currency: str, market=""):
+            def futures_curve(cls, currency: str, market=""):
                 """
 
                 :param currency: ADA,BCH,BNB ... Check analytics/futures/alt_currency For more information about available currencies
@@ -972,15 +974,15 @@ class api():
                 currency = currency.upper()
                 if len(market) >= 1:
                     market = market.upper()
-                    api_url = self.url + "futures_curve/" + currency + "/" + market
+                    api_url = cls.url + "futures_curve/" + currency + "/" + market
                     responsedata = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "futures_curve/" + currency
+                    api_url = cls.url + "futures_curve/" + currency
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def markets_oi_gainers_and_losers(self, currency: str, option: str, hour: str, type=""):
+            def markets_oi_gainers_and_losers(cls, currency: str, option: str, hour: str, type=""):
                 """
 
                 :param currency: BTC,ETH,ADA,BCH,BNB ... Check analytics/futures/alt_currency For more information about available currencies
@@ -996,17 +998,17 @@ class api():
                 """
                 currency = currency.upper()
                 if len(type) == 1:
-                    api_url = self.url + "markets_oi_gainers_and_losers/" + currency + "/" + option.lower() + "/" + str(
+                    api_url = cls.url + "markets_oi_gainers_and_losers/" + currency + "/" + option.lower() + "/" + str(
                         hour) + "/" + type.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "markets_oi_gainers_and_losers/" + currency + "/" + option.lower() + "/" + str(
+                    api_url = cls.url + "markets_oi_gainers_and_losers/" + currency + "/" + option.lower() + "/" + str(
                         hour)
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def snapshot(self, market: str):
+            def snapshot(cls, market: str):
                 """
 
                 :param market: BINANCE, BITMEX, DERIBIT, HUOBI, KRAKEN, BYBIT , OKX
@@ -1018,12 +1020,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "snapshot/" + market
+                    api_url = cls.url + "snapshot/" + market
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def aggregated_future_summary(self, currency: str):
+            def aggregated_future_summary(cls, currency: str):
                 """
                 :param currency: BTC,ETH,LTC ... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -1031,12 +1033,12 @@ class api():
                 :rtype:
                 """
                 currency = currency.upper()
-                api_url = self.url + "aggregated_future_summary/" + currency
+                api_url = cls.url + "aggregated_future_summary/" + currency
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def aggregated_option_summary(self, currency: str):
+            def aggregated_option_summary(cls, currency: str):
                 """
                 :param currency: BTC,ETH,LTC ... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -1044,7 +1046,7 @@ class api():
                 :rtype:
                 """
                 currency = currency.upper()
-                api_url = self.url + "aggregated_option_summary/" + currency
+                api_url = cls.url + "aggregated_option_summary/" + currency
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -1053,42 +1055,42 @@ class api():
             pass
 
             @classmethod
-            def dovs(self):
+            def dovs(cls):
                 """
                 :return: json data of DOVs weekly auctions
                 :rtype:
                 """
-                api_url = self.url + "dovs"
+                api_url = cls.url + "dovs"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def ribbon(self):
+            def ribbon(cls):
                 """
                 :return: json data of ribbon weekly auctions
                 :rtype:
                 """
-                api_url = self.url + "ribbon"
+                api_url = cls.url + "ribbon"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def friktion(self):
+            def friktion(cls):
                 """
                 :return: json data of friktion weekly auctions
                 :rtype:
                 """
-                api_url = self.url + "friktion"
+                api_url = cls.url + "friktion"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def squeeth(self):
+            def squeeth(cls):
                 """
                 :return: json data of squeeth live data
                 :rtype:
                 """
-                api_url = self.url + "squeeth"
+                api_url = cls.url + "squeeth"
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -1097,7 +1099,7 @@ class api():
             pass
 
             @classmethod
-            def futures(self, market: str, currency: str, maturity: str):
+            def futures(cls, market: str, currency: str, maturity: str):
                 """
 
                 :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX | GMX | PERP-PROTOCOL
@@ -1111,12 +1113,12 @@ class api():
                 """
                 market = market.upper()
                 maturity = maturity.upper()
-                api_url = self.url + "futures/" + market + "/" + currency.lower() + "/" + maturity
+                api_url = cls.url + "futures/" + market + "/" + currency.lower() + "/" + maturity
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def perpetuals(self, market: str, currency: str):
+            def perpetuals(cls, market: str, currency: str):
                 """
 
                 :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX | GMX | PERP-PROTOCOL
@@ -1128,12 +1130,12 @@ class api():
                 """
                 market = market.upper()
                 currency = currency.upper()
-                api_url = self.url + "perpetuals/" + market + "/" + currency.lower()
+                api_url = cls.url + "perpetuals/" + market + "/" + currency.lower()
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def summary(self, currency=""):
+            def summary(cls, currency=""):
                 """
                 :param currency: BTC | ETH... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -1141,15 +1143,15 @@ class api():
                 :rtype:
                 """
                 if len(currency) >= 1:
-                    api_url = self.url + "summary/" + currency.lower()
+                    api_url = cls.url + "summary/" + currency.lower()
                     responsedata = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "summary"
+                    api_url = cls.url + "summary"
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def oi_gainers(self, market: str, oitype: str, period: str):
+            def oi_gainers(cls, market: str, oitype: str, period: str):
                 """
                 :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX | GMX | PERP-PROTOCOL
                 :type market:
@@ -1167,12 +1169,12 @@ class api():
                 elif str(period) not in ["1", "2", "4", "8", "12", "18", "24", "48", "168", "336", "504", "720", "ytd"]:
                     raise TypeError("period not available")
                 else:
-                    api_url = self.url + "oi_gainers/" + market + "/" + oitype.lower() + "/" + str(period)
+                    api_url = cls.url + "oi_gainers/" + market + "/" + oitype.lower() + "/" + str(period)
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def price_gainers(self, market: str, oitype: str, period: str):
+            def price_gainers(cls, market: str, oitype: str, period: str):
                 """
 
                 :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX | GMX | PERP-PROTOCOL
@@ -1190,12 +1192,12 @@ class api():
                 elif str(period) not in ["1", "2", "4", "8", "12", "18", "24", "48", "168", "336", "504", "720", "ytd"]:
                     raise TypeError("period not available")
                 else:
-                    api_url = self.url + "price_gainers/" + market + "/" + oitype.lower() + "/" + str(period)
+                    api_url = cls.url + "price_gainers/" + market + "/" + oitype.lower() + "/" + str(period)
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def perpetuals_snapshot(self, market: str):
+            def perpetuals_snapshot(cls, market: str):
                 """
                 :param market: deribit, binance , okx, bybit
                 :type market
@@ -1203,12 +1205,12 @@ class api():
                 :rtype:
                 """
                 market = market.lower()
-                api_url = self.url + "perpetuals_snapshot/" + market
+                api_url = cls.url + "perpetuals_snapshot/" + market
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def top_funding(self, market: str):
+            def top_funding(cls, market: str):
                 """
 
                 :param market: Full list of supported exchanges on instruments endpoint (futures.instrument function),exp: BITMEX | BINANCE | FTX | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX
@@ -1220,12 +1222,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "top_funding/" + market
+                    api_url = cls.url + "top_funding/" + market
                     responsedata = requests.get(api_url, headers=api.header).json()
                     return responsedata
 
             @classmethod
-            def top_gainers_losers(self, change: str, type: str):
+            def top_gainers_losers(cls, change: str, type: str):
                 """
 
                 :param change: 1, 2, 4, 8, 12, 18, 24, 48, 168, 336, 504, 720
@@ -1236,7 +1238,7 @@ class api():
                 :rtype:
                 """
 
-                api_url = self.url + "top_gainers_losers/" + change + "/" + type
+                api_url = cls.url + "top_gainers_losers/" + change + "/" + type
                 responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
@@ -1249,7 +1251,7 @@ class api():
             pass
 
             @classmethod
-            def option(self, market: str, instrument: str, start: str, end: str, limit="", page="", granularity=""):
+            def option(cls, market: str, instrument: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -1277,15 +1279,15 @@ class api():
                 elif x[3] not in ["P", "C"]:
                     raise TypeError("type in instument is either C or P")
                 elif makequery != "":
-                    api_url = self.url + market + "/" + instrument + makequery
+                    api_url = cls.url + market + "/" + instrument + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + market + "/" + instrument
+                    api_url = cls.url + market + "/" + instrument
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def iv(self, market: str, instrument: str, start: str, end: str, limit="", page="", granularity=""):
+            def iv(cls, market: str, instrument: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -1315,15 +1317,15 @@ class api():
                 elif market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 elif makequery != "":
-                    api_url = self.url + "iv/" + market + "/" + instrument + makequery
+                    api_url = cls.url + "iv/" + market + "/" + instrument + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "iv/" + market + "/" + instrument
+                    api_url = cls.url + "iv/" + market + "/" + instrument
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def price(self, market: str, instrument: str, start: str, end: str, limit="", page="", granularity=""):
+            def price(cls, market: str, instrument: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -1353,12 +1355,12 @@ class api():
                 elif market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "price/" + market + "/" + instrument + makequery
+                    api_url = cls.url + "price/" + market + "/" + instrument + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_volume(self, market: str, instrument: str, start: str, end: str, limit="", page="", granularity=""):
+            def oi_volume(cls, market: str, instrument: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -1388,15 +1390,15 @@ class api():
                 elif market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 elif makequery != "":
-                    api_url = self.url + "oi_volume/" + market + "/" + instrument + makequery
+                    api_url = cls.url + "oi_volume/" + market + "/" + instrument + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "oi_volume/" + market + "/" + instrument
+                    api_url = cls.url + "oi_volume/" + market + "/" + instrument
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def underlying_price(self, market: str, instrument: str, start: str, end: str, limit="", page="",
+            def underlying_price(cls, market: str, instrument: str, start: str, end: str, limit="", page="",
                                  granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -1427,15 +1429,15 @@ class api():
                 elif market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 elif makequery != "":
-                    api_url = self.url + "underlying_price/" + market + "/" + instrument + makequery
+                    api_url = cls.url + "underlying_price/" + market + "/" + instrument + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "underlying_price/" + market + "/" + instrument
+                    api_url = cls.url + "underlying_price/" + market + "/" + instrument
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_strike(self, market: str, currency: str, maturity: str, date_h: str):
+            def oi_strike(cls, market: str, currency: str, maturity: str, date_h: str):
                 """
 
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -1454,12 +1456,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "oi_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "?date_h=" + date_h
+                    api_url = cls.url + "oi_strike/" + market.lower() + "/" + currency.lower() + "/" + maturity.upper() + "?date_h=" + date_h
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def volume_strike(self, market: str, currency: str, maturity: str, date_h: str):
+            def volume_strike(cls, market: str, currency: str, maturity: str, date_h: str):
                 """
 
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -1476,21 +1478,17 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "volume_strike/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + "?date_h=" + date_h
+                    api_url = cls.url + "volume_strike/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + "?date_h=" + date_h
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def trades(self, market: str, currency: str, date: str, limit="", page=""):
+            def trades(cls, market: str, currency: str, date: str, limit="", page=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
                 :param currency: BTC,ETH,BCH,SOL,XRP,BNB , Check analytics/options/Instruments for more information about available currencies and instruments
                 :type currency:
-                :param start: EXP:2023-07-11
-                :type end:
-                :param end: EXP:2023-07-18
-                :type end :
                 :param limit: 10
                 :type limit:
                 :param page: 1
@@ -1502,12 +1500,12 @@ class api():
                     raise TypeError("Market not available")
                 else:
                     makequery = prepare_query(date=date, limit=limit, page=page)
-                    api_url = self.url + "trades/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "trades/" + market.upper() + "/" + currency.upper() + makequery
                     responsedata = requests.get(api_url, headers=api.header).json()
                 return responsedata
 
             @classmethod
-            def snapshot(self, market: str, currency: str, start="", end="", limit="10", page="1", timezone=""):
+            def snapshot(cls, market: str, currency: str, start="", end="", limit="10", page="1", timezone=""):
                 """
                 :param market: DERIBIT, OKX, BINANCE,BYBIT
                 :type market:
@@ -1530,12 +1528,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "snapshot/" + market.lower() + "/" + currency.lower() + makequery
+                    api_url = cls.url + "snapshot/" + market.lower() + "/" + currency.lower() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def instrument_volume_buy_sell(self, market: str, instrument: str, start: str, end="", limit="", page=""):
+            def instrument_volume_buy_sell(cls, market: str, instrument: str, start: str, end="", limit="", page=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -1563,12 +1561,12 @@ class api():
                 elif market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "instrument_volume_buy_sell/" + market + "/" + instrument + makequery
+                    api_url = cls.url + "instrument_volume_buy_sell/" + market + "/" + instrument + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_oi_by_market(self, market: str, start: str, end: str, limit="", page="", granularity=""):
+            def total_oi_by_market(cls, market: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -1590,12 +1588,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "total/oi_by_market/" + market + makequery
+                    api_url = cls.url + "total/oi_by_market/" + market + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_volume_by_market(self, market: str, start: str, end: str, limit="", page="", granularity=""):
+            def total_volume_by_market(cls, market: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -1617,12 +1615,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "total/volume_by_market/" + market + makequery
+                    api_url = cls.url + "total/volume_by_market/" + market + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_oi_by_currency(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def total_oi_by_currency(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param currency: BTC,ETH,SOL,BNB,OP,TONCOIN,ARB,XRP ADA
                 :type currency:
@@ -1640,13 +1638,13 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "total/oi_by_currency/" + currency.upper() + makequery
+                api_url = cls.url + "total/oi_by_currency/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
 
                 return response
 
             @classmethod
-            def total_volume_by_currency(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def total_volume_by_currency(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param currency: BTC,ETH,SOL,BNB,OP,TONCOIN,ARB,XRP ADA
                 :type currency:
@@ -1664,13 +1662,13 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "total/volume_by_currency/" + currency.upper() + makequery
+                api_url = cls.url + "total/volume_by_currency/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
 
                 return response
 
             @classmethod
-            def iv_rv(self, market: str, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def iv_rv(cls, market: str, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -1693,12 +1691,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "iv_rv/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "iv_rv/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def dvol(self, market: str, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def dvol(cls, market: str, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param market: DERIBIT
                 :type market:
@@ -1721,12 +1719,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "dvol/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "dvol/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def vix(self, market: str, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def vix(cls, market: str, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param market: DERIBIT
                 :type market:
@@ -1749,12 +1747,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "vix/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "vix/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_total(self, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def oi_total(cls, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -1777,12 +1775,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "oi_total/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "oi_total/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_pc_ratio(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
+            def oi_pc_ratio(cls, market: str, currency: str, start: str, end: str, limit="10", page="1",
                             granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -1806,12 +1804,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "oi_pc_ratio/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "oi_pc_ratio/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def volume_total(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
+            def volume_total(cls, market: str, currency: str, start: str, end: str, limit="10", page="1",
                              granularity=""):
                 """
                  :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -1835,12 +1833,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "volume_total/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "volume_total/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def atm_iv(self, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def atm_iv(cls, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                  :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                  :type market:
@@ -1863,12 +1861,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "atm_iv/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "atm_iv/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def gex_index(self, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def gex_index(cls, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                  :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                  :type market:
@@ -1891,12 +1889,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "gex_index/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "gex_index/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def max_pain(self, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def max_pain(cls, market: str, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                  :param market: AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                  :type market:
@@ -1919,12 +1917,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "max_pain/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "max_pain/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def volume_pc_ratio(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
+            def volume_pc_ratio(cls, market: str, currency: str, start: str, end: str, limit="10", page="1",
                                 granularity=""):
                 """
                  :param market: AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -1948,12 +1946,12 @@ class api():
                 if market not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "volume_pc_ratio/" + market.upper() + "/" + currency.upper() + makequery
+                    api_url = cls.url + "volume_pc_ratio/" + market.upper() + "/" + currency.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def iv_bid_ask(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+            def iv_bid_ask(cls, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
                            granularity=""):
                 """
                 :param market: BYBIT, DERIBIT,
@@ -1979,12 +1977,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "type/iv_bid_ask/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    api_url = cls.url + "type/iv_bid_ask/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def atm_iv_model(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+            def atm_iv_model(cls, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
                              granularity=""):
                 """
                 :param market: DERIBIT
@@ -2010,12 +2008,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "type/butterfly_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    api_url = cls.url + "type/butterfly_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def butterfly(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+            def butterfly(cls, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
                           granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -2041,12 +2039,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "type/butterfly/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    api_url = cls.url + "type/butterfly/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def butterfly_model(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+            def butterfly_model(cls, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
                                 granularity=""):
                 """
                 :param market: DERIBIT
@@ -2072,12 +2070,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "type/butterfly_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    api_url = cls.url + "type/butterfly_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def skew(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+            def skew(cls, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
                      granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -2103,12 +2101,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "type/skew/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    api_url = cls.url + "type/skew/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def skew_model(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+            def skew_model(cls, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
                            granularity=""):
                 """
                 :param market: DERIBIT
@@ -2134,12 +2132,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "type/skew_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    api_url = cls.url + "type/skew_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def risk_reversal(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+            def risk_reversal(cls, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
                               granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -2165,12 +2163,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "type/risk_reversal/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    api_url = cls.url + "type/risk_reversal/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def risk_reversal_model(self, market: str, currency: str, type: str, start: str, end: str, limit="10",
+            def risk_reversal_model(cls, market: str, currency: str, type: str, start: str, end: str, limit="10",
                                     page="1",
                                     granularity=""):
                 """
@@ -2197,12 +2195,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "type/risk_reversal_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    api_url = cls.url + "type/risk_reversal_model/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def gamma_bands(self, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
+            def gamma_bands(cls, market: str, currency: str, type: str, start: str, end: str, limit="10", page="1",
                             granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -2228,12 +2226,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "type/gamma_bands/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+                    api_url = cls.url + "type/gamma_bands/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def spread_skew(self, market: str, type: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def spread_skew(cls, market: str, type: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                 :param market: BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
                 :type market:
@@ -2256,12 +2254,12 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "spread/type/skew/" + market.lower() + "/" + type + makequery
+                    api_url = cls.url + "spread/type/skew/" + market.lower() + "/" + type + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def maturity_total_oi(self, market: str, currency: str, maturity: str, start: str, end: str, limit="10",
+            def maturity_total_oi(cls, market: str, currency: str, maturity: str, start: str, end: str, limit="10",
                                   page="1", granularity=""):
                 """
                 :param market:  AGGREGATE,BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -2278,6 +2276,8 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
                 :return: This endpoint provides historical total open interest (OI) data for the specified market, currency, and maturity. The open interest data is given in total, for put options, for call options, and the ratio between put and call. Open interest represents the total number of outstanding derivative contracts, such as options or futures, that have not been settled. This can be used as an indicator of the market's liquidity and activity for the specific maturity.
                 :rtype:
                 """
@@ -2285,13 +2285,13 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "maturity/total_oi/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
+                    api_url = cls.url + "maturity/total_oi/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
 
                 return response
 
             @classmethod
-            def maturity_total_volume(self, market: str, currency: str, maturity: str, start: str, end: str, limit="10",
+            def maturity_total_volume(cls, market: str, currency: str, maturity: str, start: str, end: str, limit="10",
                                       page="1", granularity=""):
                 """
                 :param market:  AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -2308,6 +2308,8 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
                 :return: This endpoint provides historical total volume data for the specified market, currency, and maturity. The volume data is given in total, for put options, for call options, and the ratio between put and call. Volume represents the number of contracts traded during a given period. This can be used as an indicator of the market's activity and liquidity for the specific maturity.
                 :rtype:
                 """
@@ -2315,13 +2317,13 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "maturity/total_volume/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
+                    api_url = cls.url + "maturity/total_volume/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
 
                 return response
 
             @classmethod
-            def atm_iv_h(self, market: str, currency: str, maturity: str, start: str, end: str, limit="10", page="1",
+            def atm_iv_h(cls, market: str, currency: str, maturity: str, start: str, end: str, limit="10", page="1",
                          granularity=""):
                 """
                 :param market:  BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -2338,6 +2340,8 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
                 :return: This endpoint provides historical ATM IV data for the specified market, currency, and maturity. ATM IV is a key metric in options pricing, as it provides a measure of the market's expectations for future volatility. High IV values generally suggest that the market anticipates significant price movement, while low IV values indicate an expectation of relatively stable prices.
                 :rtype:
                 """
@@ -2345,13 +2349,13 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "maturity/atm_iv_h/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
+                    api_url = cls.url + "maturity/atm_iv_h/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
 
                 return response
 
             @classmethod
-            def maturity_oi_volume(self, market: str, currency: str, maturity: str, start: str, end: str, limit="10",
+            def maturity_oi_volume(cls, market: str, currency: str, maturity: str, start: str, end: str, limit="10",
                                    page="1", granularity=""):
                 """
                 :param market:  AGGREGATE, BIT, DERIBIT, OKEX, POWERTRADE, BINANCE, DELTA_EXCHANGE, AEVO, LYRA , LYRA_ARBITRUM, BYBIT
@@ -2368,6 +2372,8 @@ class api():
                 :type limit:
                 :param page: 1
                 :type page:
+                :param granularity: 5m,15m,30m,1h,2h,4h,6h,12h,1d
+                :type granularity :
                 :return: This endpoint provides historical OI and volume data for the specified market, currency, and maturity. These metrics provide insights into market activity and investor sentiment. High OI values suggest that a large number of contracts are open and could result in significant future trading activity, while high volume values indicate a high level of recent trading activity.
                 :rtype:
                 """
@@ -2375,13 +2381,13 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "maturity/oi_volume/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
+                    api_url = cls.url + "maturity/oi_volume/" + market.upper() + "/" + currency.upper() + "/" + maturity.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
 
                 return response
 
             @classmethod
-            def orbit_dig(self, currency: str, maturity_name: str, field: str, start: str, end: str, limit="", page=""):
+            def orbit_dig(cls, currency: str, maturity_name: str, field: str, start: str, end: str, limit="", page=""):
                 """
 
                 :param currency: BTC,ETH,AVAX,SOL
@@ -2402,12 +2408,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page)
-                api_url = self.url + "orbit_dig/" + currency.upper() + "/" + maturity_name + "/" + field + makequery
+                api_url = cls.url + "orbit_dig/" + currency.upper() + "/" + maturity_name + "/" + field + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def actual_vol_risk_reversal_model(self, market: str, currency: str, type: str, days: str, start: str,
+            def actual_vol_risk_reversal_model(cls, market: str, currency: str, type: str, days: str, start: str,
                                                end: str, limit="10", page="1",
                                                granularity=""):
                 """
@@ -2436,13 +2442,13 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "actual_vol/risk_reversal_model/" + market.upper() + "/" + currency.upper() + "/" + str(
+                    api_url = cls.url + "actual_vol/risk_reversal_model/" + market.upper() + "/" + currency.upper() + "/" + str(
                         type) + "/" + str(days) + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def actual_vol_skew_model(self, market: str, currency: str, type: str, days: str, start: str, end: str,
+            def actual_vol_skew_model(cls, market: str, currency: str, type: str, days: str, start: str, end: str,
                                       limit="10", page="1",
                                       granularity=""):
                 """
@@ -2471,13 +2477,13 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "actual_vol/skew_model/" + market.upper() + "/" + currency.upper() + "/" + str(
+                    api_url = cls.url + "actual_vol/skew_model/" + market.upper() + "/" + currency.upper() + "/" + str(
                         type) + "/" + str(days) + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def actual_vol_butterfly_model(self, market: str, currency: str, type: str, days: str, start: str, end: str,
+            def actual_vol_butterfly_model(cls, market: str, currency: str, type: str, days: str, start: str, end: str,
                                            limit="10", page="1",
                                            granularity=""):
                 """
@@ -2506,7 +2512,7 @@ class api():
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "actual_vol/butterfly_model/" + market.upper() + "/" + currency.upper() + "/" + str(
+                    api_url = cls.url + "actual_vol/butterfly_model/" + market.upper() + "/" + currency.upper() + "/" + str(
                         type) + "/" + str(days) + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
@@ -2516,7 +2522,7 @@ class api():
             pass
 
             @classmethod
-            def snapshot(self, market: str, currency: str, start: str, end: str, limit="10", page="1", timezone="0"):
+            def snapshot(cls, market: str, currency: str, start: str, end: str, limit="10", page="1", timezone="0"):
                 """
                 :param market: BINANCE, BITMEX, BYBIT, DERIBIT, HUOBI, KRAKEN, OKX
                 :type market:
@@ -2536,12 +2542,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, timezone=timezone)
-                api_url = self.url + "snapshot/" + market.upper() + '/' + currency.upper() + makequery
+                api_url = cls.url + "snapshot/" + market.upper() + '/' + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def realized_volatility(self, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def realized_volatility(cls, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -2559,12 +2565,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "realized_volatility/" + currency.upper() + makequery
+                api_url = cls.url + "realized_volatility/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_weighted_funding(self, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def oi_weighted_funding(cls, currency: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -2582,12 +2588,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "oi_weighted_funding/" + currency.upper() + makequery
+                api_url = cls.url + "oi_weighted_funding/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_weighted_volume_funding(self, currency: str, start: str, end: str, limit="10", page="1",
+            def oi_weighted_volume_funding(cls, currency: str, start: str, end: str, limit="10", page="1",
                                            granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
@@ -2606,12 +2612,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "oi_weighted_volume_funding/" + currency.upper() + makequery
+                api_url = cls.url + "oi_weighted_volume_funding/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_weighted_basis(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def oi_weighted_basis(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -2629,12 +2635,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "oi_weighted_basis/" + currency.upper() + makequery
+                api_url = cls.url + "oi_weighted_basis/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_oi(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def total_oi(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -2652,12 +2658,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "total_oi/" + currency.upper() + makequery
+                api_url = cls.url + "total_oi/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_oi_by_margin(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def total_oi_by_margin(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -2675,12 +2681,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "total_oi_by_margin/" + currency.upper() + makequery
+                api_url = cls.url + "total_oi_by_margin/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_volume(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def total_volume(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -2698,12 +2704,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "total_volume/" + currency.upper() + makequery
+                api_url = cls.url + "total_volume/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_volume_by_margin(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def total_volume_by_margin(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -2721,12 +2727,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "total_volume_by_margin/" + currency.upper() + makequery
+                api_url = cls.url + "total_volume_by_margin/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def alt_summary(self, currency: str, start: str, end: str, limit="", page="", granularity=""):
+            def alt_summary(cls, currency: str, start: str, end: str, limit="", page="", granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -2744,12 +2750,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "alt_summary/" + currency.upper() + makequery
+                api_url = cls.url + "alt_summary/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def market_index(self, index: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def market_index(cls, index: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                 :param index: privacy, oracle_data nft_gaming, memecoin, layer1 , layer2, exchange, defi , digital_asset
                 :type index:
@@ -2767,12 +2773,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "market_index/" + index.lower() + makequery
+                api_url = cls.url + "market_index/" + index.lower() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def alt_markets(self, market: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def alt_markets(cls, market: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                 :param market: DERIBIT, GMX, BITGET, BITMEX, VERTEX, BITFINEX, OKEX, BINANCE, KRAKEN, KWENTA, PERP-PROTOCOL, BYBIT, DYDX, HUOBI
                 :type market:
@@ -2790,12 +2796,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "market_index/" + market.upper() + makequery
+                api_url = cls.url + "market_index/" + market.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def indices_price(self, index: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def indices_price(cls, index: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                 :param index: privacy,oracle_data,nft_gaming,memecoin,layer2,layer1,exchange,digital_asset,defi
                 :type index:
@@ -2813,12 +2819,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "indices_price/" + index.upper() + makequery
+                api_url = cls.url + "indices_price/" + index.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def futures_annualized_basis(self, currency: str, days: str, start: str, end: str, limit="10", page="1",
+            def futures_annualized_basis(cls, currency: str, days: str, start: str, end: str, limit="10", page="1",
                                          granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
@@ -2839,12 +2845,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "futures_annualized_basis/" + currency.upper() + "/" + str(days) + makequery
+                api_url = cls.url + "futures_annualized_basis/" + currency.upper() + "/" + str(days) + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def perpetual_funding_exchange(self, currency: str, option: str, start: str, end: str, limit="10", page="1",
+            def perpetual_funding_exchange(cls, currency: str, option: str, start: str, end: str, limit="10", page="1",
                                            granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
@@ -2865,12 +2871,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "perpetual_funding_exchange/" + currency.upper() + "/" + option.upper() + makequery
+                api_url = cls.url + "perpetual_funding_exchange/" + currency.upper() + "/" + option.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_oi_by_exchange(self, currency: str, option: str, start: str, end: str, limit="10", page="1",
+            def total_oi_by_exchange(cls, currency: str, option: str, start: str, end: str, limit="10", page="1",
                                      granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
@@ -2891,13 +2897,13 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "total_oi_by_exchange/" + currency.upper() + "/" + option.upper() + makequery
+                api_url = cls.url + "total_oi_by_exchange/" + currency.upper() + "/" + option.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def total_volume_by_exchange(self, currency: str, option: str, start: str, end: str, limit="10", page="1",
-                                     granularity=""):
+            def total_volume_by_exchange(cls, currency: str, option: str, start: str, end: str, limit="10", page="1",
+                                         granularity=""):
                 """
                 :param currency: BTC,ETH,AVAX... Check analytics/futures/alt_currency For more information about available currencies
                 :type currency:
@@ -2917,13 +2923,13 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "total_volume_by_exchange/" + currency.upper() + "/" + option.upper() + makequery
+                api_url = cls.url + "total_volume_by_exchange/" + currency.upper() + "/" + option.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def perpetual_yield(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
-                                     granularity=""):
+            def perpetual_yield(cls, market: str, currency: str, start: str, end: str, limit="10", page="1",
+                                granularity=""):
                 """
                 :param market: DERIBIT, GMX, BITGET, BITMEX, VERTEX, BITFINEX, OKEX, BINANCE, KRAKEN, KWENTA, PERP-PROTOCOL, BYBIT, DYDX, HUOBI
                 :type market:
@@ -2942,14 +2948,14 @@ class api():
                 :return: This endpoint provides historical data for the yield of perpetual contracts in a specific currency and market. The data includes the date and the yield value for each perpetual contract symbol.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page,granularity=granularity)
-                api_url = self.url + "perpetual_yield/" + currency.upper() + "/" + market.upper() + makequery
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = cls.url + "perpetual_yield/" + currency.upper() + "/" + market.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def perpetual_funding(self, market: str, currency: str, start: str, end: str, limit="10", page="1",
-                                     granularity=""):
+            def perpetual_funding(cls, market: str, currency: str, start: str, end: str, limit="10", page="1",
+                                  granularity=""):
                 """
                 :param market: DERIBIT, GMX, BITGET, BITMEX, VERTEX, BITFINEX, OKEX, BINANCE, KRAKEN, KWENTA, PERP-PROTOCOL, BYBIT, DYDX, HUOBI
                 :type market:
@@ -2968,14 +2974,14 @@ class api():
                 :return: This endpoint provides historical data for the funding of perpetual contracts in a specific currency and market. The data includes the date and the funding value for each perpetual contract symbol.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page,granularity=granularity)
-                api_url = self.url + "perpetual_funding/" + currency.upper() + "/" + market.upper() + makequery
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
+                api_url = cls.url + "perpetual_funding/" + currency.upper() + "/" + market.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def global_activity_futures(self, market: str, start: str, end: str, limit="10", page="1",
-                                     granularity=""):
+            def global_activity_futures(cls, market: str, start: str, end: str, limit="10", page="1",
+                                        granularity=""):
                 """
                 :param market: DERIBIT, BITGET, BITMEX, OKEX, BINANCE, KRAKEN, BYBIT, HUOBI
                 :type market:
@@ -2992,17 +2998,17 @@ class api():
                 :return: This endpoint provides historical data for the global activity of futures in a specific market. The data includes the date, open interest, trading volume, yield value, and the number of liquidations for long and short positions.
                 :rtype:
                 """
-                makequery = prepare_query(start=start, end=end, limit=limit, page=page,granularity=granularity)
+                makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
                 if market.upper() not in MARKET_CONSTS.__members__:
                     raise TypeError("Market not available")
                 else:
-                    api_url = self.url + "global_activity_futures/" + market.upper() + makequery
+                    api_url = cls.url + "global_activity_futures/" + market.upper() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def oi_total_global_activity(self,start: str, end: str, limit="10", page="1",
-                                        granularity=""):
+            def oi_total_global_activity(cls, start: str, end: str, limit="10", page="1",
+                                         granularity=""):
                 """
                 :param start: EXP:2022-06-07
                 :type end:
@@ -3018,14 +3024,13 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "oi_total_global_activity" + makequery
+                api_url = cls.url + "oi_total_global_activity" + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
-
             @classmethod
-            def volume_total_global_activity(self,start: str, end: str, limit="10", page="1",
-                                        granularity=""):
+            def volume_total_global_activity(cls, start: str, end: str, limit="10", page="1",
+                                             granularity=""):
                 """
                 :param start: EXP:2022-06-07
                 :type end:
@@ -3041,7 +3046,7 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "volume_total_global_activity" + makequery
+                api_url = cls.url + "volume_total_global_activity" + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
@@ -3050,7 +3055,7 @@ class api():
         #     pass
         #
         #     @classmethod
-        #     def total_oi(self, market="ftx", currency="btc", start="", end="", limit="", page=""):
+        #     def total_oi(cls, market="ftx", currency="btc", start="", end="", limit="", page=""):
         #         """
         #         :param market: FTX
         #         :type market:
@@ -3073,7 +3078,7 @@ class api():
         #         elif currency.upper() not in CURRENCY.__members__:
         #             raise TypeError("Currency not available")
         #         elif makequery != "":
-        #             api_url = self.url + "total_oi/" + market.lower() + "/" + currency.lower() + makequery
+        #             api_url = cls.url + "total_oi/" + market.lower() + "/" + currency.lower() + makequery
         #             response = requests.get(api_url, headers=api.header).json()
         #             Response = Ipagination(response,
         #                                    Ipaginationmeta(response['meta']['total'], response['meta']['page'],
@@ -3084,7 +3089,7 @@ class api():
         #                 Response.items.append(IDateV(response['items'][i]['v'], response['items'][i]['date']))
         #             return Response
         #         else:
-        #             api_url = self.url + "total_oi/" + market.lower() + "/" + currency.lower()
+        #             api_url = cls.url + "total_oi/" + market.lower() + "/" + currency.lower()
         #             response = requests.get(api_url, headers=api.header).json()
         #             Response = Ipagination(response,
         #                                    Ipaginationmeta(response['meta']['total'], response['meta']['page'],
@@ -3096,7 +3101,7 @@ class api():
         #             return Response
         #
         #     @classmethod
-        #     def volume_buy_sell(self, market="ftx", currency="btc", start="", end="", limit="", page=""):
+        #     def volume_buy_sell(cls, market="ftx", currency="btc", start="", end="", limit="", page=""):
         #         """
         #
         #         :param market: FTX
@@ -3120,15 +3125,15 @@ class api():
         #         if currency.upper() not in CURRENCY.__members__:
         #             raise TypeError("Currency not available")
         #         elif makequery != "":
-        #             api_url = self.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower() + makequery
+        #             api_url = cls.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower() + makequery
         #             response = requests.get(api_url, headers=api.header).json()
         #         else:
-        #             api_url = self.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower()
+        #             api_url = cls.url + "volume_buy_sell/" + market.lower() + "/" + currency.lower()
         #             response = requests.get(api_url, headers=api.header).json()
         #         return response
         #
         #     @classmethod
-        #     def iv_type(self, market: str, currency: str, type: str, start="", end="", limit="", page=""):
+        #     def iv_type(cls, market: str, currency: str, type: str, start="", end="", limit="", page=""):
         #         """
         #
         #         :param market: FTX
@@ -3154,15 +3159,15 @@ class api():
         #         if currency.upper() not in CURRENCY.__members__:
         #             raise TypeError("Currency not available")
         #         elif makequery != "":
-        #             api_url = self.url + "iv_type/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
+        #             api_url = cls.url + "iv_type/" + market.lower() + "/" + currency.lower() + "/" + type + makequery
         #             response = requests.get(api_url, headers=api.header).json()
         #         else:
-        #             api_url = self.url + "iv_type/" + market.lower() + "/" + currency.lower() + "/" + type
+        #             api_url = cls.url + "iv_type/" + market.lower() + "/" + currency.lower() + "/" + type
         #             response = requests.get(api_url, headers=api.header).json()
         #         return response
         #
         #     @classmethod
-        #     def iv_historical_open_future(self, market: str, currency: str, is_open: str, start="", end="", limit="",
+        #     def iv_historical_open_future(cls, market: str, currency: str, is_open: str, start="", end="", limit="",
         #                                   page=""):
         #         """
         #
@@ -3189,15 +3194,15 @@ class api():
         #         if currency.upper() not in CURRENCY.__members__:
         #             raise TypeError("Currency not available")
         #         elif makequery != "":
-        #             api_url = self.url + "iv_historical_open_future/" + market.lower() + "/" + currency.lower() + "/" + is_open.lower() + makequery
+        #             api_url = cls.url + "iv_historical_open_future/" + market.lower() + "/" + currency.lower() + "/" + is_open.lower() + makequery
         #             response = requests.get(api_url, headers=api.header).json()
         #         else:
-        #             api_url = self.url + "iv_historical_open_future/" + market.lower() + "/" + currency.lower() + "/" + is_open.lower()
+        #             api_url = cls.url + "iv_historical_open_future/" + market.lower() + "/" + currency.lower() + "/" + is_open.lower()
         #             response = requests.get(api_url, headers=api.header).json()
         #         return response
         #
         #     @classmethod
-        #     def total_volume(self, market="ftx", currency="btc", start="", end="", limit="", page=""):
+        #     def total_volume(cls, market="ftx", currency="btc", start="", end="", limit="", page=""):
         #         """
         #
         #         :param market: FTX
@@ -3221,15 +3226,15 @@ class api():
         #         if currency.upper() not in CURRENCY.__members__:
         #             raise TypeError("Currency not available")
         #         elif makequery != "":
-        #             api_url = self.url + "total_volume/" + market.lower() + "/" + currency.lower() + makequery
+        #             api_url = cls.url + "total_volume/" + market.lower() + "/" + currency.lower() + makequery
         #             response = requests.get(api_url, headers=api.header).json()
         #         else:
-        #             api_url = self.url + "total_volume/" + market.lower() + "/" + currency.lower()
+        #             api_url = cls.url + "total_volume/" + market.lower() + "/" + currency.lower()
         #             response = requests.get(api_url, headers=api.header).json()
         #         return response
         #
         #     @classmethod
-        #     def historical_iv(self, contract_name: str, market="ftx", start="", end="", limit="", page=""):
+        #     def historical_iv(cls, contract_name: str, market="ftx", start="", end="", limit="", page=""):
         #         """
         #
         #         :param market: FTX
@@ -3251,15 +3256,15 @@ class api():
         #         if market.upper() not in MARKET_CONSTS.__members__:
         #             raise TypeError("Market not available")
         #         elif makequery != "":
-        #             api_url = self.url + "historical_iv/" + market.lower() + "/" + contract_name.lower() + makequery
+        #             api_url = cls.url + "historical_iv/" + market.lower() + "/" + contract_name.lower() + makequery
         #             response = requests.get(api_url, headers=api.header).json()
         #         else:
-        #             api_url = self.url + "historical_iv/" + market.lower() + "/" + contract_name.lower()
+        #             api_url = cls.url + "historical_iv/" + market.lower() + "/" + contract_name.lower()
         #             response = requests.get(api_url, headers=api.header).json()
         #         return response
         #
         #     @classmethod
-        #     def historical_oi(self, contract_name: str, market="ftx", start="", end="", limit="", page=""):
+        #     def historical_oi(cls, contract_name: str, market="ftx", start="", end="", limit="", page=""):
         #         """
         #
         #         :param market: FTX
@@ -3281,15 +3286,15 @@ class api():
         #         if market.upper() not in MARKET_CONSTS.__members__:
         #             raise TypeError("Market not available")
         #         elif makequery != "":
-        #             api_url = self.url + "historical_oi/" + market.lower() + "/" + contract_name.lower() + makequery
+        #             api_url = cls.url + "historical_oi/" + market.lower() + "/" + contract_name.lower() + makequery
         #             response = requests.get(api_url, headers=api.header).json()
         #         else:
-        #             api_url = self.url + "historical_oi/" + market.lower() + "/" + contract_name.lower()
+        #             api_url = cls.url + "historical_oi/" + market.lower() + "/" + contract_name.lower()
         #             response = requests.get(api_url, headers=api.header).json()
         #         return response
         #
         #     @classmethod
-        #     def historical_price(self, contract_name: str, market="ftx", start="", end="", limit="", page=""):
+        #     def historical_price(cls, contract_name: str, market="ftx", start="", end="", limit="", page=""):
         #         """
         #
         #         :param market: FTX
@@ -3311,15 +3316,15 @@ class api():
         #         if market.upper() not in MARKET_CONSTS.__members__:
         #             raise TypeError("Market not available")
         #         elif makequery != "":
-        #             api_url = self.url + "historical_price/" + market.lower() + "/" + contract_name.lower() + makequery
+        #             api_url = cls.url + "historical_price/" + market.lower() + "/" + contract_name.lower() + makequery
         #             response = requests.get(api_url, headers=api.header).json()
         #         else:
-        #             api_url = self.url + "historical_price/" + market.lower() + "/" + contract_name.lower()
+        #             api_url = cls.url + "historical_price/" + market.lower() + "/" + contract_name.lower()
         #             response = requests.get(api_url, headers=api.header).json()
         #         return response
         #
         #     @classmethod
-        #     def historical_volume(self, contract_name: str, market="ftx", start="", end="", limit="", page=""):
+        #     def historical_volume(cls, contract_name: str, market="ftx", start="", end="", limit="", page=""):
         #         """
         #
         #         :param market: FTX
@@ -3341,22 +3346,22 @@ class api():
         #         if market.upper() not in MARKET_CONSTS.__members__:
         #             raise TypeError("Market not available")
         #         elif makequery != "":
-        #             api_url = self.url + "historical_volume/" + market.lower() + "/" + contract_name.lower() + makequery
+        #             api_url = cls.url + "historical_volume/" + market.lower() + "/" + contract_name.lower() + makequery
         #             response = requests.get(api_url, headers=api.header).json()
         #         else:
-        #             api_url = self.url + "historical_volume/" + market.lower() + "/" + contract_name.lower()
+        #             api_url = cls.url + "historical_volume/" + market.lower() + "/" + contract_name.lower()
         #             response = requests.get(api_url, headers=api.header).json()
         #         return response
         #
         #     @classmethod
-        #     def open_future(self, contract_type: str):
+        #     def open_future(cls, contract_type: str):
         #         """
         #         :param contract_type: daily, weekly, quarterly
         #         :type contract_type:
         #         :return: json data of open future
         #         :rtype:
         #         """
-        #         api_url = self.url + "open_future/" + contract_type
+        #         api_url = cls.url + "open_future/" + contract_type
         #         response = requests.get(api_url, headers=api.header).json()
         #         return response
 
@@ -3365,7 +3370,7 @@ class api():
             pass
 
             @classmethod
-            def dovs_auctions(self, protocol: str, start="", end="", currency="", limit="", page=""):
+            def dovs_auctions(cls, protocol: str, start="", end="", currency="", limit="", page=""):
                 """
 
                 :param protocol: ribbon, friktion, thetanuts
@@ -3385,10 +3390,10 @@ class api():
                 """
                 makequery = prepare_query(start=start, end=end, currency=currency, limit=limit, page=page)
                 if makequery != "":
-                    api_url = self.url + "dovs/auctions/" + protocol.lower() + makequery
+                    api_url = cls.url + "dovs/auctions/" + protocol.lower() + makequery
                     response = requests.get(api_url, headers=api.header).json()
                 else:
-                    api_url = self.url + "dovs/auctions/" + protocol.lower()
+                    api_url = cls.url + "dovs/auctions/" + protocol.lower()
                     response = requests.get(api_url, headers=api.header).json()
                 return response
 
@@ -3397,7 +3402,7 @@ class api():
             pass
 
             @classmethod
-            def perpetuals(self, market: str, symbol: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def perpetuals(cls, market: str, symbol: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                 :param market:  BITMEX | BINANCE | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX | KWENTA | GMX | VERTEX | PERP-PROTOCOL | BITGET
                 :type market:
@@ -3417,13 +3422,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                if makequery != "":
-                    api_url = self.url + "perpetuals/" + market.upper() + "/" + symbol.upper() + makequery
-                    response = requests.get(api_url, headers=api.header).json()
+                api_url = cls.url + "perpetuals/" + market.upper() + "/" + symbol.upper() + makequery
+                response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def futures(self, market: str, symbol: str, start: str, end: str, limit="10", page="1", granularity=""):
+            def futures(cls, market: str, symbol: str, start: str, end: str, limit="10", page="1", granularity=""):
                 """
                 :param market: BITMEX | BINANCE | BYBIT | DYDX | BITFINEX | DERIBIT | HUOBI | KRAKEN | OKEX | KWENTA | GMX | VERTEX | PERP-PROTOCOL | BITGET
                 :type market:
@@ -3443,12 +3447,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "futures/" + market.upper() + "/" + symbol.upper() + makequery
+                api_url = cls.url + "futures/" + market.upper() + "/" + symbol.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
             @classmethod
-            def summary(self, currency: str, start="", end="", limit="10", page="1", granularity=""):
+            def summary(cls, currency: str, start="", end="", limit="10", page="1", granularity=""):
                 """
                 :param currency: BTC | ETH | ALTS (Full list of supported assets on instruments endpoint)
                 :type currency:
@@ -3466,13 +3470,12 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, granularity=granularity)
-                api_url = self.url + "summary/" + currency.upper() + makequery
+                api_url = cls.url + "summary/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
-
             @classmethod
-            def snapshot(self, market: str, currency: str, start: str, end: str, limit="10", page="1", timezone="0"):
+            def snapshot(cls, market: str, currency: str, start: str, end: str, limit="10", page="1", timezone="0"):
                 """
                 :param market: BITMEX | BINANCE | BYBIT |  BITFINEX | DERIBIT | HUOBI | KRAKEN | OKX
                 :type market:
@@ -3492,7 +3495,7 @@ class api():
                 :rtype:
                 """
                 makequery = prepare_query(start=start, end=end, limit=limit, page=page, timezone=timezone)
-                api_url = self.url + "snapshot/" + market.upper() + "/" + currency.upper() + makequery
+                api_url = cls.url + "snapshot/" + market.upper() + "/" + currency.upper() + makequery
                 response = requests.get(api_url, headers=api.header).json()
                 return response
 
@@ -3501,7 +3504,7 @@ class api():
         pass
 
         @classmethod
-        def risk_slide_shocked(self, market: str, currency: str, atm_iv_shock, spot_shock):
+        def risk_slide_shocked(cls, market: str, currency: str, atm_iv_shock, spot_shock):
             """
             :param market: deribit , binance
             :type market:
@@ -3515,25 +3518,24 @@ class api():
             :rtype:
             """
             makequery = prepare_query(atm_iv_shock=atm_iv_shock, spot_shock=spot_shock)
-            api_url = self.url + "risk_slide_shocked" + "/" + market.lower() + "/" + currency.upper() + makequery
+            api_url = cls.url + "risk_slide_shocked" + "/" + market.lower() + "/" + currency.upper() + makequery
             responsedata = requests.get(api_url, headers=api.header).json()
             return responsedata
 
         @classmethod
-        def risk_slide_instruments(self, market: str):
+        def risk_slide_instruments(cls, market: str):
             """
             :param market: deribit , binance
             :type market:
             :return:
             :rtype:
             """
-            api_url = self.url + "risk_slide_instruments" + "/" + market.lower()
+            api_url = cls.url + "risk_slide_instruments" + "/" + market.lower()
             responsedata = requests.get(api_url, headers=api.header).json()
             return responsedata
 
-
         @classmethod
-        def risk_slide(self, market: str, currency: str, atm_iv_shock, spot_shock):
+        def risk_slide(cls, market: str, currency: str, atm_iv_shock, spot_shock):
             """
             :param market: deribit , binance
             :type market:
@@ -3547,6 +3549,6 @@ class api():
             :rtype:
             """
             makequery = prepare_query(atm_iv_shock=atm_iv_shock, spot_shock=spot_shock)
-            api_url = self.url + "risk_slide_shocked" + "/" + market.lower() + "/" + currency.upper() + makequery
+            api_url = cls.url + "risk_slide_shocked" + "/" + market.lower() + "/" + currency.upper() + makequery
             responsedata = requests.get(api_url, headers=api.header).json()
             return responsedata

@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from Laevitas import SDK
 
 sdk = SDK.api()
-sdk.configure('35ee699f-7003-4fad-948f-921d4fdb7603')
+sdk.configure('your-api-key')
 
 
 class Testoptions(TestCase):

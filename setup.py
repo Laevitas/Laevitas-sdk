@@ -5,10 +5,10 @@ with open("README.md") as readme:
     README = readme.read()
 setup(
     name='SDK-Laevitas',
-    version='1.0',
+    version='2.0.0',
     packages=['Laevitas'],
-    url='https://github.com/Elyesbdakhlia',
-    download_url='https://github.com/Elyesbdakhlia/API-SDK/archive/refs/tags/test-1.4.2.tar.gz',
+    url='https://github.com/Laevitas/Laevitas-sdk',
+    download_url='https://github.com/Laevitas/Laevitas-sdk/archive/refs/tags/v2.0.0-beta.tar.gz',
     license='apache-2.0',
     author='Elyes',
     author_email='elyes@laevitas.ch',
