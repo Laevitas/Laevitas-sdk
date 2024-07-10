@@ -8,7 +8,7 @@ setup(
     version='2.0.0',
     packages=['Laevitas'],
     url='https://github.com/Laevitas/Laevitas-sdk',
-    download_url='https://github.com/Laevitas/Laevitas-sdk/archive/refs/tags/v2.0.0-beta.tar.gz',
+    download_url='https://github.com/Laevitas/Laevitas-sdk/archive/refs/tags/v2.0.0.tar.gz',
     license='apache-2.0',
     author='Elyes',
     author_email='elyes@laevitas.ch',
